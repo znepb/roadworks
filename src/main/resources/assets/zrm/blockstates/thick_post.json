@@ -1,0 +1,33 @@
+{
+  "multipart": [
+    {"apply": { "model": "zrm:block/post_thick_midsection" }},
+    {
+      "when": { "footer": "true" },
+      "apply": { "model": "zrm:block/post_thick_footer" }
+    },
+    {
+      "when": { "bottom": "true" },
+      "apply": { "model": "zrm:block/post_thick_bottom" }
+    },
+    {
+      "when": { "top": "true" },
+      "apply": { "model": "zrm:block/post_thick_top" }
+    },
+    {
+      "when": { "north": "thick" },
+      "apply": { "model": "zrm:block/post_thick_extension" }
+    },
+    {
+      "when": { "east": "thick" },
+      "apply": { "model": "zrm:block/post_thick_extension", "y": 90 }
+    },
+    {
+      "when": { "south": "thick" },
+      "apply": { "model": "zrm:block/post_thick_extension", "y": 180 }
+    },
+    {
+      "when": { "west": "thick" },
+      "apply": { "model": "zrm:block/post_thick_extension", "y": 270 }
+    }
+  ]
+}

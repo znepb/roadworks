@@ -1,0 +1,9 @@
+{
+	"required": true,
+	"package": "me.znepb.zrm.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

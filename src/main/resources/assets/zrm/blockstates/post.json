@@ -1,56 +1,33 @@
 {
   "multipart": [
-    {"apply": { "model": "zrm:block/post_thick_midsection" }},
+    {"apply": { "model": "zrm:block/post_medium_midsection" }},
     {
       "when": { "footer": "true" },
-      "apply": { "model": "zrm:block/post_thick_footer" }
+      "apply": { "model": "zrm:block/post_medium_footer" }
     },
+
     {
-      "when": { "down": "thick" },
-      "apply": { "model": "zrm:block/post_thick_extension", "x": 90 }
-    },
-    {
-      "when": { "up": "thick" },
-      "apply": { "model": "zrm:block/post_thick_extension", "x": 270 }
-    },
-    {
-      "when": { "north": "thick" },
-      "apply": { "model": "zrm:block/post_thick_extension" }
-    },
-    {
-      "when": { "east": "thick" },
-      "apply": { "model": "zrm:block/post_thick_extension", "y": 90 }
-    },
-    {
-      "when": { "south": "thick" },
-      "apply": { "model": "zrm:block/post_thick_extension", "y": 180 }
-    },
-    {
-      "when": { "west": "thick" },
-      "apply": { "model": "zrm:block/post_thick_extension", "y": 270 }
-    },
-    {
-      "when": { "down": "medium" },
+      "when": { "down": "thick|medium" },
       "apply": { "model": "zrm:block/post_medium_extension", "x": 90 }
     },
     {
-      "when": { "up": "medium" },
+      "when": { "up": "thick|medium" },
       "apply": { "model": "zrm:block/post_medium_extension", "x": 270 }
     },
     {
-      "when": { "north": "medium" },
+      "when": { "north": "thick|medium" },
       "apply": { "model": "zrm:block/post_medium_extension" }
     },
     {
-      "when": { "east": "medium" },
+      "when": { "east": "thick|medium" },
       "apply": { "model": "zrm:block/post_medium_extension", "y": 90 }
     },
     {
-      "when": { "south": "medium" },
+      "when": { "south": "thick|medium" },
       "apply": { "model": "zrm:block/post_medium_extension", "y": 180 }
     },
     {
-      "when": { "west": "medium" },
+      "when": { "west": "thick|medium" },
       "apply": { "model": "zrm:block/post_medium_extension", "y": 270 }
     },
     {

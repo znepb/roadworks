@@ -4,8 +4,8 @@ import net.minecraft.util.StringIdentifiable
 
 enum class PostConnection(s: String) : StringIdentifiable {
     THICK("thick"),
+    MEDIUM("medium"),
     THIN("thin"),
-    THINNER("thinner"),
     NONE("none");
 
     private var s = s;

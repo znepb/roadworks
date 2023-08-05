@@ -1,6 +1,6 @@
 package me.znepb.zrm
 
-import me.znepb.zrm.block.ThickPostBlock
+import me.znepb.zrm.block.PostBlock
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.block.AbstractBlock
@@ -35,7 +35,9 @@ object Registry {
         fun<T: Block> rBlock(name: String, value: T): T =
             Registry.register(BLOCK, Identifier("zrm", name), value)
 
-        val THICK_POST = rBlock("thick_post", ThickPostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
+        val THICK_POST = rBlock("thick_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "thick"))
+        val POST = rBlock("post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "medium"))
+        val THIN_POST = rBlock("thin_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "thin"))
     }
 
     object ModItems {
@@ -50,5 +52,7 @@ object Registry {
         }
 
         val THICK_POST = rItem(ModBlocks.THICK_POST, ::BlockItem, itemSettings())
+        val POST = rItem(ModBlocks.POST, ::BlockItem, itemSettings())
+        val THIN_POST = rItem(ModBlocks.THIN_POST, ::BlockItem, itemSettings())
     }
 }

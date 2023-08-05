@@ -23,7 +23,7 @@
 		],
 		"fabric-datagen": [
 			{
-				"value": "me.znepb.zrm.DataGen",
+				"value": "me.znepb.zrm.datagen.DataGen",
 				"adapter": "kotlin"
 			}
 		]

@@ -21,6 +21,12 @@
 				"adapter": "kotlin"
 			}
 		],
+		"client": [
+			{
+				"value": "me.znepb.zrm.ZrmClient",
+				"adapter": "kotlin"
+			}
+		],
 		"fabric-datagen": [
 			{
 				"value": "me.znepb.zrm.datagen.DataGen",

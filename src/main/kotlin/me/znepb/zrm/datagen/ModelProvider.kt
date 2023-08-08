@@ -18,17 +18,41 @@ import kotlin.collections.HashMap
 
 
 class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
+    companion object {
+        val signModel = Model(
+            Optional.of(Identifier("zrm", "block/sign_base")), Optional.empty(),
+            TextureKey.FRONT,
+            TextureKey.BACK
+        )
+    }
+
     override fun generateBlockStateModels(generator: BlockStateModelGenerator) {
-        addSignOrPole(generator, Registry.ModBlocks.POST, "post")
-        addSignOrPole(generator, Registry.ModBlocks.THICK_POST, "thick_post")
-        addSignOrPole(generator, Registry.ModBlocks.THIN_POST, "thin_post")
+        addPole(generator, Registry.ModBlocks.POST, "post")
+        addPole(generator, Registry.ModBlocks.THICK_POST, "thick_post")
+        addPole(generator, Registry.ModBlocks.THIN_POST, "thin_post")
+
+        addSign(generator, Registry.ModBlocks.STOP_SIGN, "stop_sign", "stop_sign", "back_octagon")
 
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.TRAFFIC_CONE, Identifier("zrm", "block/traffic_cone")))
     }
 
-    fun addSignOrPole(generator: BlockStateModelGenerator, block: Block, name: String) {
+    fun addPole(generator: BlockStateModelGenerator, block: Block, name: String) {
         generator.blockStateCollector.accept(createSingletonBlockState(block, Identifier("zrm", "block/$name")))
     }
+
+    fun addSign(generator: BlockStateModelGenerator, block: Block, name: String, frontTexture: String, backTexture: String) {
+        generator.blockStateCollector.accept(createSingletonBlockState(block, Identifier("zrm", "block/$name")))
+
+        signModel.upload(
+            block,
+            TextureMap()
+                .put(TextureKey.FRONT, Identifier("zrm", "block/${frontTexture}"))
+                .put(TextureKey.BACK, Identifier("zrm","block/${backTexture}")),
+            generator.modelCollector
+        )
+    }
+
+
 
     override fun generateItemModels(generator: ItemModelGenerator) {
     }

@@ -46,8 +46,6 @@ open class PostBlock(
         val EAST_SHAPE_THIN = createCuboidShape(9.0, 7.0, 7.0, 16.0, 9.0, 9.0)
         val SOUTH_SHAPE_THIN = createCuboidShape(7.0, 7.0, 9.0, 9.0, 9.0, 16.0)
         val WEST_SHAPE_THIN = createCuboidShape(0.0, 7.0, 7.0, 7.0, 9.0, 9.0)
-
-
     }
 
     override fun <T : BlockEntity?> getTicker(

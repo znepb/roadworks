@@ -1,7 +1,6 @@
 package me.znepb.zrm
 
-import me.znepb.zrm.block.TrafficCone
-import me.znepb.zrm.block.posts.*
+import me.znepb.zrm.block.*
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
@@ -39,6 +38,7 @@ object Registry {
 
     object ModBlockEntities {
         val POST_BLOCK_ENTITY = registerPostBlockEntities()
+        val SIGN_BLOCK_ENTITY = registerSignBlockEntities()
     }
 
     fun registerPostBlockEntities(): BlockEntityType<PostBlockEntity>? {
@@ -46,6 +46,12 @@ object Registry {
         entity.addBlocks(ModBlocks.THICK_POST, ModBlocks.THIN_POST)
 
         return Registry.register(BLOCK_ENTITY_TYPE, Identifier("zrm", "post_block_entity"), entity.build())
+    }
+
+    fun registerSignBlockEntities(): BlockEntityType<SignBlockEntity>? {
+        val entity = FabricBlockEntityTypeBuilder.create(::SignBlockEntity, ModBlocks.STOP_SIGN)
+
+        return Registry.register(BLOCK_ENTITY_TYPE, Identifier("zrm", "sign_block_entity"), entity.build())
     }
 
     object ModBlocks {
@@ -57,7 +63,7 @@ object Registry {
         val THIN_POST = rBlock("thin_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "thin"))
         val TRAFFIC_CONE = rBlock("traffic_cone", TrafficCone(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
 
-        //val STOP_SIGN = rBlock("stop_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
+        val STOP_SIGN = rBlock("stop_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
     }
 
     object ModItems {
@@ -76,6 +82,6 @@ object Registry {
         val THIN_POST = rItem(ModBlocks.THIN_POST, ::BlockItem, itemSettings())
         val TRAFFIC_CONE = rItem(ModBlocks.TRAFFIC_CONE, ::BlockItem, itemSettings())
 
-        //val STOP_SIGN = rItem(ModBlocks.STOP_SIGN, ::BlockItem, itemSettings())
+        val STOP_SIGN = rItem(ModBlocks.STOP_SIGN, ::BlockItem, itemSettings())
     }
 }

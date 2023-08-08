@@ -1,31 +1,38 @@
 package me.znepb.zrm.block
 
+import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry
 import me.znepb.zrm.datagen.TagProvider
+import me.znepb.zrm.datagen.TagProvider.Companion.POSTS
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.item.ItemPlacementContext
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.listener.ClientPlayPacketListener
 import net.minecraft.network.packet.Packet
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
-open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Registry.ModBlockEntities.POST_BLOCK_ENTITY, pos, state) {
+open class SignBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, pos, state) {
     var up = 0
     var down = 0
     var north = 0
     var east = 0
     var south = 0
     var west = 0
-    var footer = false
+    var signFacing = 2
+    var wall = false
+    var ctx: ItemPlacementContext? = null
+
     var hasLoaded = false
 
     init {
-        getPlacementState(pos)
+        getPlacementState(null)
     }
 
     override fun toUpdatePacket(): Packet<ClientPlayPacketListener> {
@@ -37,14 +44,7 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
     }
 
     private fun getConnectionInt(state: BlockState, dir: Direction): Int {
-        if(state.isIn(TagProvider.SIGNS)) {
-            return when(state.block) {
-                Registry.ModBlocks.THICK_POST -> 3
-                Registry.ModBlocks.POST -> 2
-                Registry.ModBlocks.THIN_POST -> 1
-                else -> 3
-            }
-        }
+        if(signFacing == dir.id) return 0
 
         if (state.isOf(Registry.ModBlocks.THICK_POST)) {
             return 3
@@ -60,18 +60,8 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
     private fun canConnect(state: BlockState?, dir: Direction): Int {
         if(state == null) return 0
 
-        return when(dir) {
-            Direction.DOWN -> {
-                val connectionInt = getConnectionInt(state, dir)
-
-                if(connectionInt > 0) {
-                    return connectionInt
-                } else if(state.isOf(Blocks.AIR)) {
-                    return 0 // floating
-                } else {
-                    return 4 // on ground
-                }
-            }
+        return when (dir) {
+            Direction.DOWN -> getConnectionInt(state, dir)
             Direction.UP -> getConnectionInt(state, dir)
             Direction.NORTH -> getConnectionInt(state, dir)
             Direction.EAST -> getConnectionInt(state, dir)
@@ -80,37 +70,65 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
             else -> 0
         }
     }
-    fun getPlacementState(pos: BlockPos) {
-        val stateDown = this.world?.getBlockState(pos.down())
-        val stateUp = this.world?.getBlockState(pos.up())
-        val stateNorth = this.world?.getBlockState(pos.north())
-        val stateEast = this.world?.getBlockState(pos.east())
-        val stateSouth = this.world?.getBlockState(pos.south())
-        val stateWest = this.world?.getBlockState(pos.west())
 
+    fun setContext(ctx: ItemPlacementContext) {
+        this.ctx = ctx
+    }
 
-        val downConn = this.canConnect(stateDown, Direction.DOWN)
-        footer = downConn == 4
-        down = downConn
+    fun getPlacementState(ctx: ItemPlacementContext?) {
+        var context = ctx
 
-        up = this.canConnect(stateUp, Direction.UP)
-        north = this.canConnect(stateNorth, Direction.NORTH)
-        south = this.canConnect(stateSouth, Direction.SOUTH)
-        east = this.canConnect(stateEast, Direction.EAST)
-        west = this.canConnect(stateWest, Direction.WEST)
+        val stateDown = world?.getBlockState(pos.down())
+        val stateUp = world?.getBlockState(pos.up())
+        val stateNorth = world?.getBlockState(pos.north())
+        val stateEast = world?.getBlockState(pos.east())
+        val stateSouth = world?.getBlockState(pos.south())
+        val stateWest = world?.getBlockState(pos.west())
+
+        if(ctx == null && this.ctx != null) context = this.ctx
+
+        if(context != null) {
+            logger.info("Placing with context")
+            val facing =  context.horizontalPlayerFacing.opposite
+            val placedOnPos = pos.offset(facing.opposite)
+            val placedOnState = world?.getBlockState(placedOnPos)
+            var isWall = true
+
+            Direction.values().forEach {
+                if(it != facing.opposite && world?.getBlockState(pos.offset(it))?.isIn(POSTS) == true) {
+                    isWall = false
+                }
+            }
+
+            if(placedOnState?.isTransparent(world, placedOnPos) == true && !placedOnState.isIn(POSTS)) {
+                isWall = false
+            }
+
+            this.signFacing = facing.id
+            this.wall = isWall
+            this.ctx = null
+        }
+
+        this.down = this.canConnect(stateDown, Direction.DOWN)
+        this.up = this.canConnect(stateUp, Direction.UP)
+        this.north = this.canConnect(stateNorth, Direction.NORTH)
+        this.east = this.canConnect(stateEast, Direction.EAST)
+        this.south = this.canConnect(stateSouth, Direction.SOUTH)
+        this.west = this.canConnect(stateWest, Direction.WEST)
         this.markDirty()
 
         this.world?.updateListeners(pos, this.cachedState, this.cachedState, Block.NOTIFY_LISTENERS)
     }
 
     public override fun writeNbt(nbt: NbtCompound) {
-        nbt.putBoolean("footer", footer)
         nbt.putInt("up", up)
         nbt.putInt("down", down)
         nbt.putInt("north", north)
         nbt.putInt("east", east)
         nbt.putInt("south", south)
         nbt.putInt("west", west)
+        nbt.putInt("facing", signFacing)
+        nbt.putBoolean("wall", wall)
 
         super.writeNbt(nbt)
     }
@@ -118,15 +136,16 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
     override fun readNbt(nbt: NbtCompound) {
         super.readNbt(nbt)
 
-        footer = nbt.getBoolean("footer")
         up = nbt.getInt("up")
         down = nbt.getInt("down")
         north = nbt.getInt("north")
         east = nbt.getInt("east")
         south = nbt.getInt("south")
         west = nbt.getInt("west")
+        signFacing = nbt.getInt("facing")
+        wall = nbt.getBoolean("wall")
 
-        this.getPlacementState(pos)
+        this.getPlacementState(null)
     }
 
     fun onTick(world: World) {
@@ -137,12 +156,14 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
         val chunkW = world.chunkManager.isChunkLoaded((pos.x / 16) - 1, pos.z / 16)
 
         if(chunk && chunkN && chunkE && chunkS && chunkW) {
-            this.getPlacementState(pos);
+            hasLoaded = false
+            this.getPlacementState(null)
         }
     }
     companion object {
-        fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: PostBlockEntity?) {
+        fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: SignBlockEntity?) {
             blockEntity?.onTick(world);
+
         }
     }
 }

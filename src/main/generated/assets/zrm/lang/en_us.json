@@ -1,5 +1,8 @@
 {
   "block.zrm.post": "Post",
+  "block.zrm.stop_sign": "Stop Sign",
+  "block.zrm.thick_post": "Thick Post",
+  "block.zrm.thin_post": "Thin Post",
   "block.zrm.traffic_cone": "Traffic Cone",
   "minecraft.itemgroup.zrm.name": "znepb's Road Mod"
 }

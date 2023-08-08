@@ -1,8 +1,11 @@
-// 1.20.1	2023-08-07T13:31:21.1312562	zrm/Model Definitions
+// 1.20.1	2023-08-08T00:52:42.3231603	zrm/Model Definitions
 c94cc825f280b138d87979ef3ba5408ca21b85fb assets\zrm\blockstates\post.json
 3c608cbb9602c3795fc147fe5eacfd76920cc429 assets\zrm\models\item\traffic_cone.json
 99673c4c8550672e39e922a4910ef5b0ccac290e assets\zrm\blockstates\traffic_cone.json
+435c58a7162a65ef5d3ce24f0a2a392a55ad3093 assets\zrm\blockstates\stop_sign.json
+cf54be61f8eb2b38f623f6f59d2d0480447d7cd9 assets\zrm\models\item\stop_sign.json
 0c45bed0c7f01d241c78abf211297c770e958e1a assets\zrm\models\item\thick_post.json
+0ef372c21415d6ddd0cd3e250c1e54457e72ffb4 assets\zrm\models\block\stop_sign.json
 53f28d300a4485f5a85428de1937351940be24b7 assets\zrm\blockstates\thick_post.json
 af5ad94d739bea4f3b57df85d2686738a6fc2459 assets\zrm\blockstates\thin_post.json
 12c048afc533925400e2135826e46b47a71fe8e1 assets\zrm\models\item\thin_post.json

@@ -7,10 +7,11 @@ import net.minecraft.util.Identifier
 
 class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output) {
     override fun generateTranslations(translationBuilder: TranslationBuilder) {
-        //translationBuilder.add(Registry.ModBlocks.THICK_POST, "Thick Post")
+        translationBuilder.add(Registry.ModBlocks.THICK_POST, "Thick Post")
         translationBuilder.add(Registry.ModBlocks.POST, "Post")
-        //translationBuilder.add(Registry.ModBlocks.THIN_POST, "Thin Post")
+        translationBuilder.add(Registry.ModBlocks.THIN_POST, "Thin Post")
         translationBuilder.add(Registry.ModBlocks.TRAFFIC_CONE, "Traffic Cone")
+        translationBuilder.add(Registry.ModBlocks.STOP_SIGN, "Stop Sign")
         translationBuilder.add(Identifier("itemgroup.zrm.name"), "znepb's Road Mod")
     }
 }

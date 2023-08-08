@@ -31,7 +31,12 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addPole(generator, Registry.ModBlocks.THICK_POST, "thick_post")
         addPole(generator, Registry.ModBlocks.THIN_POST, "thin_post")
 
-        addSign(generator, Registry.ModBlocks.STOP_SIGN, "stop_sign", "stop_sign", "back_octagon")
+        addSign(generator, Registry.ModBlocks.STOP_SIGN, "stop_sign")
+        addSign(generator, Registry.ModBlocks.STOP_SIGN_4_WAY, "stop_sign_4_way")
+        addSign(generator, Registry.ModBlocks.STOP_SIGN_AHEAD, "stop_ahead_sign")
+        addSign(generator, Registry.ModBlocks.YIELD_SIGN, "yield_sign")
+        addSign(generator, Registry.ModBlocks.YIELD_SIGN_AHEAD, "yield_ahead_sign")
+        addSign(generator, Registry.ModBlocks.SIGNAL_AHEAD, "signal_ahead")
 
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.TRAFFIC_CONE, Identifier("zrm", "block/traffic_cone")))
     }
@@ -40,14 +45,14 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         generator.blockStateCollector.accept(createSingletonBlockState(block, Identifier("zrm", "block/$name")))
     }
 
-    fun addSign(generator: BlockStateModelGenerator, block: Block, name: String, frontTexture: String, backTexture: String) {
+    fun addSign(generator: BlockStateModelGenerator, block: SignBlock, name: String) {
         generator.blockStateCollector.accept(createSingletonBlockState(block, Identifier("zrm", "block/$name")))
 
         signModel.upload(
             block,
             TextureMap()
-                .put(TextureKey.FRONT, Identifier("zrm", "block/${frontTexture}"))
-                .put(TextureKey.BACK, Identifier("zrm","block/${backTexture}")),
+                .put(TextureKey.FRONT, Identifier("zrm", "block/${block.frontTexture}"))
+                .put(TextureKey.BACK, Identifier("zrm","block/${block.backTexture}")),
             generator.modelCollector
         )
     }

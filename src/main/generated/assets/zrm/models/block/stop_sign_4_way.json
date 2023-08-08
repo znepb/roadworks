@@ -1,0 +1,7 @@
+{
+  "parent": "zrm:block/sign_base",
+  "textures": {
+    "back": "zrm:block/back_4_way",
+    "front": "zrm:block/4_way"
+  }
+}

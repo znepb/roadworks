@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
-    "zrm:stop_sign"
+    "zrm:stop_sign",
+    "zrm:stop_sign_4_way",
+    "zrm:stop_ahead_sign",
+    "zrm:yield_sign",
+    "zrm:yield_ahead_sign",
+    "zrm:signal_ahead"
   ]
 }

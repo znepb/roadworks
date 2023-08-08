@@ -44,6 +44,22 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
         val EMPTY_CUBOID = ModelPart.Cuboid(0, 0, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, false, 0F, 0F, ALL_DIRECTIONS);
     }
 
+    private fun getSignFrontTexture(entity: SignBlockEntity): String? {
+        if(entity.cachedState.block is SignBlock) {
+            return (entity.cachedState.block as SignBlock).frontTexture
+        }
+
+        return null
+    }
+
+    private fun getSignBackTexture(entity: SignBlockEntity): String? {
+        if(entity.cachedState.block is SignBlock) {
+            return (entity.cachedState.block as SignBlock).backTexture
+        }
+
+        return null
+    }
+
     private fun addSideThickness(direction: Direction, connectionSize: Int, list: MutableList<ModelPart.Cuboid>) {
         if(connectionSize == 0) return
 
@@ -99,6 +115,9 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
             .coerceAtLeast(blockEntity.west)
 
         val baseCuboids = mutableListOf<ModelPart.Cuboid>()
+
+        val frontTexture = Identifier("zrm", "textures/block/${getSignFrontTexture(blockEntity)}.png")
+        val backTexture = Identifier("zrm", "textures/block/${getSignBackTexture(blockEntity)}.png")
 
         if(!blockEntity.wall) {
             val center = when(maxThickness) {
@@ -157,10 +176,10 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
             },
             Math.toRadians(180.0).toFloat()
         )
-        front.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(SIGN_FRONT)), light, overlay)
+        front.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(frontTexture)), light, overlay)
 
         val back = ModelPart(mutableListOf(signObjectBack), Collections.emptyMap())
         back.copyTransform(front)
-        back.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(SIGN_BACK)), light, overlay)
+        back.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(backTexture)), light, overlay)
     }
 }

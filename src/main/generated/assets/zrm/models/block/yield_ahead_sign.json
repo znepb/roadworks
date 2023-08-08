@@ -1,0 +1,7 @@
+{
+  "parent": "zrm:block/sign_base",
+  "textures": {
+    "back": "zrm:block/back_diamond",
+    "front": "zrm:block/yield_ahead"
+  }
+}

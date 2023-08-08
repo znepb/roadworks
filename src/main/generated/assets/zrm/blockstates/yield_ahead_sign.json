@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "zrm:block/yield_ahead_sign"
+    }
+  }
+}

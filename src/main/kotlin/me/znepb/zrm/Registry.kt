@@ -6,9 +6,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
-import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -18,11 +16,10 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
-import net.minecraft.util.math.BlockPos
 
 object Registry {
     private val itemGroup = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier("zrm"))
-    private val items = mutableListOf<Item>();
+    private val items = mutableListOf<Item>()
 
     internal fun init() {
         listOf(ModBlocks, ModItems)
@@ -50,27 +47,39 @@ object Registry {
 
     fun registerSignBlockEntities(): BlockEntityType<SignBlockEntity>? {
         val entity = FabricBlockEntityTypeBuilder.create(::SignBlockEntity, ModBlocks.STOP_SIGN)
+        entity.addBlocks(ModBlocks.STOP_SIGN_4_WAY, ModBlocks.STOP_SIGN_AHEAD, ModBlocks.YIELD_SIGN, ModBlocks.YIELD_SIGN_AHEAD, ModBlocks.SIGNAL_AHEAD)
 
         return Registry.register(BLOCK_ENTITY_TYPE, Identifier("zrm", "sign_block_entity"), entity.build())
     }
 
     object ModBlocks {
-        fun<T: Block> rBlock(name: String, value: T): T =
+        private fun<T: Block> rBlock(name: String, value: T): T =
             Registry.register(BLOCK, Identifier("zrm", name), value)
 
         val THICK_POST = rBlock("thick_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "thick"))
         val POST = rBlock("post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "medium"))
         val THIN_POST = rBlock("thin_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "thin"))
+
+        //
+
         val TRAFFIC_CONE = rBlock("traffic_cone", TrafficCone(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
 
-        val STOP_SIGN = rBlock("stop_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
+        //
+
+        val STOP_SIGN = rBlock("stop_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_sign", "back_octagon"))
+        val STOP_SIGN_4_WAY = rBlock("stop_sign_4_way", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "4_way", "back_4_way"))
+        val STOP_SIGN_AHEAD = rBlock("stop_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_ahead", "back_diamond"))
+        val YIELD_SIGN = rBlock("yield_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield", "back_yield"))
+        val YIELD_SIGN_AHEAD = rBlock("yield_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield_ahead", "back_diamond"))
+        val SIGNAL_AHEAD = rBlock("signal_ahead", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "signal_ahead", "back_diamond"))
+
     }
 
     object ModItems {
-        fun itemSettings(): FabricItemSettings = FabricItemSettings()
+        private fun itemSettings(): FabricItemSettings = FabricItemSettings()
         fun<T: Item> rItem(name: String, value: T): T =
             Registry.register(ITEM, Identifier("zrm", name), value).also { items.add(it) }
-        fun<B: Block, I: Item> rItem(parent:B, supplier: (B, Item.Settings) -> I, settings: Item.Settings = itemSettings()): I {
+        private fun<B: Block, I: Item> rItem(parent:B, supplier: (B, Item.Settings) -> I, settings: Item.Settings = itemSettings()): I {
             val item = Registry.register(ITEM, BLOCK.getId(parent), supplier(parent, settings))
             Item.BLOCK_ITEMS[parent] = item
             items.add(item)
@@ -83,5 +92,10 @@ object Registry {
         val TRAFFIC_CONE = rItem(ModBlocks.TRAFFIC_CONE, ::BlockItem, itemSettings())
 
         val STOP_SIGN = rItem(ModBlocks.STOP_SIGN, ::BlockItem, itemSettings())
+        val STOP_SIGN_4_WAY = rItem(ModBlocks.STOP_SIGN_4_WAY, ::BlockItem, itemSettings())
+        val STOP_SIGN_AHEAD = rItem(ModBlocks.STOP_SIGN_AHEAD, ::BlockItem, itemSettings())
+        val YIELD_SIGN = rItem(ModBlocks.YIELD_SIGN, ::BlockItem, itemSettings())
+        val YIELD_SIGN_AHEAD = rItem(ModBlocks.YIELD_SIGN_AHEAD, ::BlockItem, itemSettings())
+        val SIGNAL_AHEAD = rItem(ModBlocks.SIGNAL_AHEAD, ::BlockItem, itemSettings())
     }
 }

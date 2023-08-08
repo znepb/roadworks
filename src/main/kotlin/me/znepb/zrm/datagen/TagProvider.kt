@@ -24,6 +24,11 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
 
         getOrCreateTagBuilder(SIGNS)
             .add(Registry.ModBlocks.STOP_SIGN)
+            .add(Registry.ModBlocks.STOP_SIGN_4_WAY)
+            .add(Registry.ModBlocks.STOP_SIGN_AHEAD)
+            .add(Registry.ModBlocks.YIELD_SIGN)
+            .add(Registry.ModBlocks.YIELD_SIGN_AHEAD)
+            .add(Registry.ModBlocks.SIGNAL_AHEAD)
     }
 }
 

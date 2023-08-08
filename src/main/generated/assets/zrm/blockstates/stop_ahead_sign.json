@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "zrm:block/stop_ahead_sign"
+    }
+  }
+}

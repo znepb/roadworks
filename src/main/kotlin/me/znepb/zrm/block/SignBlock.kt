@@ -15,7 +15,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-class SignBlock(settings: Settings): BlockWithEntity(settings), BlockEntityProvider {
+class SignBlock(settings: Settings, val frontTexture: String, val backTexture: String): BlockWithEntity(settings), BlockEntityProvider {
     var placementContext: ItemPlacementContext? = null
     companion object {
         val SIGN_SHAPE_WALL_NORTH = createCuboidShape(0.0, 0.0, 15.5, 16.0, 16.0, 16.0)

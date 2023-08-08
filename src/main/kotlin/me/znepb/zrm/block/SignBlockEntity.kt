@@ -6,7 +6,6 @@ import me.znepb.zrm.datagen.TagProvider
 import me.znepb.zrm.datagen.TagProvider.Companion.POSTS
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.nbt.NbtCompound
@@ -15,7 +14,6 @@ import net.minecraft.network.packet.Packet
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
 open class SignBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, pos, state) {
@@ -43,7 +41,7 @@ open class SignBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
         return createNbt()
     }
 
-    private fun getConnectionInt(state: BlockState, dir: Direction): Int {
+    private fun getConnectionInt(state: BlockState, entity: BlockEntity?, dir: Direction): Int {
         if(signFacing == dir.id) return 0
 
         if (state.isOf(Registry.ModBlocks.THICK_POST)) {
@@ -54,19 +52,23 @@ open class SignBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
             return 1
         }
 
+        if(state.isIn(TagProvider.SIGNS) && entity is SignBlockEntity) {
+            return getThickest(entity)
+        }
+
         return 0
     }
 
-    private fun canConnect(state: BlockState?, dir: Direction): Int {
+    private fun canConnect(state: BlockState?, entity: BlockEntity?, dir: Direction): Int {
         if(state == null) return 0
 
         return when (dir) {
-            Direction.DOWN -> getConnectionInt(state, dir)
-            Direction.UP -> getConnectionInt(state, dir)
-            Direction.NORTH -> getConnectionInt(state, dir)
-            Direction.EAST -> getConnectionInt(state, dir)
-            Direction.SOUTH -> getConnectionInt(state, dir)
-            Direction.WEST -> getConnectionInt(state, dir)
+            Direction.DOWN -> getConnectionInt(state, entity, dir)
+            Direction.UP -> getConnectionInt(state, entity, dir)
+            Direction.NORTH -> getConnectionInt(state, entity, dir)
+            Direction.EAST -> getConnectionInt(state, entity, dir)
+            Direction.SOUTH -> getConnectionInt(state, entity, dir)
+            Direction.WEST -> getConnectionInt(state, entity, dir)
             else -> 0
         }
     }
@@ -84,6 +86,13 @@ open class SignBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
         val stateEast = world?.getBlockState(pos.east())
         val stateSouth = world?.getBlockState(pos.south())
         val stateWest = world?.getBlockState(pos.west())
+
+        val entityDown = world?.getBlockEntity(pos.down())
+        val entityUp = world?.getBlockEntity(pos.up())
+        val entityNorth = world?.getBlockEntity(pos.north())
+        val entityEast = world?.getBlockEntity(pos.east())
+        val entitySouth = world?.getBlockEntity(pos.south())
+        val entityWest = world?.getBlockEntity(pos.west())
 
         if(ctx == null && this.ctx != null) context = this.ctx
 
@@ -109,12 +118,12 @@ open class SignBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
             this.ctx = null
         }
 
-        this.down = this.canConnect(stateDown, Direction.DOWN)
-        this.up = this.canConnect(stateUp, Direction.UP)
-        this.north = this.canConnect(stateNorth, Direction.NORTH)
-        this.east = this.canConnect(stateEast, Direction.EAST)
-        this.south = this.canConnect(stateSouth, Direction.SOUTH)
-        this.west = this.canConnect(stateWest, Direction.WEST)
+        this.down = this.canConnect(stateDown, entityDown, Direction.DOWN)
+        this.up = this.canConnect(stateUp, entityUp, Direction.UP)
+        this.north = this.canConnect(stateNorth, entityNorth, Direction.NORTH)
+        this.east = this.canConnect(stateEast, entityEast, Direction.EAST)
+        this.south = this.canConnect(stateSouth, entitySouth, Direction.SOUTH)
+        this.west = this.canConnect(stateWest, entityWest, Direction.WEST)
         this.markDirty()
 
         this.world?.updateListeners(pos, this.cachedState, this.cachedState, Block.NOTIFY_LISTENERS)
@@ -163,7 +172,14 @@ open class SignBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
     companion object {
         fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: SignBlockEntity?) {
             blockEntity?.onTick(world);
+        }
 
+        fun getThickest(entity: SignBlockEntity): Int {
+            return entity.down.coerceAtLeast(entity.up)
+                .coerceAtLeast(entity.north)
+                .coerceAtLeast(entity.east)
+                .coerceAtLeast(entity.south)
+                .coerceAtLeast(entity.west)
         }
     }
 }

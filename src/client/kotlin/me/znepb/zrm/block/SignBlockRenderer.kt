@@ -107,12 +107,7 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
         light: Int,
         overlay: Int
     ) {
-        val maxThickness = blockEntity.up
-            .coerceAtLeast(blockEntity.down)
-            .coerceAtLeast(blockEntity.north)
-            .coerceAtLeast(blockEntity.east)
-            .coerceAtLeast(blockEntity.south)
-            .coerceAtLeast(blockEntity.west)
+        val maxThickness = SignBlockEntity.getThickest(blockEntity)
 
         val baseCuboids = mutableListOf<ModelPart.Cuboid>()
 

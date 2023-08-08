@@ -106,12 +106,7 @@ class SignBlock(settings: Settings, val frontTexture: String, val backTexture: S
     private fun getShape(world: BlockView, pos: BlockPos): VoxelShape {
         val blockEntity = world.getBlockEntity(pos) as SignBlockEntity?
             ?: return VoxelShapes.empty()
-        val maxThickness = blockEntity.up
-            .coerceAtLeast(blockEntity.down)
-            .coerceAtLeast(blockEntity.north)
-            .coerceAtLeast(blockEntity.east)
-            .coerceAtLeast(blockEntity.south)
-            .coerceAtLeast(blockEntity.west)
+        val maxThickness = SignBlockEntity.getThickest(blockEntity)
 
         var signShape = if(blockEntity.wall) {
             when (blockEntity.signFacing) {

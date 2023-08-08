@@ -1,6 +1,5 @@
 package me.znepb.zrm.block
 
-import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity

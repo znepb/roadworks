@@ -1,10 +1,5 @@
 package me.znepb.zrm.block
 
-import me.znepb.zrm.Main.logger
-import me.znepb.zrm.Registry
-import me.znepb.zrm.block.PostBlockRenderer
-import net.minecraft.block.BlockState
-import net.minecraft.client.model.Model
 import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
@@ -13,22 +8,14 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
-import org.joml.Vector3f
 import java.util.*
-import kotlin.math.sign
-
 
 class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : BlockEntityRenderer<SignBlockEntity> {
     companion object {
-        val ALL_DIRECTIONS: Set<Direction> = EnumSet.allOf(Direction::class.java)
         val NORTH_ONLY = EnumSet.of(Direction.NORTH)
-        val EAST_ONLY = EnumSet.of(Direction.EAST)
         val SOUTH_ONLY = EnumSet.of(Direction.SOUTH)
-        val WEST_ONLY = EnumSet.of(Direction.WEST)
 
         val TEXTURE = Identifier("zrm:textures/block/pole.png")
-        val SIGN_FRONT = Identifier("zrm:textures/block/stop_sign.png")
-        val SIGN_BACK = Identifier("zrm:textures/block/back_octagon.png")
 
         val WALL_SIGN_FRONT = ModelPart.Cuboid(0, 0, 0F, 0F, 15.99F, 16F, 16F, 0F, 0F, 0F, 0F, false, 16F, 16F, NORTH_ONLY)
         val POST_SIGN_NONE_FRONT = ModelPart.Cuboid(0, 0, 0F, 0F, 8F, 16F, 16F, 0F, 0F, 0F, 0F, false, 16F, 16F, NORTH_ONLY)
@@ -40,8 +27,6 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
         val POST_SIGN_THIN_BACK = ModelPart.Cuboid(0, 0, 0F, 0F, 6.99F, 16F, 16F, 0F, 0F, 0F, 0F, false, 16F, 16F, SOUTH_ONLY)
         val POST_SIGN_MEDIUM_BACK = ModelPart.Cuboid(0, 0, 0F, 0F, 5.99F, 16F, 16F, 0F, 0F, 0F, 0F, false, 16F, 16F, SOUTH_ONLY)
         val POST_SIGN_THICK_BACK = ModelPart.Cuboid(0, 0, 0F, 0F, 4.99F, 16F, 16F, 0F, 0F, 0F, 0F, false, 16F, 16F, SOUTH_ONLY)
-
-        val EMPTY_CUBOID = ModelPart.Cuboid(0, 0, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, false, 0F, 0F, ALL_DIRECTIONS);
     }
 
     private fun getSignFrontTexture(entity: SignBlockEntity): String? {

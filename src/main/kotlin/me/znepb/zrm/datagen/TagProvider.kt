@@ -9,7 +9,6 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import java.util.concurrent.CompletableFuture
 
-
 class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture<WrapperLookup>) : BlockTagProvider(output, completableFuture) {
     companion object {
         val POSTS = TagKey.of(RegistryKeys.BLOCK, Identifier("zrm", "posts"))

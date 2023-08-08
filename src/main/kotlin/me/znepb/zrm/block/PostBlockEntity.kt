@@ -22,7 +22,6 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
     var south = 0
     var west = 0
     var footer = false
-    var hasLoaded = false
 
     init {
         getPlacementState(pos)

@@ -11,6 +11,11 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 
 class TrafficCone(settings: Settings): Block(settings), Equipment {
+    companion object {
+        val SHAPE = createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
+
+    }
+
     override fun isTransparent(state: BlockState?, world: BlockView?, pos: BlockPos?): Boolean {
         return true
     }
@@ -20,7 +25,7 @@ class TrafficCone(settings: Settings): Block(settings), Equipment {
     }
 
     override fun getCullingShape(state: BlockState?, world: BlockView?, pos: BlockPos?): VoxelShape {
-        return createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)
+        return SHAPE
     }
 
     override fun getCollisionShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape {
@@ -28,7 +33,7 @@ class TrafficCone(settings: Settings): Block(settings), Equipment {
     }
 
     override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape {
-        return createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)
+        return SHAPE
     }
 
     override fun getSlotType(): EquipmentSlot {

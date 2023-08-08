@@ -12,7 +12,6 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import java.util.*
 
-
 class PostBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : BlockEntityRenderer<PostBlockEntity> {
     companion object {
         val ALL_DIRECTIONS: Set<Direction> = EnumSet.allOf(Direction::class.java)

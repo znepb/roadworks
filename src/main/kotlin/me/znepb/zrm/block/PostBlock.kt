@@ -14,7 +14,6 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-
 open class PostBlock(
     settings: Settings,
     val size: String) : BlockWithEntity(settings), BlockEntityProvider

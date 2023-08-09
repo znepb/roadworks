@@ -1,6 +1,7 @@
 package me.znepb.zrm.block
 
 import me.znepb.zrm.Registry
+import me.znepb.zrm.block.entity.PostBlockEntity
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
@@ -58,10 +59,6 @@ open class PostBlock(
 
     override fun isTransparent(state: BlockState?, world: BlockView?, pos: BlockPos?): Boolean {
         return true
-    }
-
-    override fun getRenderType(state: BlockState?): BlockRenderType {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED
     }
 
     override fun getCollisionShape(

@@ -1,4 +1,6 @@
 {
+  "block.zrm.channeler": "Channeler",
+  "block.zrm.drum": "Drum",
   "block.zrm.post": "Post",
   "block.zrm.signal_ahead": "Signal Ahead Sign",
   "block.zrm.stop_ahead_sign": "Stop Ahead Sign",
@@ -9,5 +11,5 @@
   "block.zrm.traffic_cone": "Traffic Cone",
   "block.zrm.yield_ahead_sign": "Yield Ahead Sign",
   "block.zrm.yield_sign": "Yield Sign",
-  "minecraft.itemgroup.zrm.name": "znepb's Road Mod"
+  "itemGroup.zrm.main": "znepb's Road Mod"
 }

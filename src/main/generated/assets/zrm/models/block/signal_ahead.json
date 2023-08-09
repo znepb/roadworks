@@ -1,7 +1,7 @@
 {
   "parent": "zrm:block/sign_base",
   "textures": {
-    "back": "zrm:block/back_diamond",
-    "front": "zrm:block/signal_ahead"
+    "back": "zrm:block/signs/back_diamond",
+    "front": "zrm:block/signs/signal_ahead"
   }
 }

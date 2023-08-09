@@ -5,9 +5,13 @@ import me.znepb.zrm.block.SignBlock
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
+import net.minecraft.block.enums.BlockHalf
 import net.minecraft.data.client.*
 import net.minecraft.data.client.BlockStateModelGenerator.createSingletonBlockState
+import net.minecraft.data.client.VariantSettings.Rotation
+import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.Direction
 import java.util.*
 
 class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
@@ -31,21 +35,39 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addSign(generator, Registry.ModBlocks.YIELD_SIGN_AHEAD, "yield_ahead_sign")
         addSign(generator, Registry.ModBlocks.SIGNAL_AHEAD, "signal_ahead")
 
+        addDoubleHighConeBlock(generator, Registry.ModBlocks.CHANNELER, "channeler")
+        addDoubleHighConeBlock(generator, Registry.ModBlocks.DRUM, "drum")
+
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.TRAFFIC_CONE, Identifier("zrm", "block/traffic_cone")))
     }
 
-    fun addPole(generator: BlockStateModelGenerator, block: Block, name: String) {
+    private fun addDoubleHighConeBlock(generator: BlockStateModelGenerator, block: Block, modelName: String) {
+        generator.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(block)
+                .coordinate(BlockStateVariantMap.create(Properties.HORIZONTAL_FACING)
+                    .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R0))
+                    .register(Direction.EAST, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90))
+                    .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R180))
+                    .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R270))
+                ).coordinate(BlockStateVariantMap.create(Properties.BLOCK_HALF)
+                    .register(BlockHalf.BOTTOM, BlockStateVariant.create().put(VariantSettings.MODEL, Identifier("zrm", "block/$modelName")))
+                    .register(BlockHalf.TOP, BlockStateVariant.create().put(VariantSettings.MODEL, Identifier("zrm", "block/$modelName")))
+                )
+        )
+    }
+
+    private fun addPole(generator: BlockStateModelGenerator, block: Block, name: String) {
         generator.blockStateCollector.accept(createSingletonBlockState(block, Identifier("zrm", "block/$name")))
     }
 
-    fun addSign(generator: BlockStateModelGenerator, block: SignBlock, name: String) {
+    private fun addSign(generator: BlockStateModelGenerator, block: SignBlock, name: String) {
         generator.blockStateCollector.accept(createSingletonBlockState(block, Identifier("zrm", "block/$name")))
 
         signModel.upload(
             block,
             TextureMap()
-                .put(TextureKey.FRONT, Identifier("zrm", "block/${block.frontTexture}"))
-                .put(TextureKey.BACK, Identifier("zrm","block/${block.backTexture}")),
+                .put(TextureKey.FRONT, Identifier("zrm", "block/signs/${block.frontTexture}"))
+                .put(TextureKey.BACK, Identifier("zrm","block/signs/${block.backTexture}")),
             generator.modelCollector
         )
     }

@@ -1,7 +1,7 @@
 {
   "parent": "zrm:block/sign_base",
   "textures": {
-    "back": "zrm:block/back_octagon",
-    "front": "zrm:block/stop_sign"
+    "back": "zrm:block/signs/back_octagon",
+    "front": "zrm:block/signs/stop_sign"
   }
 }

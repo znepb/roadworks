@@ -12,8 +12,7 @@ import net.minecraft.world.BlockView
 
 class TrafficCone(settings: Settings): Block(settings), Equipment {
     companion object {
-        val SHAPE = createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
-
+        val SHAPE = createCuboidShape(2.5, 0.0, 2.5, 13.5, 15.0, 13.5)
     }
 
     override fun isTransparent(state: BlockState?, world: BlockView?, pos: BlockPos?): Boolean {
@@ -29,7 +28,7 @@ class TrafficCone(settings: Settings): Block(settings), Equipment {
     }
 
     override fun getCollisionShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape {
-        return createCuboidShape(2.0, 0.0, 2.0, 14.0, 24.0, 14.0)
+        return createCuboidShape(2.5, 0.0, 2.5, 13.5, 24.0, 13.5)
     }
 
     override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape {

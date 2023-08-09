@@ -12,6 +12,8 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.THIN_POST, "Thin Post")
 
         translationBuilder.add(Registry.ModBlocks.TRAFFIC_CONE, "Traffic Cone")
+        translationBuilder.add(Registry.ModBlocks.CHANNELER, "Channeler")
+        translationBuilder.add(Registry.ModBlocks.DRUM, "Drum")
 
         translationBuilder.add(Registry.ModBlocks.STOP_SIGN, "Stop Sign")
         translationBuilder.add(Registry.ModBlocks.STOP_SIGN_4_WAY, "4-way Stop Sign")
@@ -20,6 +22,6 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.YIELD_SIGN_AHEAD, "Yield Ahead Sign")
         translationBuilder.add(Registry.ModBlocks.SIGNAL_AHEAD, "Signal Ahead Sign")
 
-        translationBuilder.add(Identifier("itemgroup.zrm.name"), "znepb's Road Mod")
+        translationBuilder.add("itemGroup.zrm.main", "znepb's Road Mod")
     }
 }

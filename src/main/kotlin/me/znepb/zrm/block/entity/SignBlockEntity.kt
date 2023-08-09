@@ -1,4 +1,4 @@
-package me.znepb.zrm.block
+package me.znepb.zrm.block.entity
 
 import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry

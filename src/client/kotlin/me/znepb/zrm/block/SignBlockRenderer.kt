@@ -1,5 +1,6 @@
 package me.znepb.zrm.block
 
+import me.znepb.zrm.block.entity.SignBlockEntity
 import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
@@ -96,8 +97,8 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
 
         val baseCuboids = mutableListOf<ModelPart.Cuboid>()
 
-        val frontTexture = Identifier("zrm", "textures/block/${getSignFrontTexture(blockEntity)}.png")
-        val backTexture = Identifier("zrm", "textures/block/${getSignBackTexture(blockEntity)}.png")
+        val frontTexture = Identifier("zrm", "textures/block/signs/${getSignFrontTexture(blockEntity)}.png")
+        val backTexture = Identifier("zrm", "textures/block/signs/${getSignBackTexture(blockEntity)}.png")
 
         if(!blockEntity.wall) {
             val center = when(maxThickness) {

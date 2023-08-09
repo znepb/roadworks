@@ -1,6 +1,7 @@
 package me.znepb.zrm.block
 
 import me.znepb.zrm.Registry
+import me.znepb.zrm.block.entity.SignBlockEntity
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker

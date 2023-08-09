@@ -1,6 +1,7 @@
 package me.znepb.zrm
 
 import me.znepb.zrm.block.*
+import me.znepb.zrm.block.entity.*
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
@@ -10,6 +11,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries.*
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -26,6 +28,7 @@ object Registry {
         Registry.register(
             ITEM_GROUP, itemGroup, FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.zrm.main"))
+                .icon{ ItemStack(ModItems.TRAFFIC_CONE) }
                 .entries { _, entries ->
                     items.forEach(entries::add)
                 }
@@ -63,6 +66,8 @@ object Registry {
         //
 
         val TRAFFIC_CONE = rBlock("traffic_cone", TrafficCone(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
+        val CHANNELER = rBlock("channeler", ChannelerBlock(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
+        val DRUM = rBlock("drum", DrumBlock(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
 
         //
 
@@ -89,7 +94,10 @@ object Registry {
         val THICK_POST = rItem(ModBlocks.THICK_POST, ::BlockItem, itemSettings())
         val POST = rItem(ModBlocks.POST, ::BlockItem, itemSettings())
         val THIN_POST = rItem(ModBlocks.THIN_POST, ::BlockItem, itemSettings())
+
         val TRAFFIC_CONE = rItem(ModBlocks.TRAFFIC_CONE, ::BlockItem, itemSettings())
+        val CHANNELER = rItem(ModBlocks.CHANNELER, ::BlockItem, itemSettings())
+        val DRUM = rItem(ModBlocks.DRUM, ::BlockItem, itemSettings())
 
         val STOP_SIGN = rItem(ModBlocks.STOP_SIGN, ::BlockItem, itemSettings())
         val STOP_SIGN_4_WAY = rItem(ModBlocks.STOP_SIGN_4_WAY, ::BlockItem, itemSettings())

@@ -1,6 +1,7 @@
 package me.znepb.zrm.block
 
 import me.znepb.zrm.Registry
+import me.znepb.zrm.block.entity.PostBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.RenderLayer

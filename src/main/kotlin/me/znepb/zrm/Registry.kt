@@ -50,7 +50,14 @@ object Registry {
 
     fun registerSignBlockEntities(): BlockEntityType<SignBlockEntity>? {
         val entity = FabricBlockEntityTypeBuilder.create(::SignBlockEntity, ModBlocks.STOP_SIGN)
-        entity.addBlocks(ModBlocks.STOP_SIGN_4_WAY, ModBlocks.STOP_SIGN_AHEAD, ModBlocks.YIELD_SIGN, ModBlocks.YIELD_SIGN_AHEAD, ModBlocks.SIGNAL_AHEAD)
+        entity.addBlocks(
+            ModBlocks.STOP_SIGN_4_WAY,
+            ModBlocks.STOP_SIGN_AHEAD,
+            ModBlocks.YIELD_SIGN,
+            ModBlocks.YIELD_SIGN_AHEAD,
+            ModBlocks.SIGNAL_AHEAD,
+            ModBlocks.ROAD_WORK_AHEAD
+        )
 
         return Registry.register(BLOCK_ENTITY_TYPE, Identifier("zrm", "sign_block_entity"), entity.build())
     }
@@ -76,7 +83,8 @@ object Registry {
         val STOP_SIGN_AHEAD = rBlock("stop_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_ahead", "back_diamond"))
         val YIELD_SIGN = rBlock("yield_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield", "back_yield"))
         val YIELD_SIGN_AHEAD = rBlock("yield_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield_ahead", "back_diamond"))
-        val SIGNAL_AHEAD = rBlock("signal_ahead", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "signal_ahead", "back_diamond"))
+        val SIGNAL_AHEAD = rBlock("signal_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "signal_ahead", "back_diamond"))
+        val ROAD_WORK_AHEAD = rBlock("road_work_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "road_work_ahead", "back_diamond"))
 
     }
 
@@ -105,5 +113,7 @@ object Registry {
         val YIELD_SIGN = rItem(ModBlocks.YIELD_SIGN, ::BlockItem, itemSettings())
         val YIELD_SIGN_AHEAD = rItem(ModBlocks.YIELD_SIGN_AHEAD, ::BlockItem, itemSettings())
         val SIGNAL_AHEAD = rItem(ModBlocks.SIGNAL_AHEAD, ::BlockItem, itemSettings())
+        val ROAD_WORK_AHEAD = rItem(ModBlocks.ROAD_WORK_AHEAD, ::BlockItem, itemSettings())
+
     }
 }

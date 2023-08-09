@@ -34,6 +34,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addSign(generator, Registry.ModBlocks.YIELD_SIGN, "yield_sign")
         addSign(generator, Registry.ModBlocks.YIELD_SIGN_AHEAD, "yield_ahead_sign")
         addSign(generator, Registry.ModBlocks.SIGNAL_AHEAD, "signal_ahead")
+        addSign(generator, Registry.ModBlocks.ROAD_WORK_AHEAD, "road_work_ahead")
 
         addDoubleHighConeBlock(generator, Registry.ModBlocks.CHANNELER, "channeler")
         addDoubleHighConeBlock(generator, Registry.ModBlocks.DRUM, "drum")

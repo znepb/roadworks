@@ -21,6 +21,7 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.YIELD_SIGN, "Yield Sign")
         translationBuilder.add(Registry.ModBlocks.YIELD_SIGN_AHEAD, "Yield Ahead Sign")
         translationBuilder.add(Registry.ModBlocks.SIGNAL_AHEAD, "Signal Ahead Sign")
+        translationBuilder.add(Registry.ModBlocks.ROAD_WORK_AHEAD, "Road Work Ahead Sign")
 
         translationBuilder.add("itemGroup.zrm.main", "znepb's Road Mod")
     }

@@ -1,0 +1,7 @@
+{
+  "parent": "zrm:block/sign_base",
+  "textures": {
+    "back": "zrm:block/signs/back_diamond",
+    "front": "zrm:block/signs/road_work_ahead"
+  }
+}

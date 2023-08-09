@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "zrm:block/road_work_ahead"
+    }
+  }
+}

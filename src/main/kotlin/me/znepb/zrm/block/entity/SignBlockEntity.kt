@@ -175,11 +175,18 @@ open class SignBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
         }
 
         fun getThickest(entity: SignBlockEntity): Int {
-            return entity.down.coerceAtLeast(entity.up)
-                .coerceAtLeast(entity.north)
-                .coerceAtLeast(entity.east)
-                .coerceAtLeast(entity.south)
-                .coerceAtLeast(entity.west)
+            val up = if (entity.signFacing == Direction.UP.id) 0 else entity.up
+            val down = if (entity.signFacing == Direction.DOWN.id) 0 else entity.down
+            val north = if (entity.signFacing == Direction.NORTH.id) 0 else entity.north
+            val east = if (entity.signFacing == Direction.EAST.id) 0 else entity.east
+            val south = if (entity.signFacing == Direction.SOUTH.id) 0 else entity.south
+            val west = if (entity.signFacing == Direction.WEST.id) 0 else entity.west
+
+            return up.coerceAtLeast(down)
+                .coerceAtLeast(north)
+                .coerceAtLeast(east)
+                .coerceAtLeast(south)
+                .coerceAtLeast(west)
         }
     }
 }

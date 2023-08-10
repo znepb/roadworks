@@ -1,8 +1,13 @@
-package me.znepb.zrm.block
+package me.znepb.zrm.render
 
+import me.znepb.zrm.Registry
+import me.znepb.zrm.block.SignBlock
 import me.znepb.zrm.block.entity.SignBlockEntity
+import net.minecraft.block.BlockState
 import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.RenderLayer
+import net.minecraft.client.render.TexturedRenderLayers
+import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
@@ -46,41 +51,28 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
         return null
     }
 
-    private fun addSideThickness(direction: Direction, connectionSize: Int, list: MutableList<ModelPart.Cuboid>) {
+    private fun addSideThickness(
+        blockEntity: SignBlockEntity,
+        direction: Direction,
+        connectionSize: Int,
+        matrices: MatrixStack,
+        buffer: VertexConsumer,
+        light: Int,
+        overlay: Int,
+    ) {
         if(connectionSize == 0) return
+        if(direction.id == blockEntity.signFacing) return
 
-        when(connectionSize) {
-            1 -> {
-                list.add(when(direction) {
-                    Direction.EAST -> PostBlockRenderer.EAST_THIN
-                    Direction.SOUTH -> PostBlockRenderer.SOUTH_THIN
-                    Direction.WEST -> PostBlockRenderer.WEST_THIN
-                    Direction.UP -> PostBlockRenderer.UP_THIN
-                    Direction.DOWN -> PostBlockRenderer.DOWN_THIN
-                    else -> PostBlockRenderer.NORTH_THIN
-                })
-            }
-            2 -> {
-                list.add(when(direction) {
-                    Direction.EAST -> PostBlockRenderer.EAST_MEDIUM
-                    Direction.SOUTH -> PostBlockRenderer.SOUTH_MEDIUM
-                    Direction.WEST -> PostBlockRenderer.WEST_MEDIUM
-                    Direction.UP -> PostBlockRenderer.UP_MEDIUM
-                    Direction.DOWN -> PostBlockRenderer.DOWN_MEDIUM
-                    else -> PostBlockRenderer.NORTH_MEDIUM
-                })
-            }
-            3 -> {
-                list.add(when(direction) {
-                    Direction.EAST -> PostBlockRenderer.EAST_THICK
-                    Direction.SOUTH -> PostBlockRenderer.SOUTH_THICK
-                    Direction.WEST -> PostBlockRenderer.WEST_THICK
-                    Direction.UP -> PostBlockRenderer.UP_THICK
-                    Direction.DOWN -> PostBlockRenderer.DOWN_THICK
-                    else -> PostBlockRenderer.NORTH_THICK
-                })
-            }
+        val sizeModel = when(connectionSize) {
+            1 -> PostBlockRenderer.POST_THIN_EXT_MODEL
+            3 -> PostBlockRenderer.POST_THICK_EXT_MODEL
+            else -> PostBlockRenderer.POST_MEDIUM_EXT_MODEL
         }
+
+        matrices.push()
+        matrices.multiply(direction.rotationQuaternion, 0.5F, 0.5F, 0.5F)
+        RenderUtils.renderModel(matrices, buffer, light, overlay, sizeModel, null)
+        matrices.pop()
     }
 
     // TODO: bake models? e.g., generate once then store in a variable until any of the nbt vars are changed
@@ -93,29 +85,32 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
         light: Int,
         overlay: Int
     ) {
-        val maxThickness = SignBlockEntity.getThickest(blockEntity)
+        val buffer: VertexConsumer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntityTranslucentCull())
 
+        val maxThickness = SignBlockEntity.getThickest(blockEntity)
         val baseCuboids = mutableListOf<ModelPart.Cuboid>()
 
         val frontTexture = Identifier("zrm", "textures/block/signs/${getSignFrontTexture(blockEntity)}.png")
         val backTexture = Identifier("zrm", "textures/block/signs/${getSignBackTexture(blockEntity)}.png")
 
         if(!blockEntity.wall) {
-            val center = when(maxThickness) {
-                3 -> PostBlockRenderer.CENTER_THICK
-                2 -> PostBlockRenderer.CENTER_MEDIUM
-                1 -> PostBlockRenderer.CENTER_THIN
+            val midsectionModel = when(maxThickness) {
+                3 -> PostBlockRenderer.POST_THICK_MID_MODEL
+                2 -> PostBlockRenderer.POST_MEDIUM_MID_MODEL
+                1 -> PostBlockRenderer.POST_THIN_MID_MODEL
                 else -> null
             }
 
-            if(center != null) baseCuboids.add(center)
+            if(midsectionModel != null) {
+                RenderUtils.renderModel(matrices, buffer, light, overlay, midsectionModel, null)
+            }
 
-            addSideThickness(Direction.NORTH, blockEntity.north, baseCuboids)
-            addSideThickness(Direction.EAST, blockEntity.east, baseCuboids)
-            addSideThickness(Direction.SOUTH, blockEntity.south, baseCuboids)
-            addSideThickness(Direction.WEST, blockEntity.west, baseCuboids)
-            addSideThickness(Direction.UP, blockEntity.up, baseCuboids)
-            addSideThickness(Direction.DOWN, blockEntity.down, baseCuboids)
+            addSideThickness(blockEntity, Direction.NORTH, blockEntity.north, matrices, buffer, light, overlay)
+            addSideThickness(blockEntity, Direction.EAST, blockEntity.east, matrices, buffer, light, overlay)
+            addSideThickness(blockEntity, Direction.SOUTH, blockEntity.south, matrices, buffer, light, overlay)
+            addSideThickness(blockEntity, Direction.WEST, blockEntity.west, matrices, buffer, light, overlay)
+            addSideThickness(blockEntity, Direction.UP, blockEntity.up, matrices, buffer, light, overlay)
+            addSideThickness(blockEntity, Direction.DOWN, blockEntity.down, matrices, buffer, light, overlay)
         }
 
         val signObjectFront = if(blockEntity.wall) WALL_SIGN_FRONT else {
@@ -137,7 +132,9 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
         }
 
         // Render final model
-        ModelPart(baseCuboids, Collections.emptyMap()).render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(TEXTURE)), light, overlay)
+        ModelPart(baseCuboids, Collections.emptyMap()).render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(
+            TEXTURE
+        )), light, overlay)
 
         val front = ModelPart(mutableListOf(signObjectFront), Collections.emptyMap())
         when(blockEntity.signFacing) {

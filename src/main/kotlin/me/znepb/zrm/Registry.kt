@@ -1,5 +1,6 @@
 package me.znepb.zrm
 
+import com.mojang.authlib.minecraft.client.MinecraftClient
 import me.znepb.zrm.block.*
 import me.znepb.zrm.block.entity.*
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings

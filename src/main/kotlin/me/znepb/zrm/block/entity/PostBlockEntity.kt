@@ -37,6 +37,11 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
 
     private fun getConnectionInt(state: BlockState, dir: Direction): Int {
         if(state.isIn(TagProvider.SIGNS)) {
+            val blockEntity = this.world?.getBlockEntity(this.pos.offset(dir))
+            if(blockEntity is SignBlockEntity && Direction.byId(blockEntity.signFacing).equals(dir.opposite)) {
+                return 0
+            }
+
             return when(state.block) {
                 Registry.ModBlocks.THICK_POST -> 3
                 Registry.ModBlocks.POST -> 2

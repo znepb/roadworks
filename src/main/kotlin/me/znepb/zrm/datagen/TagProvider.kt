@@ -12,7 +12,17 @@ import java.util.concurrent.CompletableFuture
 class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture<WrapperLookup>) : BlockTagProvider(output, completableFuture) {
     companion object {
         val POSTS = TagKey.of(RegistryKeys.BLOCK, Identifier("zrm", "posts"))
-        val SIGNS = TagKey.of(RegistryKeys.BLOCK, Identifier("zrm", "signs"))
+        val POST_MOUNTABLES = TagKey.of(RegistryKeys.BLOCK, Identifier("zrm", "post_mountables"))
+
+        val SIGNS = listOf(
+            Registry.ModBlocks.STOP_SIGN,
+            Registry.ModBlocks.STOP_SIGN_4_WAY,
+            Registry.ModBlocks.STOP_SIGN_AHEAD,
+            Registry.ModBlocks.YIELD_SIGN,
+            Registry.ModBlocks.YIELD_SIGN_AHEAD,
+            Registry.ModBlocks.SIGNAL_AHEAD,
+            Registry.ModBlocks.ROAD_WORK_AHEAD
+        )
     }
 
     override fun configure(arg: WrapperLookup) {
@@ -21,14 +31,9 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
             .add(Registry.ModBlocks.THIN_POST)
             .add(Registry.ModBlocks.THICK_POST)
 
-        getOrCreateTagBuilder(SIGNS)
-            .add(Registry.ModBlocks.STOP_SIGN)
-            .add(Registry.ModBlocks.STOP_SIGN_4_WAY)
-            .add(Registry.ModBlocks.STOP_SIGN_AHEAD)
-            .add(Registry.ModBlocks.YIELD_SIGN)
-            .add(Registry.ModBlocks.YIELD_SIGN_AHEAD)
-            .add(Registry.ModBlocks.SIGNAL_AHEAD)
-            .add(Registry.ModBlocks.ROAD_WORK_AHEAD)
+        with(getOrCreateTagBuilder(POST_MOUNTABLES)) {
+            SIGNS.forEach { this.add(it) }
+        }
     }
 }
 

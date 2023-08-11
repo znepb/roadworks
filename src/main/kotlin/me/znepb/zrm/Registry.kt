@@ -1,14 +1,19 @@
 package me.znepb.zrm
 
-import com.mojang.authlib.minecraft.client.MinecraftClient
 import me.znepb.zrm.block.*
+import me.znepb.zrm.block.ChannelerBlock
+import me.znepb.zrm.block.DrumBlock
+import me.znepb.zrm.block.TrafficCone
 import me.znepb.zrm.block.entity.*
+import me.znepb.zrm.datagen.TagProvider.Companion.SIGNS
+import me.znepb.zrm.util.PostThickness
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -20,12 +25,15 @@ import net.minecraft.util.Identifier
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
 
+// TODO: Transfer registries into their own class files
+
 object Registry {
     private val itemGroup = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier("zrm"))
     private val items = mutableListOf<Item>()
 
     internal fun init() {
-        listOf(ModBlocks, ModItems)
+        listOf(ModBlockEntities, ModBlocks, ModItems)
+
         Registry.register(
             ITEM_GROUP, itemGroup, FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.zrm.main"))
@@ -38,38 +46,36 @@ object Registry {
     }
 
     object ModBlockEntities {
-        val POST_BLOCK_ENTITY = registerPostBlockEntities()
-        val SIGN_BLOCK_ENTITY = registerSignBlockEntities()
-    }
+        private fun <T : BlockEntity> registerBlockEntities(
+            factory: FabricBlockEntityTypeBuilder.Factory<T>,
+            objects: List<Block>,
+            identifier: Identifier
+        ): BlockEntityType<T>? {
+            val entity = FabricBlockEntityTypeBuilder.create(factory)
+            objects.forEach { entity.addBlock(it) }
 
-    fun registerPostBlockEntities(): BlockEntityType<PostBlockEntity>? {
-        val entity = FabricBlockEntityTypeBuilder.create(::PostBlockEntity, ModBlocks.POST)
-        entity.addBlocks(ModBlocks.THICK_POST, ModBlocks.THIN_POST)
+            return Registry.register(BLOCK_ENTITY_TYPE, identifier, entity.build())
+        }
 
-        return Registry.register(BLOCK_ENTITY_TYPE, Identifier("zrm", "post_block_entity"), entity.build())
-    }
-
-    fun registerSignBlockEntities(): BlockEntityType<SignBlockEntity>? {
-        val entity = FabricBlockEntityTypeBuilder.create(::SignBlockEntity, ModBlocks.STOP_SIGN)
-        entity.addBlocks(
-            ModBlocks.STOP_SIGN_4_WAY,
-            ModBlocks.STOP_SIGN_AHEAD,
-            ModBlocks.YIELD_SIGN,
-            ModBlocks.YIELD_SIGN_AHEAD,
-            ModBlocks.SIGNAL_AHEAD,
-            ModBlocks.ROAD_WORK_AHEAD
+        val POST_BLOCK_ENTITY = registerBlockEntities(
+            ::PostBlockEntity,
+            listOf(ModBlocks.THIN_POST, ModBlocks.POST, ModBlocks.THICK_POST),
+            Identifier("zrm", "post_block_entity")
         )
-
-        return Registry.register(BLOCK_ENTITY_TYPE, Identifier("zrm", "sign_block_entity"), entity.build())
+        val SIGN_BLOCK_ENTITY = registerBlockEntities(
+            ::SignBlockEntity,
+            SIGNS,
+            Identifier("zrm", "sign_block_entity")
+        )
     }
 
     object ModBlocks {
         private fun<T: Block> rBlock(name: String, value: T): T =
             Registry.register(BLOCK, Identifier("zrm", name), value)
 
-        val THICK_POST = rBlock("thick_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "thick"))
-        val POST = rBlock("post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "medium"))
-        val THIN_POST = rBlock("thin_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "thin"))
+        val THICK_POST = rBlock("thick_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.THICK))
+        val POST = rBlock("post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.MEDIUM))
+        val THIN_POST = rBlock("thin_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.THIN))
 
         //
 
@@ -115,6 +121,5 @@ object Registry {
         val YIELD_SIGN_AHEAD = rItem(ModBlocks.YIELD_SIGN_AHEAD, ::BlockItem, itemSettings())
         val SIGNAL_AHEAD = rItem(ModBlocks.SIGNAL_AHEAD, ::BlockItem, itemSettings())
         val ROAD_WORK_AHEAD = rItem(ModBlocks.ROAD_WORK_AHEAD, ::BlockItem, itemSettings())
-
     }
 }

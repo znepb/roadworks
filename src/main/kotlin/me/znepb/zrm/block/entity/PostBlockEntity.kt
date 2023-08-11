@@ -1,7 +1,9 @@
 package me.znepb.zrm.block.entity
 
+import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry
 import me.znepb.zrm.datagen.TagProvider
+import me.znepb.zrm.util.PostThickness
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -35,53 +37,52 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
         return createNbt()
     }
 
-    private fun getConnectionInt(state: BlockState, dir: Direction): Int {
-        if(state.isIn(TagProvider.SIGNS)) {
+    private fun getConnectionThickness(state: BlockState, dir: Direction): PostThickness {
+        if(state.isIn(TagProvider.POST_MOUNTABLES)) {
+            // Don't attach to the front of blocks that are post-mountable
             val blockEntity = this.world?.getBlockEntity(this.pos.offset(dir))
-            if(blockEntity is SignBlockEntity && Direction.byId(blockEntity.signFacing).equals(dir.opposite)) {
-                return 0
-            }
-
-            return when(state.block) {
-                Registry.ModBlocks.THICK_POST -> 3
-                Registry.ModBlocks.POST -> 2
-                Registry.ModBlocks.THIN_POST -> 1
-                else -> 3
-            }
-        }
-
-        if (state.isOf(Registry.ModBlocks.THICK_POST)) {
-            return 3
-        } else if(state.isOf(Registry.ModBlocks.POST)) {
-            return 2
-        } else if(state.isOf(Registry.ModBlocks.THIN_POST)) {
-            return 1
-        }
-
-        return 0
-    }
-
-    private fun canConnect(state: BlockState?, dir: Direction): Int {
-        if(state == null) return 0
-
-        return when(dir) {
-            Direction.DOWN -> {
-                val connectionInt = getConnectionInt(state, dir)
-
-                if(connectionInt > 0) {
-                    return connectionInt
-                } else if(state.isOf(Blocks.AIR)) {
-                    return 0 // floating
+            if(blockEntity is PostMountableBlockEntity) {
+                return if(Direction.byId(blockEntity.facing).equals(dir.opposite)) {
+                    PostThickness.NONE
                 } else {
-                    return 4 // on ground
+                    PostMountableBlockEntity.getThickest(blockEntity)
                 }
             }
-            Direction.UP -> getConnectionInt(state, dir)
-            Direction.NORTH -> getConnectionInt(state, dir)
-            Direction.EAST -> getConnectionInt(state, dir)
-            Direction.SOUTH -> getConnectionInt(state, dir)
-            Direction.WEST -> getConnectionInt(state, dir)
-            else -> 0
+        }
+
+        return PostThickness.fromState(state)
+    }
+
+    fun getDirectionThickness(dir: Direction): PostThickness {
+        return when(dir) {
+            Direction.NORTH -> PostThickness.fromId(north)
+            Direction.EAST -> PostThickness.fromId(east)
+            Direction.SOUTH -> PostThickness.fromId(south)
+            Direction.WEST -> PostThickness.fromId(west)
+            Direction.UP -> PostThickness.fromId(up)
+            Direction.DOWN -> PostThickness.fromId(down)
+            else -> PostThickness.NONE
+        }
+    }
+
+    private fun shouldBeFooter(state: BlockState?): Boolean {
+        return state != null &&
+                (!state.isOf(Blocks.AIR)
+                        && !state.isIn(TagProvider.POSTS)
+                        && !state.isIn(TagProvider.POST_MOUNTABLES))
+    }
+
+    private fun canConnect(state: BlockState?, dir: Direction): PostThickness {
+        if(state == null) return PostThickness.NONE
+
+        return when(dir) {
+            Direction.DOWN -> getConnectionThickness(state, dir)
+            Direction.UP -> getConnectionThickness(state, dir)
+            Direction.NORTH -> getConnectionThickness(state, dir)
+            Direction.EAST -> getConnectionThickness(state, dir)
+            Direction.SOUTH -> getConnectionThickness(state, dir)
+            Direction.WEST -> getConnectionThickness(state, dir)
+            else -> PostThickness.NONE
         }
     }
     fun getPlacementState(pos: BlockPos) {
@@ -92,18 +93,15 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
         val stateSouth = this.world?.getBlockState(pos.south())
         val stateWest = this.world?.getBlockState(pos.west())
 
+        footer = shouldBeFooter(stateDown)
+        down = if(!footer) this.canConnect(stateDown, Direction.DOWN).id else PostThickness.NONE.id
+        up = this.canConnect(stateUp, Direction.UP).id
+        north = this.canConnect(stateNorth, Direction.NORTH).id
+        south = this.canConnect(stateSouth, Direction.SOUTH).id
+        east = this.canConnect(stateEast, Direction.EAST).id
+        west = this.canConnect(stateWest, Direction.WEST).id
 
-        val downConn = this.canConnect(stateDown, Direction.DOWN)
-        footer = downConn == 4
-        down = downConn
-
-        up = this.canConnect(stateUp, Direction.UP)
-        north = this.canConnect(stateNorth, Direction.NORTH)
-        south = this.canConnect(stateSouth, Direction.SOUTH)
-        east = this.canConnect(stateEast, Direction.EAST)
-        west = this.canConnect(stateWest, Direction.WEST)
         this.markDirty()
-
         this.world?.updateListeners(pos, this.cachedState, this.cachedState, Block.NOTIFY_LISTENERS)
     }
 
@@ -146,7 +144,7 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
     }
     companion object {
         fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: PostBlockEntity?) {
-            blockEntity?.onTick(world);
+            blockEntity?.onTick(world)
         }
     }
 }

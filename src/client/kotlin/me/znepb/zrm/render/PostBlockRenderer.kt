@@ -27,7 +27,6 @@ class PostBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
         val POST_THICK_MID_MODEL = Identifier("zrm", "block/post_thick_midsection")
     }
 
-
     private fun addSideThickness(
         state: BlockState,
         direction: Direction,

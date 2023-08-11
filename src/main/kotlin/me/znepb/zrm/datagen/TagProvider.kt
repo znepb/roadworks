@@ -1,5 +1,6 @@
 package me.znepb.zrm.datagen
 
+import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.Registry
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.BlockTagProvider
@@ -11,8 +12,8 @@ import java.util.concurrent.CompletableFuture
 
 class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture<WrapperLookup>) : BlockTagProvider(output, completableFuture) {
     companion object {
-        val POSTS = TagKey.of(RegistryKeys.BLOCK, Identifier("zrm", "posts"))
-        val POST_MOUNTABLES = TagKey.of(RegistryKeys.BLOCK, Identifier("zrm", "post_mountables"))
+        val POSTS = TagKey.of(RegistryKeys.BLOCK, ModId("posts"))
+        val POST_MOUNTABLES = TagKey.of(RegistryKeys.BLOCK, ModId("post_mountables"))
 
         val SIGNS = listOf(
             Registry.ModBlocks.STOP_SIGN,

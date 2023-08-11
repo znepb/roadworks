@@ -1,5 +1,6 @@
 package me.znepb.zrm
 
+import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.block.*
 import me.znepb.zrm.block.cone.ChannelerBlock
 import me.znepb.zrm.block.cone.DrumBlock
@@ -28,7 +29,7 @@ import net.minecraft.text.Text
 // TODO: Transfer registries into their own class files
 
 object Registry {
-    private val itemGroup = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier("zrm"))
+    private val itemGroup = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier(Main.NAMESPACE))
     private val items = mutableListOf<Item>()
 
     internal fun init() {
@@ -36,7 +37,7 @@ object Registry {
 
         Registry.register(
             ITEM_GROUP, itemGroup, FabricItemGroup.builder()
-                .displayName(Text.translatable("itemGroup.zrm.main"))
+                .displayName(Text.translatable("itemGroup.${Main.NAMESPACE}.main"))
                 .icon{ ItemStack(ModItems.TRAFFIC_CONE) }
                 .entries { _, entries ->
                     items.forEach(entries::add)
@@ -60,18 +61,18 @@ object Registry {
         val POST_BLOCK_ENTITY = registerBlockEntities(
             ::PostBlockEntity,
             listOf(ModBlocks.THIN_POST, ModBlocks.POST, ModBlocks.THICK_POST),
-            Identifier("zrm", "post_block_entity")
+            ModId("post_block_entity")
         )
         val SIGN_BLOCK_ENTITY = registerBlockEntities(
             ::SignBlockEntity,
             SIGNS,
-            Identifier("zrm", "sign_block_entity")
+            ModId("sign_block_entity")
         )
     }
 
     object ModBlocks {
         private fun<T: Block> rBlock(name: String, value: T): T =
-            Registry.register(BLOCK, Identifier("zrm", name), value)
+            Registry.register(BLOCK, ModId(name), value)
 
         val THICK_POST = rBlock("thick_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.THICK))
         val POST = rBlock("post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.MEDIUM))
@@ -98,7 +99,7 @@ object Registry {
     object ModItems {
         private fun itemSettings(): FabricItemSettings = FabricItemSettings()
         fun<T: Item> rItem(name: String, value: T): T =
-            Registry.register(ITEM, Identifier("zrm", name), value).also { items.add(it) }
+            Registry.register(ITEM, ModId(name), value).also { items.add(it) }
         private fun<B: Block, I: Item> rItem(parent:B, supplier: (B, Item.Settings) -> I, settings: Item.Settings = itemSettings()): I {
             val item = Registry.register(ITEM, BLOCK.getId(parent), supplier(parent, settings))
             Item.BLOCK_ITEMS[parent] = item

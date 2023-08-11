@@ -5,7 +5,12 @@ import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 
 object Main : ModInitializer {
-    val logger = LoggerFactory.getLogger("zrm")
+	val NAMESPACE = "zrm"
+    val logger = LoggerFactory.getLogger(NAMESPACE)
+
+	fun ModId(id: String): Identifier {
+		return Identifier(NAMESPACE, id)
+	}
 
 	override fun onInitialize() {
 		logger.info("zrm is initalizing")

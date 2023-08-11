@@ -1,5 +1,6 @@
 package me.znepb.zrm.datagen
 
+import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.SignBlock
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -17,7 +18,7 @@ import java.util.*
 class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
     companion object {
         val signModel = Model(
-            Optional.of(Identifier("zrm", "block/sign_base")), Optional.empty(),
+            Optional.of(ModId("block/sign_base")), Optional.empty(),
             TextureKey.FRONT,
             TextureKey.BACK
         )

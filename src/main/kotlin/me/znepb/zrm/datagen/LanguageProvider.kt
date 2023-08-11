@@ -1,5 +1,6 @@
 package me.znepb.zrm.datagen
 
+import me.znepb.zrm.Main.NAMESPACE
 import me.znepb.zrm.Registry
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
@@ -23,6 +24,6 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.SIGNAL_AHEAD, "Signal Ahead Sign")
         translationBuilder.add(Registry.ModBlocks.ROAD_WORK_AHEAD, "Road Work Ahead Sign")
 
-        translationBuilder.add("itemGroup.zrm.main", "znepb's Road Mod")
+        translationBuilder.add("itemGroup.${NAMESPACE}.main", "znepb's Road Mod")
     }
 }

@@ -1,5 +1,6 @@
 package me.znepb.zrm.render
 
+import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.entity.PostBlockEntity
 import me.znepb.zrm.util.RenderUtils
@@ -15,15 +16,15 @@ import net.minecraft.util.math.Direction
 
 class PostBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : BlockEntityRenderer<PostBlockEntity> {
     companion object {
-        val POST_THIN_EXT_MODEL = Identifier("zrm", "block/post_thin_extension")
-        val POST_THIN_FOOTER_MODEL = Identifier("zrm", "block/post_thin_footer")
-        val POST_THIN_MID_MODEL = Identifier("zrm", "block/post_thin_midsection")
-        val POST_MEDIUM_EXT_MODEL = Identifier("zrm", "block/post_medium_extension")
-        val POST_MEDIUM_FOOTER_MODEL = Identifier("zrm", "block/post_medium_footer")
-        val POST_MEDIUM_MID_MODEL = Identifier("zrm", "block/post_medium_midsection")
-        val POST_THICK_EXT_MODEL = Identifier("zrm", "block/post_thick_extension")
-        val POST_THICK_FOOTER_MODEL = Identifier("zrm", "block/post_thick_footer")
-        val POST_THICK_MID_MODEL = Identifier("zrm", "block/post_thick_midsection")
+        val POST_THIN_EXT_MODEL = ModId("block/post_thin_extension")
+        val POST_THIN_FOOTER_MODEL = ModId("block/post_thin_footer")
+        val POST_THIN_MID_MODEL = ModId("block/post_thin_midsection")
+        val POST_MEDIUM_EXT_MODEL = ModId("block/post_medium_extension")
+        val POST_MEDIUM_FOOTER_MODEL = ModId("block/post_medium_footer")
+        val POST_MEDIUM_MID_MODEL = ModId("block/post_medium_midsection")
+        val POST_THICK_EXT_MODEL = ModId("block/post_thick_extension")
+        val POST_THICK_FOOTER_MODEL = ModId("block/post_thick_footer")
+        val POST_THICK_MID_MODEL = ModId("block/post_thick_midsection")
     }
 
     private fun addSideThickness(

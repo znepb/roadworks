@@ -1,5 +1,6 @@
 package me.znepb.zrm.render
 
+import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.block.SignBlock
 import me.znepb.zrm.block.entity.PostMountableBlockEntity
 import me.znepb.zrm.block.entity.SignBlockEntity
@@ -54,8 +55,8 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) :
         overlay: Int
     ) {
         val maxThickness = PostMountableBlockEntity.getThickest(entity)
-        val frontTexture = Identifier("zrm", "textures/block/signs/${getSignFrontTexture(entity)}.png")
-        val backTexture = Identifier("zrm", "textures/block/signs/${getSignBackTexture(entity)}.png")
+        val frontTexture = ModId("textures/block/signs/${getSignFrontTexture(entity)}.png")
+        val backTexture = ModId("textures/block/signs/${getSignBackTexture(entity)}.png")
 
         val signObjectFront = if(entity.wall) WALL_SIGN_FRONT else {
             when (maxThickness) {

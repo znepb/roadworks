@@ -1,9 +1,9 @@
 package me.znepb.zrm
 
 import me.znepb.zrm.block.*
-import me.znepb.zrm.block.ChannelerBlock
-import me.znepb.zrm.block.DrumBlock
-import me.znepb.zrm.block.TrafficCone
+import me.znepb.zrm.block.cone.ChannelerBlock
+import me.znepb.zrm.block.cone.DrumBlock
+import me.znepb.zrm.block.cone.TrafficCone
 import me.znepb.zrm.block.entity.*
 import me.znepb.zrm.datagen.TagProvider.Companion.SIGNS
 import me.znepb.zrm.util.PostThickness

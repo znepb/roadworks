@@ -1,6 +1,5 @@
-package me.znepb.zrm.block
+package me.znepb.zrm.block.cone
 
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
 import net.minecraft.block.enums.BlockHalf
@@ -9,7 +8,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
-class ChannelerBlock(settings: AbstractBlock.Settings) : DoubleHighConeBlock(settings) {
+class ChannelerBlock(settings: Settings) : DoubleHighConeBlock(settings) {
     companion object {
         val SHAPE_BOTTOM = VoxelShapes.union(
             createCuboidShape(6.0, 1.0, 6.0, 10.0, 16.0, 10.0),

@@ -2,6 +2,7 @@ package me.znepb.zrm.render
 
 import me.znepb.zrm.block.entity.PostMountableBlockEntity
 import me.znepb.zrm.util.PostThickness
+import me.znepb.zrm.util.RenderUtils
 import net.minecraft.client.render.TexturedRenderLayers
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider

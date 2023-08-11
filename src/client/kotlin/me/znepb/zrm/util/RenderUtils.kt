@@ -1,4 +1,4 @@
-package me.znepb.zrm.render
+package me.znepb.zrm.util
 
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient

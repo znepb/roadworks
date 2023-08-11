@@ -1,6 +1,5 @@
-package me.znepb.zrm.block
+package me.znepb.zrm.block.cone
 
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
 import net.minecraft.block.enums.BlockHalf
@@ -10,7 +9,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 
-class DrumBlock(settings: AbstractBlock.Settings) : DoubleHighConeBlock(settings) {
+class DrumBlock(settings: Settings) : DoubleHighConeBlock(settings) {
     companion object {
         val SHAPE_BOTTOM = VoxelShapes.union(
             createCuboidShape(2.5, 0.0, 2.5, 13.5, 1.0, 13.5),

@@ -2,8 +2,8 @@ package me.znepb.zrm.render
 
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.entity.PostBlockEntity
+import me.znepb.zrm.util.RenderUtils
 import net.minecraft.block.BlockState
-import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.TexturedRenderLayers
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
@@ -12,7 +12,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
-import java.util.*
 
 class PostBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : BlockEntityRenderer<PostBlockEntity> {
     companion object {
@@ -56,8 +55,6 @@ class PostBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : B
         RenderUtils.renderModel(matrices, buffer, light, overlay, sizeModel, null)
         matrices.pop()
     }
-
-    // TODO: bake models? e.g., generate once then store in a variable until any of the nbt vars are changed
 
     override fun render(
         blockEntity: PostBlockEntity,

@@ -1,6 +1,5 @@
 package me.znepb.zrm.block.entity
 
-import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry
 import me.znepb.zrm.datagen.TagProvider
 import me.znepb.zrm.util.PostThickness

@@ -1,4 +1,4 @@
-package me.znepb.zrm.block
+package me.znepb.zrm.block.cone
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockRenderType

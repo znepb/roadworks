@@ -1,7 +1,6 @@
 package me.znepb.zrm.util
 
 import me.znepb.zrm.Registry
-import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 
 enum class PostThickness(val id: Int, name: String) {

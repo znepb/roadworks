@@ -35,6 +35,7 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
         with(getOrCreateTagBuilder(POST_MOUNTABLES)) {
             SIGNS.forEach { this.add(it) }
         }
+        getOrCreateTagBuilder(POST_MOUNTABLES).add(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL)
     }
 }
 

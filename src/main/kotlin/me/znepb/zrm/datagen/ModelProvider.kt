@@ -22,6 +22,15 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
             TextureKey.FRONT,
             TextureKey.BACK
         )
+
+        val signalModel = Model(
+            Optional.of(ModId("block/signal")), Optional.empty(),
+            TextureKey.TEXTURE
+        )
+
+        val signals = listOf("green_off", "green_on", "left_green_off", "left_green_on", "left_red_off",
+                             "left_red_on", "left_yellow_off", "left_yellow_on", "red_off", "red_on",
+                             "yellow_off", "yellow_on")
     }
 
     override fun generateBlockStateModels(generator: BlockStateModelGenerator) {
@@ -41,6 +50,17 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addDoubleHighConeBlock(generator, Registry.ModBlocks.DRUM, "drum")
 
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.TRAFFIC_CONE, Identifier("zrm", "block/traffic_cone")))
+
+        signals.forEach { addSignal(generator, it) }
+    }
+
+    private fun addSignal(generator: BlockStateModelGenerator, signalName: String) {
+        signalModel.upload(
+            ModId("block/signal_$signalName"),
+            TextureMap()
+                .put(TextureKey.TEXTURE, Identifier("zrm", "block/signals/${signalName}")),
+            generator.modelCollector
+        )
     }
 
     private fun addDoubleHighConeBlock(generator: BlockStateModelGenerator, block: Block, modelName: String) {

@@ -109,7 +109,14 @@ open class PostBlock(
 
     private fun pickSideShape(connectingSize: PostThickness, direction: Direction): VoxelShape {
         return when(connectingSize) {
-            PostThickness.THICK -> getShapeFromDirectionAndSize(direction, connectingSize)
+            PostThickness.THICK -> {
+                when(size) {
+                    PostThickness.THICK -> getShapeFromDirectionAndSize(direction, connectingSize)
+                    PostThickness.MEDIUM -> getShapeFromDirectionAndSize(direction, PostThickness.MEDIUM)
+                    PostThickness.THIN -> getShapeFromDirectionAndSize(direction, PostThickness.THIN)
+                    else -> VoxelShapes.empty()
+                }
+            }
             PostThickness.MEDIUM ->
                 getShapeFromDirectionAndSize(
                     direction,

@@ -6,6 +6,8 @@ import me.znepb.zrm.block.cone.ChannelerBlock
 import me.znepb.zrm.block.cone.DrumBlock
 import me.znepb.zrm.block.cone.TrafficCone
 import me.znepb.zrm.block.entity.*
+import me.znepb.zrm.block.entity.signals.ThreeHeadTrafficSignalBlockEntity
+import me.znepb.zrm.block.signals.ThreeHeadTrafficSignal
 import me.znepb.zrm.datagen.TagProvider.Companion.SIGNS
 import me.znepb.zrm.util.PostThickness
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -58,6 +60,11 @@ object Registry {
             return Registry.register(BLOCK_ENTITY_TYPE, identifier, entity.build())
         }
 
+        val THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY = registerBlockEntities(
+            ::ThreeHeadTrafficSignalBlockEntity,
+            listOf(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL),
+            ModId("three_head_traffic_signal_block_entity")
+        )
         val POST_BLOCK_ENTITY = registerBlockEntities(
             ::PostBlockEntity,
             listOf(ModBlocks.THIN_POST, ModBlocks.POST, ModBlocks.THICK_POST),
@@ -94,6 +101,9 @@ object Registry {
         val SIGNAL_AHEAD = rBlock("signal_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "signal_ahead", "back_diamond"))
         val ROAD_WORK_AHEAD = rBlock("road_work_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "road_work_ahead", "back_diamond"))
 
+        //
+
+        val THREE_HEAD_TRAFFIC_SIGNAL = rBlock("three_head_traffic_signal", ThreeHeadTrafficSignal(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
     }
 
     object ModItems {
@@ -122,5 +132,7 @@ object Registry {
         val YIELD_SIGN_AHEAD = rItem(ModBlocks.YIELD_SIGN_AHEAD, ::BlockItem, itemSettings())
         val SIGNAL_AHEAD = rItem(ModBlocks.SIGNAL_AHEAD, ::BlockItem, itemSettings())
         val ROAD_WORK_AHEAD = rItem(ModBlocks.ROAD_WORK_AHEAD, ::BlockItem, itemSettings())
+
+        val THREE_HEAD_TRAFFIC_SIGNAL = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())
     }
 }

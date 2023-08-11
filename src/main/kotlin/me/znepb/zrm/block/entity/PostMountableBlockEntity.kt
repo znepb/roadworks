@@ -1,6 +1,7 @@
 package me.znepb.zrm.block.entity
 
 import me.znepb.zrm.Main
+import me.znepb.zrm.Main.logger
 import me.znepb.zrm.datagen.TagProvider
 import me.znepb.zrm.util.PostThickness
 import net.minecraft.block.Block
@@ -108,7 +109,6 @@ open class PostMountableBlockEntity(
         if(ctx == null && this.ctx != null) context = this.ctx
 
         if(context != null) {
-            Main.logger.info("Placing with context")
             val facing =  context.horizontalPlayerFacing.opposite
             val placedOnPos = pos.offset(facing.opposite)
             val placedOnState = world?.getBlockState(placedOnPos)
@@ -135,10 +135,12 @@ open class PostMountableBlockEntity(
         this.east = this.canConnect(stateEast, entityEast, Direction.EAST).id
         this.south = this.canConnect(stateSouth, entitySouth, Direction.SOUTH).id
         this.west = this.canConnect(stateWest, entityWest, Direction.WEST).id
-        this.markDirty()
 
+        this.markDirty()
         this.world?.updateListeners(pos, this.cachedState, this.cachedState, Block.NOTIFY_LISTENERS)
     }
+
+    open fun writeExtraNBT(nbt: NbtCompound) {}
 
     public override fun writeNbt(nbt: NbtCompound) {
         nbt.putInt("up", up)
@@ -149,9 +151,12 @@ open class PostMountableBlockEntity(
         nbt.putInt("west", west)
         nbt.putInt("facing", facing)
         nbt.putBoolean("wall", wall)
+        writeExtraNBT(nbt)
 
         super.writeNbt(nbt)
     }
+
+    open fun readExtraNBT(nbt: NbtCompound) {}
 
     override fun readNbt(nbt: NbtCompound) {
         super.readNbt(nbt)
@@ -164,6 +169,7 @@ open class PostMountableBlockEntity(
         west = nbt.getInt("west")
         facing = nbt.getInt("facing")
         wall = nbt.getBoolean("wall")
+        readExtraNBT(nbt)
 
         this.getPlacementState(null)
     }
@@ -180,6 +186,7 @@ open class PostMountableBlockEntity(
             this.getPlacementState(null)
         }
     }
+
     companion object {
         fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: PostMountableBlockEntity?) {
             blockEntity?.onTick(world)

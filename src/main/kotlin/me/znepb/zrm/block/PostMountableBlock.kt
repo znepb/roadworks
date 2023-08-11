@@ -23,15 +23,6 @@ open class PostMountableBlock<T : PostMountableBlockEntity>
 {
     private var placementContext: ItemPlacementContext? = null
 
-    override fun <T : BlockEntity?> getTicker(
-        world: World,
-        state: BlockState,
-        type: BlockEntityType<T>
-    ): BlockEntityTicker<T>? {
-        if (world.isClient) return null
-        return checkType(type, Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, PostMountableBlockEntity.Companion::onTick)
-    }
-
     override fun isTransparent(state: BlockState?, world: BlockView?, pos: BlockPos?): Boolean {
         return true
     }
@@ -44,7 +35,7 @@ open class PostMountableBlock<T : PostMountableBlockEntity>
         pos: BlockPos,
         neighborPos: BlockPos
     ): BlockState? {
-        (world.getBlockEntity(pos) as SignBlockEntity?)?.getPlacementState(placementContext)
+        (world.getBlockEntity(pos) as PostMountableBlockEntity?)?.getPlacementState(placementContext)
         placementContext = null
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }

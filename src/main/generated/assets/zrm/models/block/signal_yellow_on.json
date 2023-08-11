@@ -1,0 +1,6 @@
+{
+  "parent": "zrm:block/signal",
+  "textures": {
+    "texture": "zrm:block/signals/yellow_on"
+  }
+}

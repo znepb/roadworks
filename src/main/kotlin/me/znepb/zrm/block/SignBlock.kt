@@ -7,11 +7,15 @@ import me.znepb.zrm.block.entity.SignBlockEntity
 import me.znepb.zrm.util.PostThickness
 import me.znepb.zrm.util.RotateVoxelShape.Companion.rotateVoxelShape
 import net.minecraft.block.*
+import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import net.minecraft.world.World
 
 class SignBlock(settings: Settings, val frontTexture: String, val backTexture: String):
     PostMountableBlock<SignBlockEntity>(settings, ::SignBlockEntity, Registry.ModBlockEntities.SIGN_BLOCK_ENTITY) {
@@ -22,6 +26,15 @@ class SignBlock(settings: Settings, val frontTexture: String, val backTexture: S
         val SIGN_SHAPE_POST_THIN = SIGN_SHAPE_WALL.offset(0.0, 0.0, (-8.75 / 16))
         val SIGN_SHAPE_POST_MEDIUM = SIGN_SHAPE_WALL.offset(0.0, 0.0, (-9.75 / 16))
         val SIGN_SHAPE_POST_THICK = SIGN_SHAPE_WALL.offset(0.0, 0.0, (-10.75 / 16))
+    }
+
+    override fun <T : BlockEntity?> getTicker(
+        world: World,
+        state: BlockState,
+        type: BlockEntityType<T>
+    ): BlockEntityTicker<T>? {
+        if (world.isClient) return null
+        return checkType(type, Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, PostMountableBlockEntity.Companion::onTick)
     }
 
     override fun getCollisionShape(

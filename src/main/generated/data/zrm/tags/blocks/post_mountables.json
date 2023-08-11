@@ -7,6 +7,7 @@
     "zrm:yield_sign",
     "zrm:yield_ahead_sign",
     "zrm:signal_ahead_sign",
-    "zrm:road_work_ahead_sign"
+    "zrm:road_work_ahead_sign",
+    "zrm:three_head_traffic_signal"
   ]
 }

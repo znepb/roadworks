@@ -1,7 +1,7 @@
 package me.znepb.zrm.render
 
 import me.znepb.zrm.Main.ModId
-import me.znepb.zrm.block.entity.PostMountableBlockEntity.Companion.getThickest
+import me.znepb.zrm.block.post.AbstractPostMountableBlockEntity.Companion.getThickest
 import me.znepb.zrm.block.signals.SignalLight
 import me.znepb.zrm.block.signals.ThreeHeadTrafficSignalBlockEntity
 import me.znepb.zrm.render.SignalRenderer.Companion.renderSignal

@@ -1,7 +1,7 @@
 package me.znepb.zrm.block.signals
 
 import me.znepb.zrm.block.cabinet.TrafficCabinetBlockEntity
-import me.znepb.zrm.block.entity.PostMountableBlockEntity
+import me.znepb.zrm.block.post.AbstractPostMountableBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.nbt.NbtCompound
@@ -11,14 +11,14 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class TrafficSignalBlockEntityBase
+abstract class AbstractTrafficSignalBlockEntityBase
     (
         pos: BlockPos,
         state: BlockState,
         blockEntityType: BlockEntityType<*>,
         private val signalType: SignalType
     )
-    : PostMountableBlockEntity(blockEntityType, pos, state)
+    : AbstractPostMountableBlockEntity(blockEntityType, pos, state)
 {
     protected var linked = false
     protected var linkX = 0
@@ -32,7 +32,7 @@ abstract class TrafficSignalBlockEntityBase
     }
 
     companion object {
-        fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: TrafficSignalBlockEntityBase) {
+        fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: AbstractTrafficSignalBlockEntityBase) {
             blockEntity.onTick(world, pos, state, blockEntity)
         }
     }
@@ -132,7 +132,7 @@ abstract class TrafficSignalBlockEntityBase
         return createNbt()
     }
 
-    fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: TrafficSignalBlockEntityBase) {
+    fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: AbstractTrafficSignalBlockEntityBase) {
         if(!blockEntity.isLinked() && !world.isClient) {
             val ticks = world.server?.ticks
             if(ticks != null) {

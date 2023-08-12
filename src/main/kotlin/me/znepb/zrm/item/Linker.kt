@@ -2,7 +2,7 @@ package me.znepb.zrm.item
 
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.cabinet.TrafficCabinetBlockEntity
-import me.znepb.zrm.block.signals.TrafficSignalBlockEntityBase
+import me.znepb.zrm.block.signals.AbstractTrafficSignalBlockEntityBase
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
@@ -26,7 +26,7 @@ class Linker(settings: Settings) : Item(settings) {
         val MAX_SIGNAL_DISTANCE = 24.0
     }
 
-    private fun getCabinet(blockEntity: TrafficSignalBlockEntityBase, context: ItemUsageContext): TrafficCabinetBlockEntity? {
+    private fun getCabinet(blockEntity: AbstractTrafficSignalBlockEntityBase, context: ItemUsageContext): TrafficCabinetBlockEntity? {
         val be = context.world?.getBlockEntity(blockEntity.getLinkPos())
         if(be is TrafficCabinetBlockEntity) {
             return be
@@ -34,7 +34,7 @@ class Linker(settings: Settings) : Item(settings) {
     }
 
     private fun unlink(
-        signal: TrafficSignalBlockEntityBase,
+        signal: AbstractTrafficSignalBlockEntityBase,
         cabinet: TrafficCabinetBlockEntity,
         context: ItemUsageContext)
     {
@@ -44,7 +44,7 @@ class Linker(settings: Settings) : Item(settings) {
     }
 
     private fun alreadyLinked(
-        signal: TrafficSignalBlockEntityBase,
+        signal: AbstractTrafficSignalBlockEntityBase,
         cabinet: TrafficCabinetBlockEntity,
         context: ItemUsageContext
     ) {
@@ -63,7 +63,7 @@ class Linker(settings: Settings) : Item(settings) {
         }
     }
 
-    private fun linkThreeHead(signal: TrafficSignalBlockEntityBase, context: ItemUsageContext): ActionResult {
+    private fun linkThreeHead(signal: AbstractTrafficSignalBlockEntityBase, context: ItemUsageContext): ActionResult {
         fun startLink() {
             linking = context.blockPos
             linkingWith = Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY
@@ -98,7 +98,7 @@ class Linker(settings: Settings) : Item(settings) {
 
         val linkedFrom = context.world.getBlockEntity(linking)
 
-        if(linkedFrom !is TrafficSignalBlockEntityBase) {
+        if(linkedFrom !is AbstractTrafficSignalBlockEntityBase) {
             // Traffic signal disappeared somehow
             context.player?.sendMessage(Text.literal("The signal is no longer there"), true)
             return
@@ -141,7 +141,7 @@ class Linker(settings: Settings) : Item(settings) {
             val blockEntity = context.world?.getBlockEntity(context.blockPos)
 
             if(linking == null) {
-                if (blockEntity is TrafficSignalBlockEntityBase) {
+                if (blockEntity is AbstractTrafficSignalBlockEntityBase) {
                     return linkThreeHead(blockEntity, context)
                 } else {
                     context.player?.sendMessage(Text.literal("Right-click a signal or traffic cabinet"), true)

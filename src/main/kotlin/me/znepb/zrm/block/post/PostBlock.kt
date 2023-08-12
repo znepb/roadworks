@@ -1,7 +1,6 @@
-package me.znepb.zrm.block
+package me.znepb.zrm.block.post
 
 import me.znepb.zrm.Registry
-import me.znepb.zrm.block.entity.PostBlockEntity
 import me.znepb.zrm.util.PostThickness
 import me.znepb.zrm.util.RotateVoxelShape.Companion.rotateVoxelShape
 import net.minecraft.block.*

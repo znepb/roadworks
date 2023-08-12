@@ -2,15 +2,14 @@ package me.znepb.zrm.render
 
 import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.block.SignBlock
-import me.znepb.zrm.block.entity.PostMountableBlockEntity
-import me.znepb.zrm.block.entity.SignBlockEntity
+import me.znepb.zrm.block.SignBlockEntity
+import me.znepb.zrm.block.post.AbstractPostMountableBlockEntity
 import me.znepb.zrm.util.PostThickness
 import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import java.util.*
 
@@ -54,7 +53,7 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) :
         light: Int,
         overlay: Int
     ) {
-        val maxThickness = PostMountableBlockEntity.getThickest(entity)
+        val maxThickness = AbstractPostMountableBlockEntity.getThickest(entity)
         val frontTexture = ModId("textures/block/signs/${getSignFrontTexture(entity)}.png")
         val backTexture = ModId("textures/block/signs/${getSignBackTexture(entity)}.png")
 

@@ -1,6 +1,6 @@
 package me.znepb.zrm.render
 
-import me.znepb.zrm.block.entity.PostMountableBlockEntity
+import me.znepb.zrm.block.post.AbstractPostMountableBlockEntity
 import me.znepb.zrm.util.PostThickness
 import me.znepb.zrm.util.RenderUtils
 import net.minecraft.client.render.TexturedRenderLayers
@@ -10,7 +10,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Direction
 
-abstract class AbstractPostMountableRenderer<T : PostMountableBlockEntity> : BlockEntityRenderer<T> {
+abstract class AbstractPostMountableRenderer<T : AbstractPostMountableBlockEntity> : BlockEntityRenderer<T> {
     private fun addSideThickness(
         blockEntity: T,
         direction: Direction,
@@ -45,7 +45,7 @@ abstract class AbstractPostMountableRenderer<T : PostMountableBlockEntity> : Blo
     ) {
         val buffer: VertexConsumer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntityTranslucentCull())
 
-        val maxThickness = PostMountableBlockEntity.getThickest(entity)
+        val maxThickness = AbstractPostMountableBlockEntity.getThickest(entity)
 
         if(!entity.wall) {
             val midsectionModel = when(maxThickness) {

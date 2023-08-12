@@ -1,4 +1,4 @@
-package me.znepb.zrm.block.entity
+package me.znepb.zrm.block.post
 
 import me.znepb.zrm.Registry
 import me.znepb.zrm.datagen.TagProvider
@@ -40,11 +40,11 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
         if(state.isIn(TagProvider.POST_MOUNTABLES)) {
             // Don't attach to the front of blocks that are post-mountable
             val blockEntity = this.world?.getBlockEntity(this.pos.offset(dir))
-            if(blockEntity is PostMountableBlockEntity) {
+            if(blockEntity is AbstractPostMountableBlockEntity) {
                 return if(Direction.byId(blockEntity.facing).equals(dir.opposite)) {
                     PostThickness.NONE
                 } else {
-                    PostMountableBlockEntity.getThickest(blockEntity)
+                    AbstractPostMountableBlockEntity.getThickest(blockEntity)
                 }
             }
         }

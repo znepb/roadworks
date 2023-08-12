@@ -4,7 +4,7 @@ import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.signals.SignalLight
 import me.znepb.zrm.block.signals.SignalType
-import me.znepb.zrm.block.signals.TrafficSignalBlockEntityBase
+import me.znepb.zrm.block.signals.AbstractTrafficSignalBlockEntityBase
 import me.znepb.zrm.util.MiscUtils.Companion.blockPosFromNbtIntArray
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -68,7 +68,7 @@ class TrafficCabinetBlockEntity(
     fun addSignal(pos: BlockPos): Int? {
         val blockEntity = this.world?.getBlockEntity(pos)
 
-        if(blockEntity is TrafficSignalBlockEntityBase) {
+        if(blockEntity is AbstractTrafficSignalBlockEntityBase) {
             val data = NbtCompound()
             data.putInt("id", nextID)
             data.put("position", NbtIntArray(listOf(pos.x, pos.y, pos.z)))
@@ -98,7 +98,7 @@ class TrafficCabinetBlockEntity(
 
         if(element is NbtCompound) {
             val blockEntity = world?.getBlockEntity(blockPosFromNbtIntArray(element.getIntArray("position")))
-            if(blockEntity is TrafficSignalBlockEntityBase) {
+            if(blockEntity is AbstractTrafficSignalBlockEntityBase) {
                 blockEntity.unlink()
             }
         }

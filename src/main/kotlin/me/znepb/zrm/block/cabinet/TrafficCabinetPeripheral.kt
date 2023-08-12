@@ -5,16 +5,16 @@ import dan200.computercraft.api.lua.ObjectLuaTable
 import dan200.computercraft.api.peripheral.IPeripheral
 import me.znepb.zrm.block.signals.SignalLight
 import me.znepb.zrm.block.signals.SignalType
-import me.znepb.zrm.block.signals.TrafficSignalBlockEntityBase
+import me.znepb.zrm.block.signals.AbstractTrafficSignalBlockEntityBase
 import net.minecraft.nbt.NbtCompound
 
 class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPeripheral {
     override fun getType() = "traffic_cabinet"
     override fun getTarget() = blockEntity
 
-    fun getSignalBlockEntity(id: Int): TrafficSignalBlockEntityBase? {
+    fun getSignalBlockEntity(id: Int): AbstractTrafficSignalBlockEntityBase? {
         val signal = blockEntity.getSignalBlockEntityFromId(id)
-        return if(signal is TrafficSignalBlockEntityBase) signal else null
+        return if(signal is AbstractTrafficSignalBlockEntityBase) signal else null
     }
 
     /// Returns whether this traffic cabinet has the specified ID available.

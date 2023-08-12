@@ -2,7 +2,7 @@ package me.znepb.zrm.render
 
 import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.Registry
-import me.znepb.zrm.block.entity.PostBlockEntity
+import me.znepb.zrm.block.post.PostBlockEntity
 import me.znepb.zrm.util.RenderUtils
 import net.minecraft.block.BlockState
 import net.minecraft.client.render.TexturedRenderLayers
@@ -11,7 +11,6 @@ import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 
 class PostBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) : BlockEntityRenderer<PostBlockEntity> {

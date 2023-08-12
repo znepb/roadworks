@@ -8,7 +8,8 @@ import me.znepb.zrm.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.zrm.block.cone.ChannelerBlock
 import me.znepb.zrm.block.cone.DrumBlock
 import me.znepb.zrm.block.cone.TrafficCone
-import me.znepb.zrm.block.entity.*
+import me.znepb.zrm.block.post.PostBlock
+import me.znepb.zrm.block.post.PostBlockEntity
 import me.znepb.zrm.block.signals.ThreeHeadTrafficSignal
 import me.znepb.zrm.block.signals.ThreeHeadTrafficSignalBlockEntity
 import me.znepb.zrm.datagen.TagProvider.Companion.SIGNS

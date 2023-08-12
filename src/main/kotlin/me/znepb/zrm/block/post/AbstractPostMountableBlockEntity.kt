@@ -1,4 +1,4 @@
-package me.znepb.zrm.block.entity
+package me.znepb.zrm.block.post
 
 import me.znepb.zrm.datagen.TagProvider
 import me.znepb.zrm.util.PostThickness
@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-open class PostMountableBlockEntity(
+open class AbstractPostMountableBlockEntity(
     type: BlockEntityType<*>?,
     pos: BlockPos,
     state: BlockState
@@ -62,7 +62,7 @@ open class PostMountableBlockEntity(
 
         if(thickness != PostThickness.NONE) {
             return thickness
-        } else if(state.isIn(TagProvider.POST_MOUNTABLES) && entity is PostMountableBlockEntity) {
+        } else if(state.isIn(TagProvider.POST_MOUNTABLES) && entity is AbstractPostMountableBlockEntity) {
             return getThickest(entity)
         }
 
@@ -186,11 +186,11 @@ open class PostMountableBlockEntity(
     }
 
     companion object {
-        fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: PostMountableBlockEntity?) {
+        fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: AbstractPostMountableBlockEntity?) {
             blockEntity?.onTick(world)
         }
 
-        fun getThickest(entity: PostMountableBlockEntity): PostThickness {
+        fun getThickest(entity: AbstractPostMountableBlockEntity): PostThickness {
             val up = if (entity.facing == Direction.UP.id) 0 else entity.up
             val down = if (entity.facing == Direction.DOWN.id) 0 else entity.down
             val north = if (entity.facing == Direction.NORTH.id) 0 else entity.north

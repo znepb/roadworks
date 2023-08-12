@@ -1,7 +1,10 @@
 package me.znepb.zrm
 
+import dan200.computercraft.api.peripheral.PeripheralLookup
 import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.block.*
+import me.znepb.zrm.block.cabinet.TrafficCabinet
+import me.znepb.zrm.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.zrm.block.cone.ChannelerBlock
 import me.znepb.zrm.block.cone.DrumBlock
 import me.znepb.zrm.block.cone.TrafficCone
@@ -9,6 +12,7 @@ import me.znepb.zrm.block.entity.*
 import me.znepb.zrm.block.entity.signals.ThreeHeadTrafficSignalBlockEntity
 import me.znepb.zrm.block.signals.ThreeHeadTrafficSignal
 import me.znepb.zrm.datagen.TagProvider.Companion.SIGNS
+import me.znepb.zrm.item.Linker
 import me.znepb.zrm.util.PostThickness
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
@@ -46,6 +50,8 @@ object Registry {
                 }
                 .build()
         )
+
+        PeripheralLookup.get().registerForBlockEntity({ be, _ -> be.peripheral }, ModBlockEntities.CABINET_BLOCK_ENTITY)
     }
 
     object ModBlockEntities {
@@ -75,6 +81,11 @@ object Registry {
             SIGNS,
             ModId("sign_block_entity")
         )
+        val CABINET_BLOCK_ENTITY = registerBlockEntities(
+            ::TrafficCabinetBlockEntity,
+            listOf(ModBlocks.TRAFFIC_CABINET),
+            ModId("traffic_cabinet_block_entity")
+        )
     }
 
     object ModBlocks {
@@ -103,6 +114,7 @@ object Registry {
 
         //
 
+        val TRAFFIC_CABINET = rBlock("traffic_cabinet", TrafficCabinet(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
         val THREE_HEAD_TRAFFIC_SIGNAL = rBlock("three_head_traffic_signal", ThreeHeadTrafficSignal(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
     }
 
@@ -133,6 +145,9 @@ object Registry {
         val SIGNAL_AHEAD = rItem(ModBlocks.SIGNAL_AHEAD, ::BlockItem, itemSettings())
         val ROAD_WORK_AHEAD = rItem(ModBlocks.ROAD_WORK_AHEAD, ::BlockItem, itemSettings())
 
+        val TRAFFIC_CABINET = rItem(ModBlocks.TRAFFIC_CABINET, ::BlockItem, itemSettings())
         val THREE_HEAD_TRAFFIC_SIGNAL = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())
+
+        val LINKER = rItem("linker", Linker(FabricItemSettings()))
     }
 }

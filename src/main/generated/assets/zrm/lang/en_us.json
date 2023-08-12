@@ -9,8 +9,11 @@
   "block.zrm.stop_sign_4_way": "4-way Stop Sign",
   "block.zrm.thick_post": "Thick Post",
   "block.zrm.thin_post": "Thin Post",
+  "block.zrm.three_head_traffic_signal": "Three-head Traffic Signal",
+  "block.zrm.traffic_cabinet": "Traffic Cabinet",
   "block.zrm.traffic_cone": "Traffic Cone",
   "block.zrm.yield_ahead_sign": "Yield Ahead Sign",
   "block.zrm.yield_sign": "Yield Sign",
+  "item.zrm.linker": "Linker",
   "itemGroup.zrm.main": "znepb's Road Mod"
 }

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "zrm:block/road_work_ahead"
+      "model": "zrm:block/road_work_ahead_sign"
     }
   }
 }

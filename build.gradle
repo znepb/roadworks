@@ -65,7 +65,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
-	modCompileOnly(files("libs/cc-tweaked-1.20.1-fabric-api-1.106.1.jar"))
+	modCompileOnly("cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric-api:${project.cct_version}")
 
 	// This is awful, I'm aware. But it's the only way I could get CC to work :p
 	modRuntimeOnly(files("libs/cc-tweaked-1.20.1-fabric-1.106.1.jar", "libs/Cobalt-0.7.1.jar", "libs/core-3.6.5.jar",

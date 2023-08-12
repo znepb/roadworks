@@ -43,13 +43,49 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addSign(generator, Registry.ModBlocks.STOP_SIGN_AHEAD, "stop_ahead_sign")
         addSign(generator, Registry.ModBlocks.YIELD_SIGN, "yield_sign")
         addSign(generator, Registry.ModBlocks.YIELD_SIGN_AHEAD, "yield_ahead_sign")
-        addSign(generator, Registry.ModBlocks.SIGNAL_AHEAD, "signal_ahead")
-        addSign(generator, Registry.ModBlocks.ROAD_WORK_AHEAD, "road_work_ahead")
+        addSign(generator, Registry.ModBlocks.SIGNAL_AHEAD, "signal_ahead_sign")
+        addSign(generator, Registry.ModBlocks.ROAD_WORK_AHEAD, "road_work_ahead_sign")
 
         addDoubleHighConeBlock(generator, Registry.ModBlocks.CHANNELER, "channeler")
         addDoubleHighConeBlock(generator, Registry.ModBlocks.DRUM, "drum")
 
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, ModId("block/three_head_traffic_signal")))
+
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.TRAFFIC_CONE, Identifier("zrm", "block/traffic_cone")))
+
+        TexturedModel.ORIENTABLE_WITH_BOTTOM
+            .get(Registry.ModBlocks.TRAFFIC_CABINET)
+            .textures{ m ->
+                m.put(TextureKey.TOP, TextureMap.getSubId(Registry.ModBlocks.TRAFFIC_CABINET, "_top"))
+                m.put(TextureKey.BOTTOM, TextureMap.getSubId(Registry.ModBlocks.TRAFFIC_CABINET, "_bottom"))
+                m.put(TextureKey.SIDE, TextureMap.getSubId(Registry.ModBlocks.TRAFFIC_CABINET, "_side"))
+                m.put(TextureKey.FRONT, TextureMap.getSubId(Registry.ModBlocks.TRAFFIC_CABINET, "_front"))
+            }
+            .upload(Registry.ModBlocks.TRAFFIC_CABINET, "", generator.modelCollector)
+
+        generator.blockStateCollector.accept(MultipartBlockStateSupplier.create(Registry.ModBlocks.TRAFFIC_CABINET)
+            .with(
+                When.create().set(Properties.HORIZONTAL_FACING, Direction.NORTH),
+                BlockStateVariant.create()
+                    .put(VariantSettings.Y, Rotation.R0)
+                    .put(VariantSettings.MODEL, ModId("block/traffic_cabinet"))
+            ).with(
+                When.create().set(Properties.HORIZONTAL_FACING, Direction.EAST),
+                BlockStateVariant.create()
+                    .put(VariantSettings.Y, Rotation.R90)
+                    .put(VariantSettings.MODEL, ModId("block/traffic_cabinet"))
+            ).with(
+                When.create().set(Properties.HORIZONTAL_FACING, Direction.SOUTH),
+                BlockStateVariant.create()
+                    .put(VariantSettings.Y, Rotation.R180)
+                    .put(VariantSettings.MODEL, ModId("block/traffic_cabinet"))
+            ).with(
+                When.create().set(Properties.HORIZONTAL_FACING, Direction.WEST),
+                BlockStateVariant.create()
+                    .put(VariantSettings.Y, Rotation.R270)
+                    .put(VariantSettings.MODEL, ModId("block/traffic_cabinet"))
+            )
+        )
 
         signals.forEach { addSignal(generator, it) }
     }
@@ -95,5 +131,6 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
     }
 
     override fun generateItemModels(generator: ItemModelGenerator) {
+        generator.register(Registry.ModItems.LINKER, Models.GENERATED)
     }
 }

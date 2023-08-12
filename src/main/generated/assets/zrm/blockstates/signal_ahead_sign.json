@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "zrm:block/signal_ahead"
+      "model": "zrm:block/signal_ahead_sign"
     }
   }
 }

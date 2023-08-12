@@ -1,5 +1,6 @@
 package me.znepb.zrm.block.signals
 
+import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.PostBlock
 import me.znepb.zrm.block.PostMountableBlock
@@ -20,6 +21,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
+import net.minecraft.world.WorldAccess
 
 class ThreeHeadTrafficSignal(settings: Settings) :
     PostMountableBlock<ThreeHeadTrafficSignalBlockEntity>(settings, ::ThreeHeadTrafficSignalBlockEntity, Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY)
@@ -39,6 +41,15 @@ class ThreeHeadTrafficSignal(settings: Settings) :
     ): BlockEntityTicker<T>? {
         if (world.isClient) return null
         return checkType(type, Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY, ThreeHeadTrafficSignalBlockEntity.Companion::onTick)
+    }
+
+    // Implemented by me.znepb.zrm.mixin.BlockMixin - actually is used!
+    fun beforeBroken(world: WorldAccess, pos: BlockPos, state: BlockState) {
+        val blockEntity = world.getBlockEntity(pos)
+
+        if(blockEntity is ThreeHeadTrafficSignalBlockEntity) {
+            blockEntity.remove()
+        }
     }
 
     override fun getCollisionShape(

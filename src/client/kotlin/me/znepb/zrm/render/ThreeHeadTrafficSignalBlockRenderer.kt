@@ -85,19 +85,19 @@ class ThreeHeadTrafficSignalBlockRenderer(private val ctx: BlockEntityRendererFa
         matrices.push()
         rotateForSignalRender(matrices, direction)
         matrices.translate(0.0, 0.25, translateBy)
-        renderSignal( if(entity.green) "green_on" else "green_off", matrices, vertexConsumers, light, overlay)
+        renderSignal( if(entity.getGreen()) "green_on" else "green_off", matrices, vertexConsumers, light, overlay)
         matrices.pop()
 
         matrices.push()
         rotateForSignalRender(matrices, direction)
         matrices.translate(0.0, 0.0, translateBy)
-        renderSignal(if(entity.yellow) "yellow_on" else "yellow_off", matrices, vertexConsumers, light, overlay)
+        renderSignal(if(entity.getYellow()) "yellow_on" else "yellow_off", matrices, vertexConsumers, light, overlay)
         matrices.pop()
 
         matrices.push()
         rotateForSignalRender(matrices, direction)
         matrices.translate(0.0, -0.25, translateBy)
-        renderSignal(if(entity.red) "red_on" else "red_off", matrices, vertexConsumers, light, overlay)
+        renderSignal(if(entity.getRed()) "red_on" else "red_off", matrices, vertexConsumers, light, overlay)
         matrices.pop()
     }
 }

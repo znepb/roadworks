@@ -2,7 +2,7 @@ package me.znepb.zrm.item
 
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.cabinet.TrafficCabinetBlockEntity
-import me.znepb.zrm.block.entity.signals.ThreeHeadTrafficSignalBlockEntity
+import me.znepb.zrm.block.signals.TrafficSignalBlockEntityBase
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
@@ -26,7 +26,7 @@ class Linker(settings: Settings) : Item(settings) {
         val MAX_SIGNAL_DISTANCE = 24.0
     }
 
-    private fun getCabinet(blockEntity: ThreeHeadTrafficSignalBlockEntity, context: ItemUsageContext): TrafficCabinetBlockEntity? {
+    private fun getCabinet(blockEntity: TrafficSignalBlockEntityBase, context: ItemUsageContext): TrafficCabinetBlockEntity? {
         val be = context.world?.getBlockEntity(blockEntity.getLinkPos())
         if(be is TrafficCabinetBlockEntity) {
             return be
@@ -34,17 +34,17 @@ class Linker(settings: Settings) : Item(settings) {
     }
 
     private fun unlink(
-        signal: ThreeHeadTrafficSignalBlockEntity,
+        signal: TrafficSignalBlockEntityBase,
         cabinet: TrafficCabinetBlockEntity,
         context: ItemUsageContext)
     {
         signal.unlink()
-        cabinet.removeThreeHeadSignal(context.blockPos)
+        cabinet.removeSignal(context.blockPos)
         context.player?.sendMessage(Text.literal("Signal unlinked"), true)
     }
 
     private fun alreadyLinked(
-        signal: ThreeHeadTrafficSignalBlockEntity,
+        signal: TrafficSignalBlockEntityBase,
         cabinet: TrafficCabinetBlockEntity,
         context: ItemUsageContext
     ) {
@@ -55,7 +55,7 @@ class Linker(settings: Settings) : Item(settings) {
                 // Notify player this is already linked
                 Text.literal(
                     "Block is already linked as ID " +
-                            "${cabinet.getIdentifierOfThreeHeadSignal(context.blockPos)}. " +
+                            "${cabinet.getSignalIdentifierFromBlockPos(context.blockPos)}. " +
                             "Crouch-Right click to unlink."
                 ),
                 true
@@ -63,7 +63,7 @@ class Linker(settings: Settings) : Item(settings) {
         }
     }
 
-    private fun linkThreeHead(signal: ThreeHeadTrafficSignalBlockEntity, context: ItemUsageContext): ActionResult {
+    private fun linkThreeHead(signal: TrafficSignalBlockEntityBase, context: ItemUsageContext): ActionResult {
         fun startLink() {
             linking = context.blockPos
             linkingWith = Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY
@@ -90,7 +90,7 @@ class Linker(settings: Settings) : Item(settings) {
             return
         }
 
-        if(cabinet.getTotalSignalCount() >= MAX_SIGNALS) {
+        if(cabinet.getTotalSignals() >= MAX_SIGNALS) {
             // Too many signals connected to this box!
             context.player?.sendMessage(Text.literal("There are too many signals connected to this box! Max is $MAX_SIGNALS"), true)
             return
@@ -98,7 +98,7 @@ class Linker(settings: Settings) : Item(settings) {
 
         val linkedFrom = context.world.getBlockEntity(linking)
 
-        if(linkedFrom !is ThreeHeadTrafficSignalBlockEntity) {
+        if(linkedFrom !is TrafficSignalBlockEntityBase) {
             // Traffic signal disappeared somehow
             context.player?.sendMessage(Text.literal("The signal is no longer there"), true)
             return
@@ -141,7 +141,7 @@ class Linker(settings: Settings) : Item(settings) {
             val blockEntity = context.world?.getBlockEntity(context.blockPos)
 
             if(linking == null) {
-                if (blockEntity is ThreeHeadTrafficSignalBlockEntity) {
+                if (blockEntity is TrafficSignalBlockEntityBase) {
                     return linkThreeHead(blockEntity, context)
                 } else {
                     context.player?.sendMessage(Text.literal("Right-click a signal or traffic cabinet"), true)

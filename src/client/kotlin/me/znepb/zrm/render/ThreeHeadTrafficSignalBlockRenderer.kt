@@ -1,27 +1,19 @@
 package me.znepb.zrm.render
 
 import me.znepb.zrm.Main.ModId
-import me.znepb.zrm.Main.logger
-import me.znepb.zrm.block.SignBlock
-import me.znepb.zrm.block.entity.PostMountableBlockEntity
 import me.znepb.zrm.block.entity.PostMountableBlockEntity.Companion.getThickest
-import me.znepb.zrm.block.entity.SignBlockEntity
-import me.znepb.zrm.block.entity.signals.ThreeHeadTrafficSignalBlockEntity
+import me.znepb.zrm.block.signals.SignalLight
+import me.znepb.zrm.block.signals.ThreeHeadTrafficSignalBlockEntity
 import me.znepb.zrm.render.SignalRenderer.Companion.renderSignal
 import me.znepb.zrm.util.PostThickness
 import me.znepb.zrm.util.RenderUtils
-import net.minecraft.client.model.ModelPart
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.TexturedRenderLayers
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import org.joml.Quaternionf
-import java.util.*
-import kotlin.math.cos
 
 class ThreeHeadTrafficSignalBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) :
     AbstractPostMountableRenderer<ThreeHeadTrafficSignalBlockEntity>() {
@@ -74,8 +66,6 @@ class ThreeHeadTrafficSignalBlockRenderer(private val ctx: BlockEntityRendererFa
             }).toDouble() / 16
         }.toDouble()
 
-
-
         matrices.push()
         rotateForSignalRender(matrices, direction)
         matrices.translate(0.0, 0.0, translateBy)
@@ -85,19 +75,19 @@ class ThreeHeadTrafficSignalBlockRenderer(private val ctx: BlockEntityRendererFa
         matrices.push()
         rotateForSignalRender(matrices, direction)
         matrices.translate(0.0, 0.25, translateBy)
-        renderSignal( if(entity.getGreen()) "green_on" else "green_off", matrices, vertexConsumers, light, overlay)
+        renderSignal( if(entity.getSignal(SignalLight.GREEN)) "green_on" else "green_off", matrices, vertexConsumers, light, overlay)
         matrices.pop()
 
         matrices.push()
         rotateForSignalRender(matrices, direction)
         matrices.translate(0.0, 0.0, translateBy)
-        renderSignal(if(entity.getYellow()) "yellow_on" else "yellow_off", matrices, vertexConsumers, light, overlay)
+        renderSignal(if(entity.getSignal(SignalLight.YELLOW)) "yellow_on" else "yellow_off", matrices, vertexConsumers, light, overlay)
         matrices.pop()
 
         matrices.push()
         rotateForSignalRender(matrices, direction)
         matrices.translate(0.0, -0.25, translateBy)
-        renderSignal(if(entity.getRed()) "red_on" else "red_off", matrices, vertexConsumers, light, overlay)
+        renderSignal(if(entity.getSignal(SignalLight.RED)) "red_on" else "red_off", matrices, vertexConsumers, light, overlay)
         matrices.pop()
     }
 }

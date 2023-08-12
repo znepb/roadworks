@@ -1,13 +1,8 @@
 package me.znepb.zrm.block.signals
 
-import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.PostBlock
-import me.znepb.zrm.block.PostMountableBlock
-import me.znepb.zrm.block.SignBlock
 import me.znepb.zrm.block.entity.PostMountableBlockEntity
-import me.znepb.zrm.block.entity.SignBlockEntity
-import me.znepb.zrm.block.entity.signals.ThreeHeadTrafficSignalBlockEntity
 import me.znepb.zrm.util.PostThickness
 import me.znepb.zrm.util.RotateVoxelShape
 import net.minecraft.block.BlockState
@@ -21,10 +16,10 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
-import net.minecraft.world.WorldAccess
 
-class ThreeHeadTrafficSignal(settings: Settings) :
-    PostMountableBlock<ThreeHeadTrafficSignalBlockEntity>(settings, ::ThreeHeadTrafficSignalBlockEntity, Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY)
+class ThreeHeadTrafficSignal(settings: Settings)
+    : TrafficSignalBase<ThreeHeadTrafficSignalBlockEntity>
+    (settings, ::ThreeHeadTrafficSignalBlockEntity)
 {
     companion object {
         val SIGNAL_SHAPE_WALL = createCuboidShape(5.0, 1.0, 15.0, 11.0, 15.0, 16.0)
@@ -37,19 +32,10 @@ class ThreeHeadTrafficSignal(settings: Settings) :
     override fun <T : BlockEntity?> getTicker(
         world: World,
         state: BlockState,
-        type: BlockEntityType<T>
+        type: BlockEntityType<T>?
     ): BlockEntityTicker<T>? {
         if (world.isClient) return null
-        return checkType(type, Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY, ThreeHeadTrafficSignalBlockEntity.Companion::onTick)
-    }
-
-    // Implemented by me.znepb.zrm.mixin.BlockMixin - actually is used!
-    fun beforeBroken(world: WorldAccess, pos: BlockPos, state: BlockState) {
-        val blockEntity = world.getBlockEntity(pos)
-
-        if(blockEntity is ThreeHeadTrafficSignalBlockEntity) {
-            blockEntity.remove()
-        }
+        return checkType(type, Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY, TrafficSignalBlockEntityBase.Companion::onTick)
     }
 
     override fun getCollisionShape(

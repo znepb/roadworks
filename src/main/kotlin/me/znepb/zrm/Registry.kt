@@ -9,14 +9,15 @@ import me.znepb.zrm.block.cone.ChannelerBlock
 import me.znepb.zrm.block.cone.DrumBlock
 import me.znepb.zrm.block.cone.TrafficCone
 import me.znepb.zrm.block.entity.*
-import me.znepb.zrm.block.entity.signals.ThreeHeadTrafficSignalBlockEntity
 import me.znepb.zrm.block.signals.ThreeHeadTrafficSignal
+import me.znepb.zrm.block.signals.ThreeHeadTrafficSignalBlockEntity
 import me.znepb.zrm.datagen.TagProvider.Companion.SIGNS
 import me.znepb.zrm.item.Linker
 import me.znepb.zrm.util.PostThickness
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
+import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder.Factory
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -56,21 +57,16 @@ object Registry {
 
     object ModBlockEntities {
         private fun <T : BlockEntity> registerBlockEntities(
-            factory: FabricBlockEntityTypeBuilder.Factory<T>,
+            factory: Factory<T>,
             objects: List<Block>,
             identifier: Identifier
-        ): BlockEntityType<T>? {
+        ): BlockEntityType<T> {
             val entity = FabricBlockEntityTypeBuilder.create(factory)
             objects.forEach { entity.addBlock(it) }
 
             return Registry.register(BLOCK_ENTITY_TYPE, identifier, entity.build())
         }
 
-        val THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY = registerBlockEntities(
-            ::ThreeHeadTrafficSignalBlockEntity,
-            listOf(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL),
-            ModId("three_head_traffic_signal_block_entity")
-        )
         val POST_BLOCK_ENTITY = registerBlockEntities(
             ::PostBlockEntity,
             listOf(ModBlocks.THIN_POST, ModBlocks.POST, ModBlocks.THICK_POST),
@@ -85,6 +81,11 @@ object Registry {
             ::TrafficCabinetBlockEntity,
             listOf(ModBlocks.TRAFFIC_CABINET),
             ModId("traffic_cabinet_block_entity")
+        )
+        val THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY = registerBlockEntities(
+            ::ThreeHeadTrafficSignalBlockEntity,
+            listOf(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL),
+            ModId("three_head_traffic_signal_block_entity")
         )
     }
 

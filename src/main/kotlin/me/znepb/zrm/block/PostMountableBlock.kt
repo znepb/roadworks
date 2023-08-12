@@ -18,7 +18,7 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
 open class PostMountableBlock<T : PostMountableBlockEntity>
-    (settings: Settings, private val blockEntityFactory: BlockEntityFactory<T>, private val entityType: BlockEntityType<T>?)
+    (settings: Settings, private val blockEntityFactory: BlockEntityFactory<T>)
     : BlockWithEntity(settings), BlockEntityProvider
 {
     private var placementContext: ItemPlacementContext? = null

@@ -1,39 +1,28 @@
 package me.znepb.zrm.block.cabinet
 
 import dan200.computercraft.api.lua.LuaFunction
-import dan200.computercraft.api.lua.LuaTable
-import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.lua.ObjectLuaTable
 import dan200.computercraft.api.peripheral.IPeripheral
-import me.znepb.zrm.Main.logger
-import me.znepb.zrm.block.entity.signals.ThreeHeadTrafficSignalBlockEntity
-import me.znepb.zrm.util.MiscUtils.Companion.blockPosFromNbtIntArray
-import net.minecraft.block.entity.BlockEntity
+import me.znepb.zrm.block.signals.SignalLight
+import me.znepb.zrm.block.signals.SignalType
+import me.znepb.zrm.block.signals.TrafficSignalBlockEntityBase
 import net.minecraft.nbt.NbtCompound
-import org.spongepowered.asm.mixin.Mutable
 
 class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPeripheral {
     override fun getType() = "traffic_cabinet"
     override fun getTarget() = blockEntity
 
-    fun getThreeHeadSignalBlockEntity(id: Int): ThreeHeadTrafficSignalBlockEntity? {
-        val signal = blockEntity.getSignalBlockEntity(id)
-
-        return if(signal is ThreeHeadTrafficSignalBlockEntity) {
-            signal
-        } else {
-            null
-        }
+    fun getSignalBlockEntity(id: Int): TrafficSignalBlockEntityBase? {
+        val signal = blockEntity.getSignalBlockEntityFromId(id)
+        return if(signal is TrafficSignalBlockEntityBase) signal else null
     }
 
     /// Returns whether this traffic cabinet has the specified ID available.
     @LuaFunction
     fun hasId(id: Int): Boolean {
-        blockEntity.getThreeHeadSignals().forEach {
-            if(it is NbtCompound) {
-                if(it.getInt("id") == id) {
-                    return true
-                }
+        blockEntity.getSignals().forEach {
+            if(it is NbtCompound && it.getInt("id") == id) {
+                return true
             }
         }
 
@@ -43,10 +32,8 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     /// Returns whether a signal type has the specified light.
     @LuaFunction
     fun hasLight(type: String, light: String): Boolean {
-        return when(type) {
-            "threeHead" -> light == "red" || light == "green" || light == "yellow"
-            else -> false
-        }
+        val info = SignalType.fromType(type)
+        return info != null && info.lights.contains(SignalLight.fromName(light))
     }
 
     /// Gets the signal's type from its ID.
@@ -54,11 +41,9 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     fun getSignalType(id: Int): String? {
         if(!hasId(id)) return null
 
-        blockEntity.getThreeHeadSignals().forEach {
+        blockEntity.getSignals().forEach {
             if(it is NbtCompound) {
-                if(it.getInt("id") == id) {
-                    return "threeHead"
-                }
+                return blockEntity.getIdType(it.getInt("id"))?.type
             }
         }
 
@@ -70,7 +55,11 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     fun getSignalsOfType(type: String): List<Int> {
         val list = mutableListOf<Int>()
 
-        blockEntity.getThreeHeadSignals().forEach { if(it is NbtCompound) { list.add(it.getInt("id")) } }
+        blockEntity.getSignals().forEach {
+            if(it is NbtCompound && blockEntity.getIdType(it.getInt("id"))?.type == type) {
+                list.add(it.getInt("id"))
+            }
+        }
 
         return list
     }
@@ -80,11 +69,11 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     fun getSignals(): List<Any> {
         val signals = mutableListOf<ObjectLuaTable>();
 
-        blockEntity.getThreeHeadSignals().forEach {
+        blockEntity.getSignals().forEach {
             if(it is NbtCompound) {
-                val map = hashMapOf<Any, Any>()
+                val map = hashMapOf<Any, Any?>()
                 map["id"] = it.getInt("id")
-                map["type"] = "threeHead"
+                map["type"] = blockEntity.getIdType(it.getInt("id"))?.type
 
                 signals.add(ObjectLuaTable(map))
             }
@@ -94,17 +83,19 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     }
 
     /// Sets the colors of a three-head signal.
-    @LuaFunction(mainThread = true)
+    @LuaFunction
     fun setThreeHead(id: Int, red: Boolean, yellow: Boolean, green: Boolean): Boolean {
-        val entity = getThreeHeadSignalBlockEntity(id)
-        return if(entity != null) {
-            entity.setRed(red)
-            entity.setYellow(yellow)
-            entity.setGreen(green)
-            true
-        } else {
-            false
+        val entity = getSignalBlockEntity(id)
+
+        if(entity?.getSignalType() == SignalType.THREE_HEAD) {
+            entity.queueSignalSet(SignalLight.RED, red)
+            entity.queueSignalSet(SignalLight.YELLOW, yellow)
+            entity.queueSignalSet(SignalLight.GREEN, green)
+
+            return true
         }
+
+        return false
     }
 
     override fun equals(other: IPeripheral?): Boolean {

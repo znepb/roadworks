@@ -1,9 +1,10 @@
 package me.znepb.zrm.block.cabinet
 
-import dan200.computercraft.api.peripheral.IPeripheral
 import me.znepb.zrm.Main.logger
 import me.znepb.zrm.Registry
-import me.znepb.zrm.block.entity.signals.ThreeHeadTrafficSignalBlockEntity
+import me.znepb.zrm.block.signals.SignalLight
+import me.znepb.zrm.block.signals.SignalType
+import me.znepb.zrm.block.signals.TrafficSignalBlockEntityBase
 import me.znepb.zrm.util.MiscUtils.Companion.blockPosFromNbtIntArray
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -17,16 +18,18 @@ class TrafficCabinetBlockEntity(
     state: BlockState
 ) : BlockEntity(Registry.ModBlockEntities.CABINET_BLOCK_ENTITY, pos, state) {
     val peripheral = TrafficCabinetPeripheral(this)
-    private var threeHeadSignals = NbtList()
+    private var signals = NbtList()
     private var nextID = 1
+    private val idTypeCache = HashMap<Int, SignalType>()
 
-    fun getThreeHeadSignals() = threeHeadSignals
-    fun getTotalSignalCount(): Int {
-        return threeHeadSignals.size
+    fun getSignals() = signals
+    fun getTotalSignals(): Int = signals.size
+    fun getIdType(id: Int): SignalType? {
+        return idTypeCache[id]
     }
 
-    fun getSignalBlockEntity(id: Int): BlockEntity? {
-        val result = threeHeadSignals.filter { it is NbtCompound && it.getInt("id") == id }
+    fun getSignalBlockEntityFromId(id: Int): BlockEntity? {
+        val result = signals.filter { it is NbtCompound && it.getInt("id") == id }
         if(result.isEmpty()) return null
         val element = result[0]
 
@@ -39,7 +42,7 @@ class TrafficCabinetBlockEntity(
                     return entity
                 } else {
                     // Entity disappeared!
-                    removeThreeHeadSignal(id)
+                    removeSignal(id)
                     logger.warn("Signal with ID $id was removed incorrectly, removing now")
                     return null
                 }
@@ -49,8 +52,8 @@ class TrafficCabinetBlockEntity(
         return null
     }
 
-    fun getIdentifierOfThreeHeadSignal(pos: BlockPos): Int? {
-        threeHeadSignals.forEach {
+    fun getSignalIdentifierFromBlockPos(pos: BlockPos): Int? {
+        signals.forEach {
             if (it is NbtCompound) {
                 val list = it.getIntArray("position")
                 if (list[0] == pos.x && list[1] == pos.y && list[2] == pos.z) {
@@ -62,18 +65,19 @@ class TrafficCabinetBlockEntity(
         return null
     }
 
-    fun addThreeHeadSignal(pos: BlockPos): Int? {
+    fun addSignal(pos: BlockPos): Int? {
         val blockEntity = this.world?.getBlockEntity(pos)
 
-        if(blockEntity is ThreeHeadTrafficSignalBlockEntity) {
+        if(blockEntity is TrafficSignalBlockEntityBase) {
             val data = NbtCompound()
             data.putInt("id", nextID)
             data.put("position", NbtIntArray(listOf(pos.x, pos.y, pos.z)))
-            threeHeadSignals.add(data)
 
-            blockEntity.setRed(true)
-            blockEntity.setYellow(false)
-            blockEntity.setGreen(false)
+            signals.add(data)
+            blockEntity.setSignal(SignalLight.RED, false)
+            blockEntity.setSignal(SignalLight.YELLOW, false)
+            blockEntity.setSignal(SignalLight.GREEN, false)
+            idTypeCache[nextID] = blockEntity.getSignalType()
 
             nextID += 1
             this.markDirty()
@@ -84,53 +88,47 @@ class TrafficCabinetBlockEntity(
         return null
     }
 
-    fun removeThreeHeadSignal(pos: BlockPos) {
-        getIdentifierOfThreeHeadSignal(pos)?.let { removeThreeHeadSignal(it) }
+    fun removeSignal(pos: BlockPos) {
+        getSignalIdentifierFromBlockPos(pos)?.let { removeSignal(it) }
     }
 
-    fun removeThreeHeadSignal(identifier: Int) {
-        val result = threeHeadSignals.filter { it is NbtCompound && it.getInt("id") == identifier }
+    fun removeSignal(identifier: Int) {
+        val result = signals.filter { it is NbtCompound && it.getInt("id") == identifier }
         val element = result[0]
 
         if(element is NbtCompound) {
             val blockEntity = world?.getBlockEntity(blockPosFromNbtIntArray(element.getIntArray("position")))
-            if(blockEntity is ThreeHeadTrafficSignalBlockEntity) {
+            if(blockEntity is TrafficSignalBlockEntityBase) {
                 blockEntity.unlink()
             }
         }
 
-        if(element != null) threeHeadSignals.remove(element)
+        if(element != null) signals.remove(element)
 
         this.markDirty()
     }
 
-    fun peripheral(): IPeripheral {
-        return peripheral
-    }
-
     fun remove() {
-        if(threeHeadSignals.size > 0) {
-            for (i in 0 until threeHeadSignals.size) {
-                val element = threeHeadSignals[0]
+        if(signals.size > 0) {
+            for (i in 0 until signals.size) {
+                val element = signals[0]
 
                 if (element is NbtCompound) {
-                    removeThreeHeadSignal(element.getInt("id"))
+                    removeSignal(element.getInt("id"))
                 }
             }
         }
-
-        super.markRemoved()
     }
 
     override fun readNbt(nbt: NbtCompound) {
         super.readNbt(nbt)
-        threeHeadSignals = if(nbt.contains("threeHeadSignals")) nbt.get("threeHeadSignals") as NbtList else NbtList()
+        signals = if(nbt.contains("signals")) nbt.get("signals") as NbtList else NbtList()
         nextID = nbt.getInt("nextID")
         this.markDirty()
     }
 
     override fun writeNbt(nbt: NbtCompound) {
-        nbt.put("threeHeadSignals", threeHeadSignals)
+        nbt.put("signals", signals)
         nbt.putInt("nextID", nextID)
 
         super.writeNbt(nbt)

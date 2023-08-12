@@ -18,7 +18,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
 class SignBlock(settings: Settings, val frontTexture: String, val backTexture: String):
-    PostMountableBlock<SignBlockEntity>(settings, ::SignBlockEntity, Registry.ModBlockEntities.SIGN_BLOCK_ENTITY) {
+    PostMountableBlock<SignBlockEntity>(settings, ::SignBlockEntity) {
 
     companion object {
         val SIGN_SHAPE_WALL = createCuboidShape(0.0, 0.0, 15.5, 16.0, 16.0, 16.0)

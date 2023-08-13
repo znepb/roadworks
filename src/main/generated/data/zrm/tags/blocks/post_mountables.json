@@ -11,6 +11,8 @@
     "zrm:three_head_traffic_signal",
     "zrm:three_head_traffic_signal_right",
     "zrm:three_head_traffic_signal_straight",
-    "zrm:three_head_traffic_signal_left"
+    "zrm:three_head_traffic_signal_left",
+    "zrm:five_head_traffic_signal_left",
+    "zrm:five_head_traffic_signal_right"
   ]
 }

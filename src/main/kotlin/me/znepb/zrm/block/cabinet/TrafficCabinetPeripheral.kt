@@ -113,6 +113,32 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
 
     }
 
+    @LuaFunction
+    fun setFiveHead(id: Int, red: Boolean, yellowLeft: Boolean, greenLeft: Boolean, yellowRight: Boolean, greenRight: Boolean): Boolean {
+        val type = blockEntity.getTypeOfId(id)
+
+        return when (type) {
+            SignalType.FIVE_HEAD_LEFT -> {
+                blockEntity.queueSignalSet(id, SignalLight.RED, red)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW, yellowRight)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN, greenRight)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW_LEFT, yellowLeft)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN_LEFT, greenLeft)
+                true
+            }
+            SignalType.FIVE_HEAD_RIGHT -> {
+                blockEntity.queueSignalSet(id, SignalLight.RED, red)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW, yellowLeft)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN, greenLeft)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW_RIGHT, yellowRight)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN_RIGHT, greenRight)
+                true
+            }
+            else -> false
+        }
+
+    }
+
     override fun equals(other: IPeripheral?): Boolean {
         return other is TrafficCabinetPeripheral
     }

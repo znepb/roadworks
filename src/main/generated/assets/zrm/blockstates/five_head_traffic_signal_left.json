@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "zrm:block/five_head_traffic_signal_left"
+    }
+  }
+}

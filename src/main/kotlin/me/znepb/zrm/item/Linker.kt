@@ -23,7 +23,7 @@ class Linker(settings: Settings) : Item(settings) {
 
     companion object {
         val MAX_SIGNALS = 16
-        val MAX_SIGNAL_DISTANCE = 24.0
+        val MAX_SIGNAL_DISTANCE = 32.0
     }
 
     private fun getCabinet(blockEntity: AbstractTrafficSignalBlockEntity, context: ItemUsageContext): TrafficCabinetBlockEntity? {

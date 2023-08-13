@@ -1,10 +1,7 @@
 package me.znepb.zrm.init
 
 import me.znepb.zrm.ZrmClient.logger
-import me.znepb.zrm.render.AbstractThreeHeadSignalBlockRenderer
-import me.znepb.zrm.render.PostBlockRenderer
-import me.znepb.zrm.render.SignalRenderer
-import me.znepb.zrm.render.ThreeHeadTrafficSignalBlockRenderer
+import me.znepb.zrm.render.*
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier
 
@@ -20,6 +17,7 @@ class ModelLoader {
             PostBlockRenderer.POST_MEDIUM_EXT_MODEL,
             PostBlockRenderer.POST_MEDIUM_FOOTER_MODEL,
             PostBlockRenderer.POST_MEDIUM_MID_MODEL,
+            AbstractFiveHeadSignalBlockRenderer.SIGNAL_FRAME_5,
             AbstractThreeHeadSignalBlockRenderer.SIGNAL_FRAME_3,
             AbstractThreeHeadSignalBlockRenderer.SIGNAL
         )

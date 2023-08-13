@@ -19,21 +19,11 @@ enum class SignalLight(val light: String, val genericType: SignalLight, val isGe
 
     companion object {
         fun fromName(name: String): SignalLight? {
-            return when (name) {
-                "green" -> GREEN
-                "yellow" -> YELLOW
-                "red" -> RED
-                "green_right" -> GREEN_RIGHT
-                "yellow_right" -> YELLOW_RIGHT
-                "red_right" -> RED_RIGHT
-                "green_straight" -> GREEN_STRAIGHT
-                "yellow_straight" -> YELLOW_STRAIGHT
-                "red_straight" -> RED_STRAIGHT
-                "green_left" -> GREEN_LEFT
-                "yellow_left" -> YELLOW_LEFT
-                "red_left" -> RED_LEFT
-                else -> null
+            entries.forEach {
+                if(it.name == name) return it
             }
+
+            return null
         }
 
         fun getReds(block: Block): List<SignalLight> {
@@ -42,6 +32,8 @@ enum class SignalLight(val light: String, val genericType: SignalLight, val isGe
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT -> listOf(RED_LEFT)
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT -> listOf(RED_RIGHT)
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT -> listOf(RED_STRAIGHT)
+                Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT -> listOf(RED)
+                Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT -> listOf(RED)
                 else -> listOf()
             }
         }
@@ -52,6 +44,8 @@ enum class SignalLight(val light: String, val genericType: SignalLight, val isGe
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT -> listOf(GREEN_LEFT)
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT -> listOf(GREEN_RIGHT)
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT -> listOf(GREEN_STRAIGHT)
+                Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT -> listOf(GREEN_LEFT, GREEN)
+                Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT -> listOf(GREEN_RIGHT, GREEN)
                 else -> listOf()
             }
         }
@@ -62,6 +56,8 @@ enum class SignalLight(val light: String, val genericType: SignalLight, val isGe
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT -> listOf(YELLOW_LEFT)
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT -> listOf(YELLOW_RIGHT)
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT -> listOf(YELLOW_STRAIGHT)
+                Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT -> listOf(YELLOW_LEFT, YELLOW)
+                Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT -> listOf(YELLOW_RIGHT, YELLOW)
                 else -> listOf()
             }
         }

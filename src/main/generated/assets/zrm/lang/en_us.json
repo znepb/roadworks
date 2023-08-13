@@ -1,6 +1,8 @@
 {
   "block.zrm.channeler": "Channeler",
   "block.zrm.drum": "Drum",
+  "block.zrm.five_head_traffic_signal_left": "Five-head Traffic Signal Left",
+  "block.zrm.five_head_traffic_signal_right": "Five-head Traffic Signal Right",
   "block.zrm.post": "Post",
   "block.zrm.road_work_ahead_sign": "Road Work Ahead Sign",
   "block.zrm.signal_ahead_sign": "Signal Ahead Sign",

@@ -102,6 +102,16 @@ object Registry {
             listOf(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT),
             ModId("three_head_traffic_signal_straight_block_entity")
         )
+        val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT_BLOCK_ENTITY = registerBlockEntities(
+            ::FiveHeadTrafficSignalLeftBlockEntity,
+            listOf(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT),
+            ModId("five_head_traffic_signal_left_block_entity")
+        )
+        val FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT_BLOCK_ENTITY = registerBlockEntities(
+            ::FiveHeadTrafficSignalRightBlockEntity,
+            listOf(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT),
+            ModId("five_head_traffic_signal_right_block_entity")
+        )
     }
 
     object ModBlocks {
@@ -169,7 +179,14 @@ object Registry {
             "three_head_traffic_signal_straight",
             ThreeHeadTrafficSignalStraight(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
         )
-
+        val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT = rBlock(
+            "five_head_traffic_signal_left",
+            FiveHeadTrafficSignalLeft(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
+        val FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT = rBlock(
+            "five_head_traffic_signal_right",
+            FiveHeadTrafficSignalRight(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
     }
 
     object ModItems {
@@ -204,6 +221,8 @@ object Registry {
         val THREE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
         val THREE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem, itemSettings())
         val THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT, ::BlockItem, itemSettings())
+        val FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem, itemSettings())
+        val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
     }

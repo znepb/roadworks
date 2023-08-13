@@ -7,15 +7,6 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.WorldAccess
 
-abstract class AbstractTrafficSignalBase<T : AbstractPostMountableBlockEntity>
+abstract class AbstractTrafficSignal<T : AbstractPostMountableBlockEntity>
     (settings: Settings, blockEntityFactory: BlockEntityType.BlockEntityFactory<T>)
     : AbstractPostMountableBlock<T>(settings, blockEntityFactory)
-{
-    fun beforeBroken(world: WorldAccess, pos: BlockPos, state: BlockState) {
-        val blockEntity = world.getBlockEntity(pos)
-
-        if(blockEntity is AbstractTrafficSignalBlockEntityBase) {
-            blockEntity.remove()
-        }
-    }
-}

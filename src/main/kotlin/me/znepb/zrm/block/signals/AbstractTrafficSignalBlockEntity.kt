@@ -11,7 +11,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class AbstractTrafficSignalBlockEntityBase
+abstract class AbstractTrafficSignalBlockEntity
     (
         pos: BlockPos,
         state: BlockState,
@@ -32,7 +32,7 @@ abstract class AbstractTrafficSignalBlockEntityBase
     }
 
     companion object {
-        fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: AbstractTrafficSignalBlockEntityBase) {
+        fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: AbstractTrafficSignalBlockEntity) {
             blockEntity.onTick(world, pos, state, blockEntity)
         }
     }
@@ -57,7 +57,12 @@ abstract class AbstractTrafficSignalBlockEntityBase
             linkY = cabinetBlockEntity.pos.y
             linkZ = cabinetBlockEntity.pos.z
             linked = true
+
             this.markDirty()
+
+            SignalLight.getReds(cachedState.block).forEach { queueSignalSet(it, true) }
+            SignalLight.getGreens(cachedState.block).forEach { queueSignalSet(it, false) }
+            SignalLight.getYellows(cachedState.block).forEach { queueSignalSet(it, false) }
 
             return id
         }
@@ -81,10 +86,8 @@ abstract class AbstractTrafficSignalBlockEntityBase
         }
     }
 
-    fun reset() {
-        signalType.lights.forEach {
-            signalState[it] = false
-        }
+    private fun reset() {
+        this.linked = false
         this.markDirty()
     }
 
@@ -104,18 +107,18 @@ abstract class AbstractTrafficSignalBlockEntityBase
 
     override fun readExtraNBT(nbt: NbtCompound) {
         signalType.lights.forEach {
-            signalState[it] = nbt.getBoolean(it.name)
+            signalState[it] = nbt.getBoolean(it.light)
         }
 
         linked = nbt.getBoolean("linked")
         linkX = nbt.getInt("linkX")
-        linkY = nbt.getInt("linkX")
-        linkZ = nbt.getInt("linkX")
+        linkY = nbt.getInt("linkY")
+        linkZ = nbt.getInt("linkZ")
     }
 
     override fun writeExtraNBT(nbt: NbtCompound) {
         signalType.lights.forEach {
-            signalState[it]?.let { it1 -> nbt.putBoolean(it.name, it1) }
+            signalState[it]?.let { it1 -> nbt.putBoolean(it.light, it1) }
         }
 
         nbt.putBoolean("linked", linked)
@@ -132,18 +135,26 @@ abstract class AbstractTrafficSignalBlockEntityBase
         return createNbt()
     }
 
-    fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: AbstractTrafficSignalBlockEntityBase) {
-        if(!blockEntity.isLinked() && !world.isClient) {
-            val ticks = world.server?.ticks
-            if(ticks != null) {
-                setSignal(SignalLight.RED, (ticks % 40) > 20);
+    fun onTick(world: World, pos: BlockPos, state: BlockState, blockEntity: AbstractTrafficSignalBlockEntity) {
+        if(!world.isClient) {
+            if (!blockEntity.isLinked()) {
+                val ticks = world.server?.ticks
+                if (ticks != null) {
+                    SignalLight.getReds(state.block).forEach { queueSignalSet(it, (ticks % 40) > 20) }
+                    SignalLight.getGreens(state.block).forEach { queueSignalSet(it, false) }
+                    SignalLight.getYellows(state.block).forEach { queueSignalSet(it, false) }
+                }
+            } else if (world.getBlockEntity(BlockPos(this.linkX, this.linkY, this.linkZ)) !is TrafficCabinetBlockEntity) {
+                this.unlink()
             }
         }
 
         if(queue.size > 0) {
-            queue.forEach {
-                this.setSignal(it.key, it.value)
-                queue.remove(it.key)
+            signalType.lights.forEach {
+                if(queue[it] != null) {
+                    val value = queue[it]!!
+                    this.setSignal(it, value)
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 package me.znepb.zrm.init
 
 import me.znepb.zrm.ZrmClient.logger
+import me.znepb.zrm.render.AbstractThreeHeadSignalBlockRenderer
 import me.znepb.zrm.render.PostBlockRenderer
 import me.znepb.zrm.render.SignalRenderer
 import me.znepb.zrm.render.ThreeHeadTrafficSignalBlockRenderer
@@ -19,8 +20,8 @@ class ModelLoader {
             PostBlockRenderer.POST_MEDIUM_EXT_MODEL,
             PostBlockRenderer.POST_MEDIUM_FOOTER_MODEL,
             PostBlockRenderer.POST_MEDIUM_MID_MODEL,
-            ThreeHeadTrafficSignalBlockRenderer.SIGNAL_FRAME_3,
-            ThreeHeadTrafficSignalBlockRenderer.SIGNAL
+            AbstractThreeHeadSignalBlockRenderer.SIGNAL_FRAME_3,
+            AbstractThreeHeadSignalBlockRenderer.SIGNAL
         )
     }
 

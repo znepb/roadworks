@@ -27,6 +27,9 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModItems.LINKER, "Linker")
         translationBuilder.add(Registry.ModBlocks.TRAFFIC_CABINET, "Traffic Cabinet")
         translationBuilder.add(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, "Three-head Traffic Signal")
+        translationBuilder.add(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, "Three-head Traffic Signal Left")
+        translationBuilder.add(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT, "Three-head Traffic Signal Right")
+        translationBuilder.add(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT, "Three-head Traffic Signal Straight")
 
         translationBuilder.add("itemGroup.${NAMESPACE}.main", "znepb's Road Mod")
     }

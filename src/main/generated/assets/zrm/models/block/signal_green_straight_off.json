@@ -1,6 +1,6 @@
 {
   "parent": "zrm:block/signal",
   "textures": {
-    "texture": "zrm:block/signals/left_red_on"
+    "texture": "zrm:block/signals/green_straight_off"
   }
 }

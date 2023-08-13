@@ -10,8 +10,7 @@ import me.znepb.zrm.block.cone.DrumBlock
 import me.znepb.zrm.block.cone.TrafficCone
 import me.znepb.zrm.block.post.PostBlock
 import me.znepb.zrm.block.post.PostBlockEntity
-import me.znepb.zrm.block.signals.ThreeHeadTrafficSignal
-import me.znepb.zrm.block.signals.ThreeHeadTrafficSignalBlockEntity
+import me.znepb.zrm.block.signals.impl.*
 import me.znepb.zrm.datagen.TagProvider.Companion.SIGNS
 import me.znepb.zrm.item.Linker
 import me.znepb.zrm.util.PostThickness
@@ -88,15 +87,32 @@ object Registry {
             listOf(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL),
             ModId("three_head_traffic_signal_block_entity")
         )
+        val THREE_HEAD_TRAFFIC_SIGNAL_LEFT_BLOCK_ENTITY = registerBlockEntities(
+            ::ThreeHeadTrafficSignalLeftBlockEntity,
+            listOf(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT),
+            ModId("three_head_traffic_signal_left_block_entity")
+        )
+        val THREE_HEAD_TRAFFIC_SIGNAL_RIGHT_BLOCK_ENTITY = registerBlockEntities(
+            ::ThreeHeadTrafficSignalRightBlockEntity,
+            listOf(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT),
+            ModId("three_head_traffic_signal_right_block_entity")
+        )
+        val THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT_BLOCK_ENTITY = registerBlockEntities(
+            ::ThreeHeadTrafficSignalStraightBlockEntity,
+            listOf(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT),
+            ModId("three_head_traffic_signal_straight_block_entity")
+        )
     }
 
     object ModBlocks {
-        private fun<T: Block> rBlock(name: String, value: T): T =
+        private fun <T : Block> rBlock(name: String, value: T): T =
             Registry.register(BLOCK, ModId(name), value)
 
-        val THICK_POST = rBlock("thick_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.THICK))
+        val THICK_POST =
+            rBlock("thick_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.THICK))
         val POST = rBlock("post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.MEDIUM))
-        val THIN_POST = rBlock("thin_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.THIN))
+        val THIN_POST =
+            rBlock("thin_post", PostBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), PostThickness.THIN))
 
         //
 
@@ -106,18 +122,54 @@ object Registry {
 
         //
 
-        val STOP_SIGN = rBlock("stop_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_sign", "back_octagon"))
-        val STOP_SIGN_4_WAY = rBlock("stop_sign_4_way", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "4_way", "back_4_way"))
-        val STOP_SIGN_AHEAD = rBlock("stop_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_ahead", "back_diamond"))
-        val YIELD_SIGN = rBlock("yield_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield", "back_yield"))
-        val YIELD_SIGN_AHEAD = rBlock("yield_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield_ahead", "back_diamond"))
-        val SIGNAL_AHEAD = rBlock("signal_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "signal_ahead", "back_diamond"))
-        val ROAD_WORK_AHEAD = rBlock("road_work_ahead_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "road_work_ahead", "back_diamond"))
+        val STOP_SIGN = rBlock(
+            "stop_sign",
+            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_sign", "back_octagon")
+        )
+        val STOP_SIGN_4_WAY = rBlock(
+            "stop_sign_4_way",
+            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "4_way", "back_4_way")
+        )
+        val STOP_SIGN_AHEAD = rBlock(
+            "stop_ahead_sign",
+            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_ahead", "back_diamond")
+        )
+        val YIELD_SIGN =
+            rBlock("yield_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield", "back_yield"))
+        val YIELD_SIGN_AHEAD = rBlock(
+            "yield_ahead_sign",
+            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield_ahead", "back_diamond")
+        )
+        val SIGNAL_AHEAD = rBlock(
+            "signal_ahead_sign",
+            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "signal_ahead", "back_diamond")
+        )
+        val ROAD_WORK_AHEAD = rBlock(
+            "road_work_ahead_sign",
+            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "road_work_ahead", "back_diamond")
+        )
 
         //
 
-        val TRAFFIC_CABINET = rBlock("traffic_cabinet", TrafficCabinet(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
-        val THREE_HEAD_TRAFFIC_SIGNAL = rBlock("three_head_traffic_signal", ThreeHeadTrafficSignal(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
+        val TRAFFIC_CABINET =
+            rBlock("traffic_cabinet", TrafficCabinet(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
+        val THREE_HEAD_TRAFFIC_SIGNAL = rBlock(
+            "three_head_traffic_signal",
+            ThreeHeadTrafficSignal(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
+        val THREE_HEAD_TRAFFIC_SIGNAL_LEFT = rBlock(
+            "three_head_traffic_signal_left",
+            ThreeHeadTrafficSignalLeft(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
+        val THREE_HEAD_TRAFFIC_SIGNAL_RIGHT = rBlock(
+            "three_head_traffic_signal_right",
+            ThreeHeadTrafficSignalRight(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
+        val THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT = rBlock(
+            "three_head_traffic_signal_straight",
+            ThreeHeadTrafficSignalStraight(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
+
     }
 
     object ModItems {
@@ -149,6 +201,9 @@ object Registry {
 
         val TRAFFIC_CABINET = rItem(ModBlocks.TRAFFIC_CABINET, ::BlockItem, itemSettings())
         val THREE_HEAD_TRAFFIC_SIGNAL = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem, itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
     }

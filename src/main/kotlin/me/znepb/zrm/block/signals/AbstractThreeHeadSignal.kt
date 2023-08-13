@@ -1,6 +1,5 @@
 package me.znepb.zrm.block.signals
 
-import me.znepb.zrm.Registry
 import me.znepb.zrm.block.post.AbstractPostMountableBlockEntity
 import me.znepb.zrm.util.PostThickness
 import me.znepb.zrm.util.RotateVoxelShape
@@ -15,9 +14,9 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
-class ThreeHeadTrafficSignal(settings: Settings)
-    : AbstractTrafficSignalBase<ThreeHeadTrafficSignalBlockEntity>
-    (settings, ::ThreeHeadTrafficSignalBlockEntity)
+abstract class AbstractThreeHeadSignal<T: AbstractTrafficSignalBlockEntity>
+    (settings: Settings, blockEntityFactory: BlockEntityType.BlockEntityFactory<T>)
+    : AbstractTrafficSignal<T>(settings, blockEntityFactory)
 {
     companion object {
         val SIGNAL_SHAPE_WALL = createCuboidShape(5.0, 1.0, 15.0, 11.0, 15.0, 16.0)
@@ -27,17 +26,8 @@ class ThreeHeadTrafficSignal(settings: Settings)
         val SIGNAL_SHAPE_POST_THICK = SIGNAL_SHAPE_POST_NONE.offset(0.0, 0.0, (-3.0 / 16))
     }
 
-    override fun <T : BlockEntity?> getTicker(
-        world: World,
-        state: BlockState,
-        type: BlockEntityType<T>?
-    ): BlockEntityTicker<T>? {
-        if (world.isClient) return null
-        return checkType(type, Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY, AbstractTrafficSignalBlockEntityBase.Companion::onTick)
-    }
-
     override fun getAttachmentShape(world: BlockView, pos: BlockPos): VoxelShape {
-        val blockEntity = world.getBlockEntity(pos) as ThreeHeadTrafficSignalBlockEntity?
+        val blockEntity = world.getBlockEntity(pos) as AbstractTrafficSignalBlockEntity?
             ?: return VoxelShapes.empty()
 
         return if(blockEntity.wall) {

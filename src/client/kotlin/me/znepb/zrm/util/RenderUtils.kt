@@ -51,5 +51,15 @@ class RenderUtils {
                 buffer.quad(matrix, bakedquad, 1F, 1F, 1F, lightmapCoord, overlayLight)
             }
         }
+
+        fun getRotationFromDirection(direction: Direction): Float {
+            return Math.toRadians(when(direction) {
+                Direction.NORTH -> 180.0
+                Direction.WEST -> 90.0
+                Direction.SOUTH -> 0.0
+                Direction.EAST -> 270.0
+                else -> 0.0
+            }).toFloat()
+        }
     }
 }

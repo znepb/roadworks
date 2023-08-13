@@ -3,6 +3,7 @@ package me.znepb.zrm.datagen
 import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.SignBlock
+import me.znepb.zrm.block.signals.SignalLight
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -28,9 +29,18 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
             TextureKey.TEXTURE
         )
 
-        val signals = listOf("green_off", "green_on", "left_green_off", "left_green_on", "left_red_off",
-                             "left_red_on", "left_yellow_off", "left_yellow_on", "red_off", "red_on",
-                             "yellow_off", "yellow_on")
+        val signals = getSignalTextures()
+
+        private fun getSignalTextures(): List<String> {
+            val list = mutableListOf<String>();
+
+            SignalLight.entries.forEach {
+                list.add("${it.light}_on")
+                list.add("${it.light}_off")
+            }
+
+            return list
+        }
     }
 
     override fun generateBlockStateModels(generator: BlockStateModelGenerator) {
@@ -50,6 +60,9 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addDoubleHighConeBlock(generator, Registry.ModBlocks.DRUM, "drum")
 
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, ModId("block/three_head_traffic_signal")))
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, ModId("block/three_head_traffic_signal_left")))
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT, ModId("block/three_head_traffic_signal_right")))
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT, ModId("block/three_head_traffic_signal_straight")))
 
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.TRAFFIC_CONE, Identifier("zrm", "block/traffic_cone")))
 

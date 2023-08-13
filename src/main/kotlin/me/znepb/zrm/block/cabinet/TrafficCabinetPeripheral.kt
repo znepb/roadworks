@@ -5,23 +5,23 @@ import dan200.computercraft.api.lua.ObjectLuaTable
 import dan200.computercraft.api.peripheral.IPeripheral
 import me.znepb.zrm.block.signals.SignalLight
 import me.znepb.zrm.block.signals.SignalType
-import me.znepb.zrm.block.signals.AbstractTrafficSignalBlockEntityBase
+import me.znepb.zrm.block.signals.AbstractTrafficSignalBlockEntity
 import net.minecraft.nbt.NbtCompound
 
 class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPeripheral {
     override fun getType() = "traffic_cabinet"
     override fun getTarget() = blockEntity
 
-    fun getSignalBlockEntity(id: Int): AbstractTrafficSignalBlockEntityBase? {
+    fun getSignalBlockEntity(id: Int): AbstractTrafficSignalBlockEntity? {
         val signal = blockEntity.getSignalBlockEntityFromId(id)
-        return if(signal is AbstractTrafficSignalBlockEntityBase) signal else null
+        return if(signal is AbstractTrafficSignalBlockEntity) signal else null
     }
 
     /// Returns whether this traffic cabinet has the specified ID available.
     @LuaFunction
     fun hasId(id: Int): Boolean {
-        blockEntity.getSignals().forEach {
-            if(it is NbtCompound && it.getInt("id") == id) {
+        blockEntity.getSignals().getSignals().forEach {
+            if(it.getId() == id) {
                 return true
             }
         }
@@ -41,10 +41,8 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     fun getSignalType(id: Int): String? {
         if(!hasId(id)) return null
 
-        blockEntity.getSignals().forEach {
-            if(it is NbtCompound) {
-                return blockEntity.getIdType(it.getInt("id"))?.type
-            }
+        blockEntity.getSignals().getSignals().forEach {
+            return blockEntity.getTypeOfId(it.getId())?.type
         }
 
         return null
@@ -55,9 +53,9 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     fun getSignalsOfType(type: String): List<Int> {
         val list = mutableListOf<Int>()
 
-        blockEntity.getSignals().forEach {
-            if(it is NbtCompound && blockEntity.getIdType(it.getInt("id"))?.type == type) {
-                list.add(it.getInt("id"))
+        blockEntity.getSignals().getSignals().forEach {
+            if(blockEntity.getTypeOfId(it.getId())?.type == type) {
+                list.add(it.getId())
             }
         }
 
@@ -69,14 +67,12 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     fun getSignals(): List<Any> {
         val signals = mutableListOf<ObjectLuaTable>();
 
-        blockEntity.getSignals().forEach {
-            if(it is NbtCompound) {
+        blockEntity.getSignals().getSignals().forEach {
                 val map = hashMapOf<Any, Any?>()
-                map["id"] = it.getInt("id")
-                map["type"] = blockEntity.getIdType(it.getInt("id"))?.type
+                map["id"] = it.getId()
+                map["type"] = blockEntity.getTypeOfId(it.getId())?.type
 
                 signals.add(ObjectLuaTable(map))
-            }
         }
 
         return signals
@@ -85,17 +81,36 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     /// Sets the colors of a three-head signal.
     @LuaFunction
     fun setThreeHead(id: Int, red: Boolean, yellow: Boolean, green: Boolean): Boolean {
-        val entity = getSignalBlockEntity(id)
+        val type = blockEntity.getTypeOfId(id)
 
-        if(entity?.getSignalType() == SignalType.THREE_HEAD) {
-            entity.queueSignalSet(SignalLight.RED, red)
-            entity.queueSignalSet(SignalLight.YELLOW, yellow)
-            entity.queueSignalSet(SignalLight.GREEN, green)
-
-            return true
+        when (type) {
+            SignalType.THREE_HEAD -> {
+                blockEntity.queueSignalSet(id, SignalLight.RED, red)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW, yellow)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN, green)
+                return true
+            }
+            SignalType.THREE_HEAD_LEFT -> {
+                blockEntity.queueSignalSet(id, SignalLight.RED_LEFT, red)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW_LEFT, yellow)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN_LEFT, green)
+                return true
+            }
+            SignalType.THREE_HEAD_STRAIGHT -> {
+                blockEntity.queueSignalSet(id, SignalLight.RED_STRAIGHT, red)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW_STRAIGHT, yellow)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN_STRAIGHT, green)
+                return true
+            }
+            SignalType.THREE_HEAD_RIGHT -> {
+                blockEntity.queueSignalSet(id, SignalLight.RED_RIGHT, red)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW_RIGHT, yellow)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN_RIGHT, green)
+                return true
+            }
+            else -> return false
         }
 
-        return false
     }
 
     override fun equals(other: IPeripheral?): Boolean {

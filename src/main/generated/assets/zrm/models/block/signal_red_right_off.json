@@ -1,0 +1,6 @@
+{
+  "parent": "zrm:block/signal",
+  "textures": {
+    "texture": "zrm:block/signals/red_right_off"
+  }
+}

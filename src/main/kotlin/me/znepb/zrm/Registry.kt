@@ -5,9 +5,7 @@ import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.block.*
 import me.znepb.zrm.block.cabinet.TrafficCabinet
 import me.znepb.zrm.block.cabinet.TrafficCabinetBlockEntity
-import me.znepb.zrm.block.cone.ChannelerBlock
-import me.znepb.zrm.block.cone.DrumBlock
-import me.znepb.zrm.block.cone.TrafficCone
+import me.znepb.zrm.block.cone.*
 import me.znepb.zrm.block.post.PostBlock
 import me.znepb.zrm.block.post.PostBlockEntity
 import me.znepb.zrm.block.signals.impl.*
@@ -129,6 +127,9 @@ object Registry {
         val TRAFFIC_CONE = rBlock("traffic_cone", TrafficCone(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
         val CHANNELER = rBlock("channeler", ChannelerBlock(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
         val DRUM = rBlock("drum", DrumBlock(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
+        val BOLLARD_THIN = rBlock("bollard_thin", BollardThinBlock(AbstractBlock.Settings.copy(Blocks.YELLOW_CONCRETE)))
+        val BOLLARD = rBlock("bollard", BollardBlock(AbstractBlock.Settings.copy(Blocks.YELLOW_CONCRETE)))
+        val BOLLARD_THICK = rBlock("bollard_thick", BollardThickBlock(AbstractBlock.Settings.copy(Blocks.YELLOW_CONCRETE)))
 
         //
 
@@ -207,6 +208,9 @@ object Registry {
         val TRAFFIC_CONE = rItem(ModBlocks.TRAFFIC_CONE, ::BlockItem, itemSettings())
         val CHANNELER = rItem(ModBlocks.CHANNELER, ::BlockItem, itemSettings())
         val DRUM = rItem(ModBlocks.DRUM, ::BlockItem, itemSettings())
+        val BOLLARD_THIN = rItem(ModBlocks.BOLLARD_THIN, ::BlockItem, itemSettings())
+        val BOLLARD = rItem(ModBlocks.BOLLARD, ::BlockItem, itemSettings())
+        val BOLLARD_THICK = rItem(ModBlocks.BOLLARD_THICK, ::BlockItem, itemSettings())
 
         val STOP_SIGN = rItem(ModBlocks.STOP_SIGN, ::BlockItem, itemSettings())
         val STOP_SIGN_4_WAY = rItem(ModBlocks.STOP_SIGN_4_WAY, ::BlockItem, itemSettings())

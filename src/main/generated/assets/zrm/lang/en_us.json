@@ -1,4 +1,7 @@
 {
+  "block.zrm.bollard": "Bollard",
+  "block.zrm.bollard_thick": "Thick Bollard",
+  "block.zrm.bollard_thin": "Thin Bollard",
   "block.zrm.channeler": "Channeler",
   "block.zrm.drum": "Drum",
   "block.zrm.five_head_traffic_signal_left": "Five-head Traffic Signal Left",

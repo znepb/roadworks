@@ -15,6 +15,9 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.TRAFFIC_CONE, "Traffic Cone")
         translationBuilder.add(Registry.ModBlocks.CHANNELER, "Channeler")
         translationBuilder.add(Registry.ModBlocks.DRUM, "Drum")
+        translationBuilder.add(Registry.ModBlocks.BOLLARD_THIN, "Thin Bollard")
+        translationBuilder.add(Registry.ModBlocks.BOLLARD, "Bollard")
+        translationBuilder.add(Registry.ModBlocks.BOLLARD_THICK, "Thick Bollard")
 
         translationBuilder.add(Registry.ModBlocks.STOP_SIGN, "Stop Sign")
         translationBuilder.add(Registry.ModBlocks.STOP_SIGN_4_WAY, "4-way Stop Sign")

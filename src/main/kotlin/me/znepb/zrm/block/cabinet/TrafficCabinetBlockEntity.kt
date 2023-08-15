@@ -29,6 +29,7 @@ class TrafficCabinetBlockEntity(
     private val idTypeCache = HashMap<Int, SignalType>()
     private var queue = HashMap<Int, HashMap<SignalLight, Boolean>>()
 
+    fun getTotalDevices() = signals.getAmount()
     fun getSignals() = signals
     fun getTotalSignals(): Int = signals.getAmount()
     fun getTypeOfId(id: Int): SignalType? {

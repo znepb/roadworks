@@ -6,6 +6,8 @@ import me.znepb.zrm.block.*
 import me.znepb.zrm.block.cabinet.TrafficCabinet
 import me.znepb.zrm.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.zrm.block.cone.*
+import me.znepb.zrm.block.marking.BasicMarking
+import me.znepb.zrm.block.marking.OneSideFilledMarking
 import me.znepb.zrm.block.post.PostBlock
 import me.znepb.zrm.block.post.PostBlockEntity
 import me.znepb.zrm.block.signals.impl.*
@@ -188,6 +190,9 @@ object Registry {
             "five_head_traffic_signal_right",
             FiveHeadTrafficSignalRight(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
         )
+
+        val WHITE_INFILL_MARKING = rBlock("white_infill_marking", BasicMarking())
+        val WHITE_CENTER_MARKING = rBlock("white_center_marking", OneSideFilledMarking())
     }
 
     object ModItems {
@@ -227,6 +232,9 @@ object Registry {
         val THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT, ::BlockItem, itemSettings())
         val FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem, itemSettings())
         val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
+
+        val WHITE_INFILL_MARKING = rItem(ModBlocks.WHITE_INFILL_MARKING, ::BlockItem, itemSettings())
+        val WHITE_CENTER_MARKING = rItem(ModBlocks.WHITE_CENTER_MARKING, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
     }

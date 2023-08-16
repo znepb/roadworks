@@ -1,0 +1,6 @@
+{
+  "parent": "zrm:block/marking_basic",
+  "textures": {
+    "texture": "zrm:block/markings/white_infill"
+  }
+}

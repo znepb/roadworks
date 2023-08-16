@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-13T22:15:28.3352863	zrm/Model Definitions
+// 1.20.1	2023-08-15T21:48:39.1260129	zrm/Model Definitions
 41d090d130da994886831404abee76226a4bf4be assets\zrm\models\block\stop_sign.json
 bf0735e1c2e97078881ac7d7cb9d97f225b40f9c assets\zrm\models\item\three_head_traffic_signal_right.json
 53f28d300a4485f5a85428de1937351940be24b7 assets\zrm\blockstates\thick_post.json
@@ -12,6 +12,7 @@ f2434f22dec1d2c1b59acd59532bdfe818913128 assets\zrm\blockstates\three_head_traff
 d08e2fdb22e9f2e8e0206a105b77cd82198774cb assets\zrm\blockstates\road_work_ahead_sign.json
 5817066d51e6cad635d76ea7cb7df049f998db9b assets\zrm\blockstates\five_head_traffic_signal_right.json
 b1efca075a99474530611ad8e96425a3a79d126e assets\zrm\models\item\bollard_thin.json
+e6af6d4c3d73b2cf5755d6aa0c475b1567a20299 assets\zrm\blockstates\white_infill_marking.json
 570ee826952a77bc748c2791f5aeb9d26e53b5de assets\zrm\blockstates\traffic_cabinet.json
 0ab8ffa28b8e64bc5f6c3af09e18329a01788f3f assets\zrm\models\block\signal_green_right_on.json
 da0b03907c4dee22dbdde8de54772c0eae322de5 assets\zrm\models\block\signal_yellow_straight_off.json
@@ -43,6 +44,7 @@ f17e2e2d727bcf7154d5f4741e1843e76418aa2d assets\zrm\models\item\five_head_traffi
 9f70946114c684b7a50367f406f97d31bb00579e assets\zrm\models\block\signal_green_on.json
 c5be4dce9771d4755cfa1daa6f8298a5e059b945 assets\zrm\models\item\stop_ahead_sign.json
 64928388fea3f69b5af2f6a380edd3c7fa760365 assets\zrm\models\block\signal_ahead_sign.json
+a298297a263941dea159d5a0a1a8322dcaa2fc1f assets\zrm\models\block\white_infill.json
 81c0c252b32316dbcdfa2dd471acdeaf066cd601 assets\zrm\models\block\signal_yellow_left_off.json
 03b6d0a06b4db3cab300697646db0132b6e64cbd assets\zrm\models\block\signal_red_straight_on.json
 fbfe0968c7374605386153c0493c79d4469f68cb assets\zrm\models\item\five_head_traffic_signal_right.json
@@ -62,12 +64,16 @@ ab481c9de0b201572b7a494b3b7ea90865848546 assets\zrm\blockstates\five_head_traffi
 dca97e3d82f9c0bcc70c9d65c25056ea55b74743 assets\zrm\blockstates\bollard.json
 9ee42a315c1c1d5a61262a83c26098d6574cda7b assets\zrm\models\item\three_head_traffic_signal.json
 5bf626aed95eef43d4b6482460f63f239c7bc5c6 assets\zrm\models\block\signal_red_right_on.json
+bb6d922e0542403e906b305206bbaaa2a33fb3b5 assets\zrm\models\block\white_center.json
 cf54be61f8eb2b38f623f6f59d2d0480447d7cd9 assets\zrm\models\item\stop_sign.json
+966843517c02ea6664ba437cb1c7b376c93c3777 assets\zrm\models\item\white_infill_marking.json
+b7b5db68b52392a5d08405235f3f80ce36b0a5a8 assets\zrm\models\item\white_center_marking.json
 1f7f0288b03e69c34f149f8cb37c3efb278b57f9 assets\zrm\models\item\channeler.json
 a71b333644128f75289b0b2a54058ace84a166db assets\zrm\blockstates\channeler.json
 c12f8bc961e170b66e7b8c85ef52c336ea1f1787 assets\zrm\models\block\yield_ahead_sign.json
 1546dfadf000d3bda0e9533e725a43d69a0d91e8 assets\zrm\models\item\bollard.json
 8eb12aa092ba8b316876aecc94104d24ab69d03c assets\zrm\blockstates\stop_ahead_sign.json
+4c2e5175baf072e1ef1ab0aa73e0e20813bde952 assets\zrm\blockstates\white_center_marking.json
 49cb372e3b5a5690f4f9c7a8d4f5ec44037a8174 assets\zrm\models\item\stop_sign_4_way.json
 80491d81725252f9116646531197b576f95325d7 assets\zrm\models\block\signal_yellow_right_off.json
 6e686bd9156ad72a7a7e90d020cc6b2679a6c133 assets\zrm\models\item\road_work_ahead_sign.json

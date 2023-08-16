@@ -28,8 +28,11 @@ object ZrmClient : ClientModInitializer {
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT_BLOCK_ENTITY, ::FiveHeadTrafficSignalLeftBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT_BLOCK_ENTITY, ::FiveHeadTrafficSignalRightBlockRenderer)
 
-		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), Registry.ModBlocks.WHITE_CENTER_MARKING)
-		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), Registry.ModBlocks.WHITE_INFILL_MARKING)
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+			Registry.ModBlocks.WHITE_CENTER_MARKING,
+			Registry.ModBlocks.WHITE_CENTER_DASH_MARKING,
+			Registry.ModBlocks.WHITE_INFILL_MARKING
+		)
 
 		ModelLoader()
 	}

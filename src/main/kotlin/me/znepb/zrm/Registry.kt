@@ -192,6 +192,7 @@ object Registry {
         )
 
         val WHITE_INFILL_MARKING = rBlock("white_infill_marking", BasicMarking())
+        val WHITE_CENTER_DASH_MARKING = rBlock("white_center_dash_marking", BasicMarking())
         val WHITE_CENTER_MARKING = rBlock("white_center_marking", OneSideFilledMarking())
     }
 
@@ -234,6 +235,7 @@ object Registry {
         val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
 
         val WHITE_INFILL_MARKING = rItem(ModBlocks.WHITE_INFILL_MARKING, ::BlockItem, itemSettings())
+        val WHITE_CENTER_DASH_MARKING = rItem(ModBlocks.WHITE_CENTER_DASH_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_MARKING = rItem(ModBlocks.WHITE_CENTER_MARKING, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))

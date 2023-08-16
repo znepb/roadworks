@@ -114,12 +114,13 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
 
         addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_CENTER_MARKING, "white_center", "marking_white_center_filled")
         addBasicMarking(generator, Registry.ModBlocks.WHITE_INFILL_MARKING, "white_infill", true)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "white_center_dash")
 
         signals.forEach { addSignal(generator, it) }
     }
 
     private fun addBasicMarking(generator: BlockStateModelGenerator, block: Block, id: String) {
-        addBasicMarking(generator, block, id, null)
+        addBasicMarking(generator, block, id, false)
     }
 
     private fun addBasicMarking(generator: BlockStateModelGenerator, block: Block, id: String, uvLock: Boolean?) {

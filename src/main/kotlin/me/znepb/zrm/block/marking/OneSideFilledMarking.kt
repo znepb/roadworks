@@ -37,16 +37,16 @@ class OneSideFilledMarking() : HorizontalFacingBlock(Settings.copy(WHITE_CONCRET
         fun getAbsoluteFromRelative(state: BlockState, relative: Side): Direction {
             return when(state.get(Properties.HORIZONTAL_FACING)) {
                 Direction.NORTH -> when(relative) {
-                    Side.RIGHT -> Direction.WEST
-                    Side.LEFT -> Direction.EAST
+                    Side.RIGHT -> Direction.EAST
+                    Side.LEFT -> Direction.WEST
                 }
                 Direction.EAST -> when(relative) {
                     Side.RIGHT -> Direction.SOUTH
                     Side.LEFT -> Direction.NORTH
                 }
                 Direction.SOUTH -> when(relative) {
-                    Side.RIGHT -> Direction.EAST
-                    Side.LEFT -> Direction.WEST
+                    Side.RIGHT -> Direction.WEST
+                    Side.LEFT -> Direction.EAST
                 }
                 Direction.WEST -> when(relative) {
                     Side.RIGHT -> Direction.NORTH
@@ -54,6 +54,15 @@ class OneSideFilledMarking() : HorizontalFacingBlock(Settings.copy(WHITE_CONCRET
                 }
                 else -> Direction.NORTH
             }
+        }
+
+        fun getCardinalDirectionFilled(state: BlockState, direction: Direction): Boolean {
+            if(state.get(Properties.HORIZONTAL_FACING) == direction &&
+                state.get(Properties.HORIZONTAL_FACING) == direction.opposite) return false
+
+            return if(direction == state.get(Properties.HORIZONTAL_FACING).rotateYClockwise())
+                state.get(RIGHT_FILL)
+            else state.get(LEFT_FILL)
         }
     }
 

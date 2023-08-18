@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "zrm:block/white_center",
+        "model": "zrm:block/white_turn_center",
         "uvlock": false,
         "y": 0
       },
@@ -12,7 +12,7 @@
     },
     {
       "apply": {
-        "model": "zrm:block/white_center",
+        "model": "zrm:block/white_turn_center",
         "uvlock": false,
         "y": 90
       },
@@ -22,7 +22,7 @@
     },
     {
       "apply": {
-        "model": "zrm:block/white_center",
+        "model": "zrm:block/white_turn_center",
         "uvlock": false,
         "y": 180
       },
@@ -32,7 +32,7 @@
     },
     {
       "apply": {
-        "model": "zrm:block/white_center",
+        "model": "zrm:block/white_turn_center",
         "uvlock": false,
         "y": 270
       },
@@ -42,90 +42,90 @@
     },
     {
       "apply": {
-        "model": "zrm:block/marking_white_center_filled",
+        "model": "zrm:block/marking_white_turn_center_filled_inside",
         "uvlock": true,
         "y": 180
       },
       "when": {
         "facing": "north",
-        "right_fill": "true"
+        "inside_fill": "true"
       }
     },
     {
       "apply": {
-        "model": "zrm:block/marking_white_center_filled",
+        "model": "zrm:block/marking_white_turn_center_filled_inside",
         "uvlock": true,
         "y": 270
       },
       "when": {
         "facing": "east",
-        "right_fill": "true"
+        "inside_fill": "true"
       }
     },
     {
       "apply": {
-        "model": "zrm:block/marking_white_center_filled",
+        "model": "zrm:block/marking_white_turn_center_filled_inside",
         "uvlock": true,
         "y": 0
       },
       "when": {
         "facing": "south",
-        "right_fill": "true"
+        "inside_fill": "true"
       }
     },
     {
       "apply": {
-        "model": "zrm:block/marking_white_center_filled",
+        "model": "zrm:block/marking_white_turn_center_filled_inside",
         "uvlock": true,
         "y": 90
       },
       "when": {
         "facing": "west",
-        "right_fill": "true"
+        "inside_fill": "true"
       }
     },
     {
       "apply": {
-        "model": "zrm:block/marking_white_center_filled",
-        "uvlock": true,
-        "y": 0
-      },
-      "when": {
-        "facing": "north",
-        "left_fill": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "zrm:block/marking_white_center_filled",
-        "uvlock": true,
-        "y": 90
-      },
-      "when": {
-        "facing": "east",
-        "left_fill": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "zrm:block/marking_white_center_filled",
+        "model": "zrm:block/marking_white_turn_center_filled_outside",
         "uvlock": true,
         "y": 180
       },
       "when": {
-        "facing": "south",
-        "left_fill": "true"
+        "facing": "north",
+        "outside_fill": "true"
       }
     },
     {
       "apply": {
-        "model": "zrm:block/marking_white_center_filled",
+        "model": "zrm:block/marking_white_turn_center_filled_outside",
         "uvlock": true,
         "y": 270
       },
       "when": {
+        "facing": "east",
+        "outside_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "zrm:block/marking_white_turn_center_filled_outside",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "facing": "south",
+        "outside_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "zrm:block/marking_white_turn_center_filled_outside",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
         "facing": "west",
-        "left_fill": "true"
+        "outside_fill": "true"
       }
     }
   ]

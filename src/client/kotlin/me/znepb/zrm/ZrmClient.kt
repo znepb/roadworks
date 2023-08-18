@@ -31,7 +31,8 @@ object ZrmClient : ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 			Registry.ModBlocks.WHITE_CENTER_MARKING,
 			Registry.ModBlocks.WHITE_CENTER_DASH_MARKING,
-			Registry.ModBlocks.WHITE_INFILL_MARKING
+			Registry.ModBlocks.WHITE_INFILL_MARKING,
+			Registry.ModBlocks.WHITE_CENTER_TURN_MARKING
 		)
 
 		ModelLoader()

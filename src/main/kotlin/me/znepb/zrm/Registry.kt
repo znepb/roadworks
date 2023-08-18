@@ -8,6 +8,7 @@ import me.znepb.zrm.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.zrm.block.cone.*
 import me.znepb.zrm.block.marking.BasicMarking
 import me.znepb.zrm.block.marking.OneSideFilledMarking
+import me.znepb.zrm.block.marking.TurnMarking
 import me.znepb.zrm.block.post.PostBlock
 import me.znepb.zrm.block.post.PostBlockEntity
 import me.znepb.zrm.block.signals.impl.*
@@ -194,6 +195,7 @@ object Registry {
         val WHITE_INFILL_MARKING = rBlock("white_infill_marking", BasicMarking())
         val WHITE_CENTER_DASH_MARKING = rBlock("white_center_dash_marking", BasicMarking())
         val WHITE_CENTER_MARKING = rBlock("white_center_marking", OneSideFilledMarking())
+        val WHITE_CENTER_TURN_MARKING = rBlock("white_turn_center_marking", TurnMarking())
     }
 
     object ModItems {
@@ -237,6 +239,7 @@ object Registry {
         val WHITE_INFILL_MARKING = rItem(ModBlocks.WHITE_INFILL_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_DASH_MARKING = rItem(ModBlocks.WHITE_CENTER_DASH_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_MARKING = rItem(ModBlocks.WHITE_CENTER_MARKING, ::BlockItem, itemSettings())
+        val WHITE_CENTER_TURN_MARKING = rItem(ModBlocks.WHITE_CENTER_TURN_MARKING, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
     }

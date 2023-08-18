@@ -1,6 +1,6 @@
 {
   "parent": "zrm:block/marking_basic",
   "textures": {
-    "texture": "zrm:block/markings/white_infill"
+    "texture": "zrm:block/markings/marking_white_center_dash"
   }
 }

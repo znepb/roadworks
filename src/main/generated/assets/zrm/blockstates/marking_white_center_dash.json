@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "zrm:block/white_center_dash",
+        "model": "zrm:block/marking_white_center_dash",
         "uvlock": false,
         "y": 0
       },
@@ -12,7 +12,7 @@
     },
     {
       "apply": {
-        "model": "zrm:block/white_center_dash",
+        "model": "zrm:block/marking_white_center_dash",
         "uvlock": false,
         "y": 90
       },
@@ -22,7 +22,7 @@
     },
     {
       "apply": {
-        "model": "zrm:block/white_center_dash",
+        "model": "zrm:block/marking_white_center_dash",
         "uvlock": false,
         "y": 180
       },
@@ -32,7 +32,7 @@
     },
     {
       "apply": {
-        "model": "zrm:block/white_center_dash",
+        "model": "zrm:block/marking_white_center_dash",
         "uvlock": false,
         "y": 270
       },

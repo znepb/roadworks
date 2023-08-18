@@ -192,10 +192,10 @@ object Registry {
             FiveHeadTrafficSignalRight(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
         )
 
-        val WHITE_INFILL_MARKING = rBlock("white_infill_marking", BasicMarking())
-        val WHITE_CENTER_DASH_MARKING = rBlock("white_center_dash_marking", BasicMarking())
-        val WHITE_CENTER_MARKING = rBlock("white_center_marking", OneSideFilledMarking())
-        val WHITE_CENTER_TURN_MARKING = rBlock("white_turn_center_marking", TurnMarking())
+        val WHITE_INFILL_MARKING = rBlock("marking_white_infill", BasicMarking())
+        val WHITE_CENTER_DASH_MARKING = rBlock("marking_white_center_dash", BasicMarking())
+        val WHITE_CENTER_MARKING = rBlock("marking_white_center", OneSideFilledMarking())
+        val WHITE_CENTER_TURN_MARKING = rBlock("marking_white_turn_center", TurnMarking())
     }
 
     object ModItems {

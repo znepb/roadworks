@@ -114,10 +114,10 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
             )
         )
 
-        addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_CENTER_MARKING, "white_center", "marking_white_center_filled")
-        addBasicMarking(generator, Registry.ModBlocks.WHITE_INFILL_MARKING, "white_infill", true)
-        addBasicMarking(generator, Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "white_center_dash")
-        addTurnMarking(generator, Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "white_turn_center", "marking_white_turn_center_filled_inside", "marking_white_turn_center_filled_outside")
+        addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_CENTER_MARKING, "marking_white_center", "marking_white_center_filled")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_INFILL_MARKING, "marking_white_infill", true)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "marking_white_center_dash")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "marking_white_turn_center", "marking_white_turn_center_filled_inside", "marking_white_turn_center_filled_outside")
 
         signals.forEach { addSignal(generator, it) }
     }
@@ -128,7 +128,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
 
     private fun addBasicMarking(generator: BlockStateModelGenerator, block: Block, id: String, uvLock: Boolean?) {
         basicMarkingModel.upload(
-            ModId("block/$id"),
+            ModId("block/${id}"),
             TextureMap()
                 .put(TextureKey.TEXTURE, Identifier("zrm", "block/markings/$id")),
             generator.modelCollector
@@ -362,5 +362,9 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
 
     override fun generateItemModels(generator: ItemModelGenerator) {
         generator.register(Registry.ModItems.LINKER, Models.GENERATED)
+
+        fun markingItem(name: String): Model {
+            return Model(Optional.of(ModId("block/$name")), Optional.empty())
+        }
     }
 }

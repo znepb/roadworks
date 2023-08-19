@@ -1,41 +1,40 @@
 {
 	"schemaVersion": 1,
-	"id": "zrm",
+	"id": "roadworks",
 	"version": "${version}",
-	"name": "zrm",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Roadworks",
+	"description": "Immersive American-style traffic management",
 	"authors": [
-		"Me!"
+		"znepb"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/znepb/roadworks"
 	},
-	"license": "CC0-1.0",
-	"icon": "assets/zrm/icon.png",
+	"license": "MIT",
+	"icon": "assets/roadworks/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			{
-				"value": "me.znepb.zrm.Main",
+				"value": "me.znepb.roadworks.RoadworksMain",
 				"adapter": "kotlin"
 			}
 		],
 		"client": [
 			{
-				"value": "me.znepb.zrm.ZrmClient",
+				"value": "me.znepb.roadworks.RoadworksClient",
 				"adapter": "kotlin"
 			}
 		],
 		"fabric-datagen": [
 			{
-				"value": "me.znepb.zrm.datagen.DataGen",
+				"value": "me.znepb.roadworks.datagen.DataGen",
 				"adapter": "kotlin"
 			}
 		]
 	},
 	"mixins": [
-		"zrm.mixins.json"
+      "roadworks.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.14.21",

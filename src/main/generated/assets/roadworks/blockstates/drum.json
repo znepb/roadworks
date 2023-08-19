@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "facing=east,half=bottom": {
+      "model": "roadworks:block/drum",
+      "y": 90
+    },
+    "facing=east,half=top": {
+      "model": "roadworks:block/drum",
+      "y": 90
+    },
+    "facing=north,half=bottom": {
+      "model": "roadworks:block/drum",
+      "y": 0
+    },
+    "facing=north,half=top": {
+      "model": "roadworks:block/drum",
+      "y": 0
+    },
+    "facing=south,half=bottom": {
+      "model": "roadworks:block/drum",
+      "y": 180
+    },
+    "facing=south,half=top": {
+      "model": "roadworks:block/drum",
+      "y": 180
+    },
+    "facing=west,half=bottom": {
+      "model": "roadworks:block/drum",
+      "y": 270
+    },
+    "facing=west,half=top": {
+      "model": "roadworks:block/drum",
+      "y": 270
+    }
+  }
+}

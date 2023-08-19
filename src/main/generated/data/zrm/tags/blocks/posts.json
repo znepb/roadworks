@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "zrm:post",
-    "zrm:thin_post",
-    "zrm:thick_post"
-  ]
-}

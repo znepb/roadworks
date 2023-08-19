@@ -1,0 +1,7 @@
+{
+  "parent": "roadworks:block/sign_base",
+  "textures": {
+    "back": "roadworks:block/signs/back_yield",
+    "front": "roadworks:block/signs/yield"
+  }
+}

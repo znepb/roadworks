@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/orientable_with_bottom",
-  "textures": {
-    "bottom": "zrm:block/traffic_cabinet_bottom",
-    "front": "zrm:block/traffic_cabinet_front",
-    "side": "zrm:block/traffic_cabinet_side",
-    "top": "zrm:block/traffic_cabinet_top"
-  }
-}

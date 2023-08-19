@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "roadworks:block/traffic_cabinet_bottom",
+    "front": "roadworks:block/traffic_cabinet_front",
+    "side": "roadworks:block/traffic_cabinet_side",
+    "top": "roadworks:block/traffic_cabinet_top"
+  }
+}

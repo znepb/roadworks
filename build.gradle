@@ -15,7 +15,7 @@ loom {
     splitEnvironmentSourceSets()
 
 	mods {
-		"zrm" {
+		"roadworks" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
@@ -27,7 +27,7 @@ loom {
 			name "Data Generation"
 			vmArg "-Dfabric-api.datagen"
 			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-			vmArg "-Dfabric-api.datagen.modid=zrm"
+			vmArg "-Dfabric-api.datagen.modid=roadworks"
  
 			runDir "build/datagen"
 		}

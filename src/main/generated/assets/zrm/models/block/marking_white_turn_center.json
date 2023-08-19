@@ -1,6 +1,0 @@
-{
-  "parent": "zrm:block/marking_basic",
-  "textures": {
-    "texture": "zrm:block/markings/marking_white_turn_center"
-  }
-}

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "roadworks:post",
+    "roadworks:thin_post",
+    "roadworks:thick_post"
+  ]
+}

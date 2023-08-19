@@ -1,0 +1,6 @@
+{
+  "parent": "roadworks:block/signal",
+  "textures": {
+    "texture": "roadworks:block/signals/green_right_off"
+  }
+}

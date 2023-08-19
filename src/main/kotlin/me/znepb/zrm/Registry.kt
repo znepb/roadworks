@@ -202,7 +202,9 @@ object Registry {
         private fun itemSettings(): FabricItemSettings = FabricItemSettings()
         fun<T: Item> rItem(name: String, value: T): T =
             Registry.register(ITEM, ModId(name), value).also { items.add(it) }
-        private fun<B: Block, I: Item> rItem(parent:B, supplier: (B, Item.Settings) -> I, settings: Item.Settings = itemSettings()): I {
+        private fun<B: Block, I: Item> rItem(parent:B, supplier: (B, Item.Settings) -> I, settings: Item.Settings =
+                itemSettings()): I
+        {
             val item = Registry.register(ITEM, BLOCK.getId(parent), supplier(parent, settings))
             Item.BLOCK_ITEMS[parent] = item
             items.add(item)
@@ -230,10 +232,14 @@ object Registry {
 
         val TRAFFIC_CABINET = rItem(ModBlocks.TRAFFIC_CABINET, ::BlockItem, itemSettings())
         val THREE_HEAD_TRAFFIC_SIGNAL = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())
-        val THREE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
-        val THREE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem, itemSettings())
-        val THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT, ::BlockItem, itemSettings())
-        val FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem, itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem,
+                itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem,
+                itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT, ::BlockItem,
+                itemSettings())
+        val FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem,
+                itemSettings())
         val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
 
         val WHITE_INFILL_MARKING = rItem(ModBlocks.WHITE_INFILL_MARKING, ::BlockItem, itemSettings())

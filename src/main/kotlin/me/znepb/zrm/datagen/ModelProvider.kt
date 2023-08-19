@@ -1,5 +1,6 @@
 package me.znepb.zrm.datagen
 
+import me.znepb.zrm.Main
 import me.znepb.zrm.Main.ModId
 import me.znepb.zrm.Registry
 import me.znepb.zrm.block.SignBlock
@@ -28,10 +29,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
             TextureKey.BACK
         )
 
-        val signalModel = Model(
-            Optional.of(ModId("block/signal")), Optional.empty(),
-            TextureKey.TEXTURE
-        )
+        val signalModel = Model(Optional.of(ModId("block/signal")), Optional.empty(), TextureKey.TEXTURE)
 
         val basicMarkingModel = Model(
             Optional.of(ModId("block/marking_basic")), Optional.empty(),
@@ -41,7 +39,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         val signals = getSignalTextures()
 
         private fun getSignalTextures(): List<String> {
-            val list = mutableListOf<String>();
+            val list = mutableListOf<String>()
 
             SignalLight.entries.forEach {
                 list.add("${it.light}_on")

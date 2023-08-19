@@ -1,6 +1,7 @@
 package me.znepb.roadworks.block.marking
 
 import me.znepb.roadworks.RoadworksMain
+import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.datagen.ModelProvider
 import me.znepb.roadworks.util.MarkingUtil
 import me.znepb.roadworks.util.OrientedBlockStateSupplier
@@ -80,9 +81,9 @@ class TMarking : AbstractMarking() {
 
         val rightState = if(right.block is OneSideFilledMarking && front.block is OneSideFilledMarking) {
             val rightFilled = MarkingUtil.getCardinalDirectionFilled(right, facing.opposite)
-            val backFilled = MarkingUtil.getCardinalDirectionFilled(front, facing.rotateYClockwise())
+            val frontFilled = MarkingUtil.getCardinalDirectionFilled(front, facing.rotateYClockwise())
 
-            rightFilled && backFilled
+            rightFilled && frontFilled
         } else false
 
         // Left
@@ -90,9 +91,9 @@ class TMarking : AbstractMarking() {
 
         val leftState = if(left.block is OneSideFilledMarking && front.block is OneSideFilledMarking) {
             val leftFilled = MarkingUtil.getCardinalDirectionFilled(left, facing.opposite)
-            val backFilled = MarkingUtil.getCardinalDirectionFilled(front, facing.rotateYClockwise())
+            val frontFilled = MarkingUtil.getCardinalDirectionFilled(front, facing.rotateYCounterclockwise())
 
-            leftFilled && backFilled
+            leftFilled && frontFilled
         } else false
 
         // Back

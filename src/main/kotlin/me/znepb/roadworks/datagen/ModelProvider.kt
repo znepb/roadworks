@@ -3,9 +3,12 @@ package me.znepb.roadworks.datagen
 import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.Registry
 import me.znepb.roadworks.block.SignBlock
-import me.znepb.roadworks.block.marking.OneSideFilledMarking
-import me.znepb.roadworks.block.marking.TurnMarking
+import me.znepb.roadworks.block.marking.AbstractMarking.Companion.addBasicMarking
+import me.znepb.roadworks.block.marking.OneSideFilledMarking.Companion.addMarkingWithFilledSides
+import me.znepb.roadworks.block.marking.TMarking.Companion.addTMarking
+import me.znepb.roadworks.block.marking.TurnMarking.Companion.addTurnMarking
 import me.znepb.roadworks.block.signals.SignalLight
+import me.znepb.roadworks.util.OrientedBlockStateSupplier
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -14,7 +17,6 @@ import net.minecraft.data.client.*
 import net.minecraft.data.client.BlockStateModelGenerator.createSingletonBlockState
 import net.minecraft.data.client.VariantSettings.Rotation
 import net.minecraft.state.property.Properties
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import java.util.*
 
@@ -27,11 +29,6 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         )
 
         val signalModel = Model(Optional.of(ModId("block/signal")), Optional.empty(), TextureKey.TEXTURE)
-
-        val basicMarkingModel = Model(
-            Optional.of(ModId("block/marking_basic")), Optional.empty(),
-            TextureKey.TEXTURE
-        )
 
         val signals = getSignalTextures()
 
@@ -85,234 +82,40 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
             }
             .upload(Registry.ModBlocks.TRAFFIC_CABINET, "", generator.modelCollector)
 
-        generator.blockStateCollector.accept(MultipartBlockStateSupplier.create(Registry.ModBlocks.TRAFFIC_CABINET)
-            .with(
-                When.create().set(Properties.HORIZONTAL_FACING, Direction.NORTH),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R0)
-                    .put(VariantSettings.MODEL, ModId("block/traffic_cabinet"))
-            ).with(
-                When.create().set(Properties.HORIZONTAL_FACING, Direction.EAST),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R90)
-                    .put(VariantSettings.MODEL, ModId("block/traffic_cabinet"))
-            ).with(
-                When.create().set(Properties.HORIZONTAL_FACING, Direction.SOUTH),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R180)
-                    .put(VariantSettings.MODEL, ModId("block/traffic_cabinet"))
-            ).with(
-                When.create().set(Properties.HORIZONTAL_FACING, Direction.WEST),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R270)
-                    .put(VariantSettings.MODEL, ModId("block/traffic_cabinet"))
+        generator.blockStateCollector.accept(
+            OrientedBlockStateSupplier(
+                ModId("block/traffic_cabinet")
+            ).put(
+                MultipartBlockStateSupplier.create(Registry.ModBlocks.TRAFFIC_CABINET)
             )
         )
 
-        addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_CENTER_MARKING, "marking_white_center", "marking_white_center_filled")
         addBasicMarking(generator, Registry.ModBlocks.WHITE_INFILL_MARKING, "marking_white_infill", true)
+
+        // White center
+        addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_CENTER_MARKING, "marking_white_center",
+            "marking_white_fill_half", "marking_white_fill_half")
         addBasicMarking(generator, Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "marking_white_center_dash")
-        addTurnMarking(generator, Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "marking_white_turn_center", "marking_white_turn_center_filled_inside", "marking_white_turn_center_filled_outside")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "marking_white_turn_center",
+            "marking_white_fill_quarter_nw",
+            "marking_white_fill_quarter_nw_opposite")
+        addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER,
+            "marking_white_t_center", "marking_white_fill_half",
+            "marking_white_fill_quarter_ne", "marking_white_fill_quarter_nw", true)
+
+        // White edge
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_EDGE_DASH_MARKING, "marking_white_edge_dash")
+        addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_EDGE_MARKING,
+            "marking_white_edge", "marking_white_edge_filled_left",
+            "marking_white_edge_filled_right")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_INSIDE,
+            "marking_white_turn_inside", "marking_white_turn_tight_inside",
+            "marking_white_turn_tight_outside")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE,
+            "marking_white_turn_outside", "marking_white_turn_wide_inside",
+            "marking_white_turn_wide_outside")
 
         signals.forEach { addSignal(generator, it) }
-    }
-
-    private fun addBasicMarking(generator: BlockStateModelGenerator, block: Block, id: String) {
-        addBasicMarking(generator, block, id, false)
-    }
-
-    private fun addBasicMarking(generator: BlockStateModelGenerator, block: Block, id: String, uvLock: Boolean?) {
-        basicMarkingModel.upload(
-            ModId("block/${id}"),
-            TextureMap()
-                .put(TextureKey.TEXTURE, ModId("block/markings/$id")),
-            generator.modelCollector
-        )
-
-        generator.blockStateCollector.accept(basicMarkingBlockStateSupplier(block, id, uvLock))
-    }
-
-    private fun basicMarkingBlockStateSupplier(block: Block, id: String, uvLock: Boolean?): MultipartBlockStateSupplier {
-        return MultipartBlockStateSupplier.create(block)
-            .with(
-                When.create().set(Properties.HORIZONTAL_FACING, Direction.NORTH),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R0)
-                    .put(VariantSettings.MODEL, ModId("block/$id"))
-                    .put(VariantSettings.UVLOCK, uvLock)
-            ).with(
-                When.create().set(Properties.HORIZONTAL_FACING, Direction.EAST),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R90)
-                    .put(VariantSettings.MODEL, ModId("block/$id"))
-                    .put(VariantSettings.UVLOCK, uvLock)
-            ).with(
-                When.create().set(Properties.HORIZONTAL_FACING, Direction.SOUTH),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R180)
-                    .put(VariantSettings.MODEL, ModId("block/$id"))
-                    .put(VariantSettings.UVLOCK, uvLock)
-            ).with(
-                When.create().set(Properties.HORIZONTAL_FACING, Direction.WEST),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R270)
-                    .put(VariantSettings.MODEL, ModId("block/$id"))
-                    .put(VariantSettings.UVLOCK, uvLock)
-            )
-    }
-
-    private fun addMarkingWithFilledSides(generator: BlockStateModelGenerator, block: Block, id: String, fillModel: String) {
-        basicMarkingModel.upload(
-            ModId("block/$id"),
-            TextureMap()
-                .put(TextureKey.TEXTURE, ModId("block/markings/$id")),
-            generator.modelCollector
-        )
-
-        // there HAS to be a better way to do this, if there is please PR it :D
-        generator.blockStateCollector.accept(basicMarkingBlockStateSupplier(block, id, false).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                    .set(OneSideFilledMarking.RIGHT_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R180)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModel"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.EAST)
-                    .set(OneSideFilledMarking.RIGHT_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R270)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModel"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.SOUTH)
-                    .set(OneSideFilledMarking.RIGHT_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R0)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModel"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.WEST)
-                    .set(OneSideFilledMarking.RIGHT_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R90)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModel"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                    .set(OneSideFilledMarking.LEFT_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R0)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModel"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.EAST)
-                    .set(OneSideFilledMarking.LEFT_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R90)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModel"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.SOUTH)
-                    .set(OneSideFilledMarking.LEFT_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R180)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModel"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.WEST)
-                    .set(OneSideFilledMarking.LEFT_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R270)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModel"))
-                    .put(VariantSettings.UVLOCK, true)
-            )
-        )
-    }
-
-    private fun addTurnMarking(generator: BlockStateModelGenerator, block: Block, id: String, fillModelInside: String, fillModelOutside: String) {
-        basicMarkingModel.upload(
-            ModId("block/$id"),
-            TextureMap()
-                .put(TextureKey.TEXTURE, ModId("block/markings/$id")),
-            generator.modelCollector
-        )
-
-        // there HAS to be a better way to do this, if there is please PR it :D
-        generator.blockStateCollector.accept(basicMarkingBlockStateSupplier(block, id, false).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                    .set(TurnMarking.INSIDE_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R180)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModelInside"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.EAST)
-                    .set(TurnMarking.INSIDE_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R270)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModelInside"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.SOUTH)
-                    .set(TurnMarking.INSIDE_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R0)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModelInside"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.WEST)
-                    .set(TurnMarking.INSIDE_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R90)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModelInside"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                    .set(TurnMarking.OUTSIDE_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R180)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModelOutside"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.EAST)
-                    .set(TurnMarking.OUTSIDE_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R270)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModelOutside"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.SOUTH)
-                    .set(TurnMarking.OUTSIDE_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R0)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModelOutside"))
-                    .put(VariantSettings.UVLOCK, true)
-            ).with(
-                When.create()
-                    .set(Properties.HORIZONTAL_FACING, Direction.WEST)
-                    .set(TurnMarking.OUTSIDE_FILL, true),
-                BlockStateVariant.create()
-                    .put(VariantSettings.Y, Rotation.R90)
-                    .put(VariantSettings.MODEL, ModId("block/$fillModelOutside"))
-                    .put(VariantSettings.UVLOCK, true)
-            )
-        )
     }
 
     private fun addSignal(generator: BlockStateModelGenerator, signalName: String) {

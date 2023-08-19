@@ -1,8 +1,12 @@
 package me.znepb.roadworks.block.marking
 
 import me.znepb.roadworks.Registry
-import me.znepb.roadworks.block.marking.OneSideFilledMarking.Companion.getCardinalDirectionFilled
+import me.znepb.roadworks.RoadworksMain
+import me.znepb.roadworks.datagen.ModelProvider
+import me.znepb.roadworks.util.MarkingUtil.Companion.getCardinalDirectionFilled
+import me.znepb.roadworks.util.OrientedBlockStateSupplier
 import net.minecraft.block.*
+import net.minecraft.data.client.*
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
@@ -13,12 +17,33 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
-class TurnMarking : HorizontalFacingBlock(Settings.copy(Blocks.WHITE_CONCRETE)) {
+class TurnMarking : AbstractMarking() {
     companion object {
-        val MARKING_SHAPE = createCuboidShape(0.0, 0.05, 0.0, 16.0, 0.1, 16.0)
-
         val INSIDE_FILL = BooleanProperty.of("inside_fill")
         val OUTSIDE_FILL = BooleanProperty.of("outside_fill")
+
+        fun addTurnMarking(generator: BlockStateModelGenerator, block: Block, id: String, fillModelInside: String, fillModelOutside: String) {
+            basicMarkingModel.upload(
+                RoadworksMain.ModId("block/$id"),
+                TextureMap()
+                    .put(TextureKey.TEXTURE, RoadworksMain.ModId("block/markings/$id")),
+                generator.modelCollector
+            )
+
+            generator.blockStateCollector.accept(
+                OrientedBlockStateSupplier(
+                    RoadworksMain.ModId("block/$fillModelOutside"),
+                    { it.set(OUTSIDE_FILL, true) },
+                    { it.put(VariantSettings.UVLOCK, true) },
+                    2
+                ).put(OrientedBlockStateSupplier(
+                    RoadworksMain.ModId("block/$fillModelInside"),
+                    { it.set(INSIDE_FILL, true) },
+                    { it.put(VariantSettings.UVLOCK, true) },
+                    2
+                ).put(basicMarkingBlockStateSupplier(block, id, false)))
+            )
+        }
     }
 
     init {
@@ -33,7 +58,7 @@ class TurnMarking : HorizontalFacingBlock(Settings.copy(Blocks.WHITE_CONCRETE)) 
         builder.add(OUTSIDE_FILL)
     }
 
-    private fun getState(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
+    override fun getState(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
         val facing = state.get(Properties.HORIZONTAL_FACING)
 
         // Inside
@@ -60,33 +85,5 @@ class TurnMarking : HorizontalFacingBlock(Settings.copy(Blocks.WHITE_CONCRETE)) 
         } else left.isOf(Registry.ModBlocks.WHITE_INFILL_MARKING) && front.isOf(Registry.ModBlocks.WHITE_INFILL_MARKING)
 
         return state.with(INSIDE_FILL, inside).with(OUTSIDE_FILL, outside)
-    }
-
-    override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos,
-        neighborPos: BlockPos
-    ): BlockState {
-        return getState(state, world, pos)
-    }
-
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        val placement = super.getPlacementState(ctx)!!.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing)
-        return getState(placement, ctx.world, ctx.blockPos)
-    }
-
-    override fun getCullingShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
-        return MARKING_SHAPE
-    }
-
-    override fun getCollisionShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape {
-        return MARKING_SHAPE
-    }
-
-    override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape {
-        return MARKING_SHAPE
     }
 }

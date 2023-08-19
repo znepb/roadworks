@@ -6,6 +6,7 @@ import me.znepb.roadworks.render.*
 import me.znepb.roadworks.render.ThreeHeadTrafficSignalLeftBlockRenderer
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.minecraft.client.gui.screen.ingame.ForgingScreen
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.RenderLayer
 import org.slf4j.LoggerFactory
@@ -27,7 +28,12 @@ object RoadworksClient : ClientModInitializer {
 			Registry.ModBlocks.WHITE_CENTER_MARKING,
 			Registry.ModBlocks.WHITE_CENTER_DASH_MARKING,
 			Registry.ModBlocks.WHITE_INFILL_MARKING,
-			Registry.ModBlocks.WHITE_CENTER_TURN_MARKING
+			Registry.ModBlocks.WHITE_CENTER_TURN_MARKING,
+			Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_INSIDE,
+			Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE,
+			Registry.ModBlocks.WHITE_EDGE_DASH_MARKING,
+			Registry.ModBlocks.WHITE_EDGE_MARKING,
+			Registry.ModBlocks.WHITE_T_CENTER
 		)
 
 		ModelLoader()

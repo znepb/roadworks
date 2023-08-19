@@ -3,16 +3,21 @@ package me.znepb.roadworks.datagen
 import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.Registry
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.BlockTagProvider
+import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents.TagsLoaded
+import net.minecraft.block.Blocks
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper.WrapperLookup
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.Identifier
 import java.util.concurrent.CompletableFuture
 
 class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture<WrapperLookup>) : BlockTagProvider(output, completableFuture) {
     companion object {
         val POSTS = TagKey.of(RegistryKeys.BLOCK, ModId("posts"))
         val POST_MOUNTABLES = TagKey.of(RegistryKeys.BLOCK, ModId("post_mountables"))
+        val MARKINGS = TagKey.of(RegistryKeys.BLOCK, ModId("marking"))
 
         val SIGNS = listOf(
             Registry.ModBlocks.STOP_SIGN,
@@ -26,6 +31,12 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
     }
 
     override fun configure(arg: WrapperLookup) {
+        getOrCreateTagBuilder(MARKINGS)
+            .add(Registry.ModBlocks.WHITE_CENTER_MARKING)
+            .add(Registry.ModBlocks.WHITE_CENTER_TURN_MARKING)
+            .add(Registry.ModBlocks.WHITE_CENTER_DASH_MARKING)
+            .add(Registry.ModBlocks.WHITE_INFILL_MARKING)
+
         getOrCreateTagBuilder(POSTS)
             .add(Registry.ModBlocks.POST)
             .add(Registry.ModBlocks.THIN_POST)

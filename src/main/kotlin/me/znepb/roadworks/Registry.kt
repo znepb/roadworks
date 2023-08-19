@@ -8,6 +8,7 @@ import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.block.cone.*
 import me.znepb.roadworks.block.marking.BasicMarking
 import me.znepb.roadworks.block.marking.OneSideFilledMarking
+import me.znepb.roadworks.block.marking.TMarking
 import me.znepb.roadworks.block.marking.TurnMarking
 import me.znepb.roadworks.block.post.PostBlock
 import me.znepb.roadworks.block.post.PostBlockEntity
@@ -33,6 +34,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
+import org.spongepowered.asm.service.modlauncher.ModLauncherAuditTrail
 
 // TODO: Transfer registries into their own class files
 
@@ -196,6 +198,13 @@ object Registry {
         val WHITE_CENTER_DASH_MARKING = rBlock("marking_white_center_dash", BasicMarking())
         val WHITE_CENTER_MARKING = rBlock("marking_white_center", OneSideFilledMarking())
         val WHITE_CENTER_TURN_MARKING = rBlock("marking_white_turn_center", TurnMarking())
+
+        val WHITE_EDGE_DASH_MARKING = rBlock("marking_white_edge_dash", BasicMarking())
+        val WHITE_EDGE_MARKING = rBlock("marking_white_edge", OneSideFilledMarking())
+        val WHITE_EDGE_TURN_MARKING_INSIDE = rBlock("marking_white_turn_inside", TurnMarking())
+        val WHITE_EDGE_TURN_MARKING_OUTSIDE = rBlock("marking_white_turn_outside", TurnMarking())
+
+        val WHITE_T_CENTER = rBlock("marking_white_t_center", TMarking())
     }
 
     object ModItems {
@@ -246,6 +255,13 @@ object Registry {
         val WHITE_CENTER_DASH_MARKING = rItem(ModBlocks.WHITE_CENTER_DASH_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_MARKING = rItem(ModBlocks.WHITE_CENTER_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_TURN_MARKING = rItem(ModBlocks.WHITE_CENTER_TURN_MARKING, ::BlockItem, itemSettings())
+
+        val WHITE_EDGE_DASH_MARKING = rItem(ModBlocks.WHITE_EDGE_DASH_MARKING, ::BlockItem, itemSettings())
+        val WHITE_EDGE_MARKING = rItem(ModBlocks.WHITE_EDGE_MARKING, ::BlockItem, itemSettings())
+        val WHITE_EDGE_TURN_MARKING_INSIDE = rItem(ModBlocks.WHITE_EDGE_TURN_MARKING_INSIDE, ::BlockItem, itemSettings())
+        val WHITE_EDGE_TURN_MARKING_OUTSIDE = rItem(ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE, ::BlockItem, itemSettings())
+
+        val WHITE_T_CENTER = rItem(ModBlocks.WHITE_T_CENTER, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
     }

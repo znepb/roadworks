@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "roadworks:block/marking_white_turn_center",
+        "model": "roadworks:block/marking_white_turn_inside",
         "uvlock": false,
         "y": 0
       },
@@ -12,7 +12,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_turn_center",
+        "model": "roadworks:block/marking_white_turn_inside",
         "uvlock": false,
         "y": 90
       },
@@ -22,7 +22,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_turn_center",
+        "model": "roadworks:block/marking_white_turn_inside",
         "uvlock": false,
         "y": 180
       },
@@ -32,7 +32,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_turn_center",
+        "model": "roadworks:block/marking_white_turn_inside",
         "uvlock": false,
         "y": 270
       },
@@ -42,7 +42,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_fill_quarter_nw",
+        "model": "roadworks:block/marking_white_turn_tight_inside",
         "uvlock": true,
         "y": 180
       },
@@ -53,7 +53,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_fill_quarter_nw",
+        "model": "roadworks:block/marking_white_turn_tight_inside",
         "uvlock": true,
         "y": 270
       },
@@ -64,7 +64,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_fill_quarter_nw",
+        "model": "roadworks:block/marking_white_turn_tight_inside",
         "uvlock": true,
         "y": 0
       },
@@ -75,7 +75,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_fill_quarter_nw",
+        "model": "roadworks:block/marking_white_turn_tight_inside",
         "uvlock": true,
         "y": 90
       },
@@ -86,7 +86,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_fill_quarter_nw_opposite",
+        "model": "roadworks:block/marking_white_turn_tight_outside",
         "uvlock": true,
         "y": 180
       },
@@ -97,7 +97,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_fill_quarter_nw_opposite",
+        "model": "roadworks:block/marking_white_turn_tight_outside",
         "uvlock": true,
         "y": 270
       },
@@ -108,7 +108,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_fill_quarter_nw_opposite",
+        "model": "roadworks:block/marking_white_turn_tight_outside",
         "uvlock": true,
         "y": 0
       },
@@ -119,7 +119,7 @@
     },
     {
       "apply": {
-        "model": "roadworks:block/marking_white_fill_quarter_nw_opposite",
+        "model": "roadworks:block/marking_white_turn_tight_outside",
         "uvlock": true,
         "y": 90
       },

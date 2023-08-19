@@ -36,9 +36,15 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, "Five-head Traffic Signal Right")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_INFILL_MARKING, "White Infill Marking")
-        translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "Centered Short White Line")
-        translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "Centered Turn White Line")
+        translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "Centered White Dash")
+        translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "Centered White Turn Line")
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_MARKING, "Centered Long White Line")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER, "Center T Marking")
+
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_DASH_MARKING, "Edge White Dash")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_MARKING, "Edge White Line")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_INSIDE, "Inside White Edge Turn Line")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE, "Outside White Edge Turn Line")
 
         translationBuilder.add("itemGroup.${NAMESPACE}.main", "Roadworks")
     }

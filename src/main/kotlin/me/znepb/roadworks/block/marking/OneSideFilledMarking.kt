@@ -1,11 +1,20 @@
 package me.znepb.roadworks.block.marking
 
 import me.znepb.roadworks.Registry
+import me.znepb.roadworks.RoadworksMain
+import me.znepb.roadworks.datagen.ModelProvider
+import me.znepb.roadworks.datagen.TagProvider
+import me.znepb.roadworks.util.MarkingUtil.Companion.doesBorder
+import me.znepb.roadworks.util.MarkingUtil.Companion.getAbsoluteFromRelative
+import me.znepb.roadworks.util.OrientedBlockStateSupplier
+import me.znepb.roadworks.util.Side
+import net.fabricmc.fabric.impl.tag.convention.TagRegistration
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks.WHITE_CONCRETE
 import net.minecraft.block.HorizontalFacingBlock
 import net.minecraft.block.ShapeContext
+import net.minecraft.data.client.*
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
@@ -15,62 +24,35 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
+import java.util.*
 
-class OneSideFilledMarking() : HorizontalFacingBlock(Settings.copy(WHITE_CONCRETE)) {
+class OneSideFilledMarking : AbstractMarking() {
     companion object {
-        val MARKING_SHAPE = createCuboidShape(0.0, 0.05, 0.0, 16.0, 0.1, 16.0)
-
         val RIGHT_FILL = BooleanProperty.of("right_fill")
         val LEFT_FILL = BooleanProperty.of("left_fill")
 
-        fun doesBorder(from: BlockState, other: BlockState, side: Side): Boolean {
-            if(other.isOf(Registry.ModBlocks.WHITE_INFILL_MARKING)) return true
-            if(!from.contains(Properties.HORIZONTAL_FACING)
-                || !other.contains(Properties.HORIZONTAL_FACING)) return false
+        fun addMarkingWithFilledSides(generator: BlockStateModelGenerator, block: Block, id: String, leftModel: String, rightModel: String) {
+            basicMarkingModel.upload(
+                RoadworksMain.ModId("block/$id"),
+                TextureMap()
+                    .put(TextureKey.TEXTURE, RoadworksMain.ModId("block/markings/$id")),
+                generator.modelCollector
+            )
 
-            val thisState = from.get(Properties.HORIZONTAL_FACING)
-            val otherState = other.get(Properties.HORIZONTAL_FACING)
-
-            return thisState == otherState || thisState == otherState.opposite
-        }
-
-        fun getAbsoluteFromRelative(state: BlockState, relative: Side): Direction {
-            return when(state.get(Properties.HORIZONTAL_FACING)) {
-                Direction.NORTH -> when(relative) {
-                    Side.RIGHT -> Direction.EAST
-                    Side.LEFT -> Direction.WEST
-                }
-                Direction.EAST -> when(relative) {
-                    Side.RIGHT -> Direction.SOUTH
-                    Side.LEFT -> Direction.NORTH
-                }
-                Direction.SOUTH -> when(relative) {
-                    Side.RIGHT -> Direction.WEST
-                    Side.LEFT -> Direction.EAST
-                }
-                Direction.WEST -> when(relative) {
-                    Side.RIGHT -> Direction.NORTH
-                    Side.LEFT -> Direction.SOUTH
-                }
-                else -> Direction.NORTH
-            }
-        }
-
-        fun getCardinalDirectionFilled(state: BlockState, direction: Direction): Boolean {
-            if(state.get(Properties.HORIZONTAL_FACING) == direction &&
-                state.get(Properties.HORIZONTAL_FACING) == direction.opposite) return false
-
-            return if(direction == state.get(Properties.HORIZONTAL_FACING).rotateYClockwise())
-                state.get(RIGHT_FILL)
-            else state.get(LEFT_FILL)
-        }
-    }
-
-    enum class Side {
-        RIGHT, LEFT;
-
-        fun opposite(): Side {
-            return if(this == RIGHT) LEFT else RIGHT
+            generator.blockStateCollector.accept(
+                OrientedBlockStateSupplier(
+                    RoadworksMain.ModId("block/$leftModel"),
+                    { it.set(LEFT_FILL, true) },
+                    { it.put(VariantSettings.UVLOCK, true) }
+                ).put(OrientedBlockStateSupplier(
+                    RoadworksMain.ModId("block/$rightModel"),
+                    { it.set(RIGHT_FILL, true) },
+                    { it.put(VariantSettings.UVLOCK, true) },
+                    2
+                ).put(
+                    basicMarkingBlockStateSupplier(block, id, false)
+                ))
+            )
         }
     }
 
@@ -86,44 +68,16 @@ class OneSideFilledMarking() : HorizontalFacingBlock(Settings.copy(WHITE_CONCRET
         builder.add(LEFT_FILL)
     }
 
-    private fun getState(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
+     override fun getState(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
         val directionRight = getAbsoluteFromRelative(state, Side.RIGHT)
         val directionLeft = directionRight.opposite
 
         val blockLeft = world.getBlockState(pos.offset(directionLeft))
         val blockRight = world.getBlockState(pos.offset(directionRight))
 
-        val connectLeft = doesBorder(state, blockLeft, Side.LEFT)
-        val connectRight = doesBorder(state, blockRight, Side.RIGHT)
+        val connectLeft = doesBorder(state, blockLeft)
+        val connectRight = doesBorder(state, blockRight)
 
         return state.with(RIGHT_FILL, connectRight).with(LEFT_FILL, connectLeft)
-    }
-
-    override fun getStateForNeighborUpdate(
-        state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
-        pos: BlockPos,
-        neighborPos: BlockPos
-    ): BlockState {
-        return getState(state, world, pos)
-    }
-
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        val placement = super.getPlacementState(ctx)!!.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
-        return getState(placement, ctx.world, ctx.blockPos)
-    }
-
-    override fun getCullingShape(state: BlockState, world: BlockView, pos: BlockPos): VoxelShape {
-        return MARKING_SHAPE
-    }
-
-    override fun getCollisionShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape {
-        return MARKING_SHAPE
-    }
-
-    override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape {
-        return MARKING_SHAPE
     }
 }

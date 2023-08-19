@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "roadworks:marking_white_center",
+    "roadworks:marking_white_turn_center",
+    "roadworks:marking_white_center_dash",
+    "roadworks:marking_white_infill"
+  ]
+}

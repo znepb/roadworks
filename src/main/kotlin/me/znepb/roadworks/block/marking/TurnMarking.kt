@@ -17,7 +17,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
-class TurnMarking : AbstractMarking() {
+class TurnMarking(private val mirror: Boolean = false) : AbstractMarking() {
     companion object {
         val INSIDE_FILL = BooleanProperty.of("inside_fill")
         val OUTSIDE_FILL = BooleanProperty.of("outside_fill")
@@ -62,27 +62,28 @@ class TurnMarking : AbstractMarking() {
         val facing = state.get(Properties.HORIZONTAL_FACING)
 
         // Inside
-        val right = world.getBlockState(pos.offset(facing.rotateYClockwise()))
+        val dir = if(mirror) facing.rotateYCounterclockwise() else facing.rotateYClockwise()
+        val side = world.getBlockState(pos.offset(dir))
         val back = world.getBlockState(pos.offset(facing.opposite))
 
-        val inside = if(right.block is OneSideFilledMarking && back.block is OneSideFilledMarking) {
-            val rightFilled = getCardinalDirectionFilled(right, facing.opposite)
-            val backFilled = getCardinalDirectionFilled(back, facing.rotateYClockwise())
+        val inside = if(side.block is OneSideFilledMarking && back.block is OneSideFilledMarking) {
+            val rightFilled = getCardinalDirectionFilled(side, facing.opposite)
+            val backFilled = getCardinalDirectionFilled(back, dir)
 
             rightFilled && backFilled
         } else false
 
         // outside
 
-        val left = world.getBlockState(pos.offset(facing.rotateYCounterclockwise()))
+        val outsideSide = world.getBlockState(pos.offset(dir.opposite))
         val front = world.getBlockState(pos.offset(facing))
 
-        val outside = if(left.block is OneSideFilledMarking && front.block is OneSideFilledMarking) {
-            val leftFilled = getCardinalDirectionFilled(left, facing.rotateYClockwise())
+        val outside = if(outsideSide.block is OneSideFilledMarking && front.block is OneSideFilledMarking) {
+            val leftFilled = getCardinalDirectionFilled(outsideSide, dir.opposite)
             val frontFilled = getCardinalDirectionFilled(front, facing.opposite)
 
             leftFilled && frontFilled
-        } else left.isOf(Registry.ModBlocks.WHITE_INFILL_MARKING) && front.isOf(Registry.ModBlocks.WHITE_INFILL_MARKING)
+        } else outsideSide.isOf(Registry.ModBlocks.WHITE_INFILL_MARKING) && front.isOf(Registry.ModBlocks.WHITE_INFILL_MARKING)
 
         return state.with(INSIDE_FILL, inside).with(OUTSIDE_FILL, outside)
     }

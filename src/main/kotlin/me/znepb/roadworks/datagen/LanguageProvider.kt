@@ -39,12 +39,31 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "Centered White Dash")
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "Centered White Turn Line")
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_MARKING, "Centered Long White Line")
-        translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER, "Center T Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_THICK, "Centered Thick White Line")
+        translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_STUB_SHORT, "White Centered Short Stub")
+        translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_STUB_MEDIUM, "White Centered Medium Stub")
+        translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_STUB_LONG, "White Centered Long Stub")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_DASH_MARKING, "Edge White Dash")
         translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_MARKING, "Edge White Line")
         translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_INSIDE, "Inside White Edge Turn Line")
         translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE, "Outside White Edge Turn Line")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_THICK, "Edge Thick White Line")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_STUB_SHORT_LEFT, "White Edge Stub Short (Left)")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_STUB_MEDIUM_LEFT, "White Edge Stub Medium (Left)")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_STUB_LONG_LEFT, "White Edge Stub Long (Left)")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_STUB_SHORT_RIGHT, "White Edge Stub Short (Right)")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_STUB_MEDIUM_RIGHT, "White Edge Stub Medium (Right)")
+        translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT, "White Edge Stub Long (Right)")
+
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_LONG, "White Long Center T Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER, "White Center T Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_SHORT, "White Short Center T Marking")
+
+        translationBuilder.add(Registry.ModBlocks.WHITE_L_THIN_LEFT, "White Thin L Left")
+        translationBuilder.add(Registry.ModBlocks.WHITE_L_THIN_RIGHT, "White Thin L Right")
+        translationBuilder.add(Registry.ModBlocks.WHITE_L_LEFT, "White L Left")
+        translationBuilder.add(Registry.ModBlocks.WHITE_L_RIGHT, "White L Right")
 
         translationBuilder.add("itemGroup.${NAMESPACE}.main", "Roadworks")
     }

@@ -195,16 +195,35 @@ object Registry {
         )
 
         val WHITE_INFILL_MARKING = rBlock("marking_white_infill", BasicMarking())
+
         val WHITE_CENTER_DASH_MARKING = rBlock("marking_white_center_dash", BasicMarking())
         val WHITE_CENTER_MARKING = rBlock("marking_white_center", OneSideFilledMarking())
         val WHITE_CENTER_TURN_MARKING = rBlock("marking_white_turn_center", TurnMarking())
+        val WHITE_CENTER_THICK = rBlock("marking_white_center_thick", OneSideFilledMarking())
+        val WHITE_CENTER_STUB_SHORT = rBlock("marking_white_stub_short_center", BasicMarking())
+        val WHITE_CENTER_STUB_MEDIUM = rBlock("marking_white_stub_medium_center", BasicMarking())
+        val WHITE_CENTER_STUB_LONG = rBlock("marking_white_stub_long_center", BasicMarking())
 
         val WHITE_EDGE_DASH_MARKING = rBlock("marking_white_edge_dash", BasicMarking())
         val WHITE_EDGE_MARKING = rBlock("marking_white_edge", OneSideFilledMarking())
         val WHITE_EDGE_TURN_MARKING_INSIDE = rBlock("marking_white_turn_inside", TurnMarking())
         val WHITE_EDGE_TURN_MARKING_OUTSIDE = rBlock("marking_white_turn_outside", TurnMarking())
+        val WHITE_EDGE_THICK = rBlock("marking_white_edge_thick", OneSideFilledMarking())
+        val WHITE_EDGE_STUB_SHORT_LEFT = rBlock("marking_white_stub_short_edge_left", BasicMarking())
+        val WHITE_EDGE_STUB_MEDIUM_LEFT = rBlock("marking_white_stub_medium_edge_left", BasicMarking())
+        val WHITE_EDGE_STUB_LONG_LEFT = rBlock("marking_white_stub_long_edge_left", BasicMarking())
+        val WHITE_EDGE_STUB_SHORT_RIGHT = rBlock("marking_white_stub_short_edge_right", BasicMarking())
+        val WHITE_EDGE_STUB_MEDIUM_RIGHT = rBlock("marking_white_stub_medium_edge_right", BasicMarking())
+        val WHITE_EDGE_STUB_LONG_RIGHT = rBlock("marking_white_stub_long_edge_right", BasicMarking())
 
+        val WHITE_T_CENTER_LONG = rBlock("marking_white_t_center_long", TMarking())
         val WHITE_T_CENTER = rBlock("marking_white_t_center", TMarking())
+        val WHITE_T_CENTER_SHORT = rBlock("marking_white_t_center_short", TMarking())
+
+        val WHITE_L_THIN_LEFT = rBlock("marking_white_l_thin_left", TurnMarking())
+        val WHITE_L_THIN_RIGHT = rBlock("marking_white_l_thin_right", TurnMarking(true))
+        val WHITE_L_LEFT = rBlock("marking_white_l_left", TurnMarking())
+        val WHITE_L_RIGHT = rBlock("marking_white_l_right", TurnMarking(true))
     }
 
     object ModItems {
@@ -255,13 +274,31 @@ object Registry {
         val WHITE_CENTER_DASH_MARKING = rItem(ModBlocks.WHITE_CENTER_DASH_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_MARKING = rItem(ModBlocks.WHITE_CENTER_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_TURN_MARKING = rItem(ModBlocks.WHITE_CENTER_TURN_MARKING, ::BlockItem, itemSettings())
+        val WHITE_CENTER_THICK = rItem(ModBlocks.WHITE_CENTER_THICK, ::BlockItem, itemSettings())
+        val WHITE_CENTER_STUB_SHORT = rItem(ModBlocks.WHITE_CENTER_STUB_SHORT, ::BlockItem, itemSettings())
+        val WHITE_CENTER_STUB_MEDIUM = rItem(ModBlocks.WHITE_CENTER_STUB_MEDIUM, ::BlockItem, itemSettings())
+        val WHITE_CENTER_STUB_LONG = rItem(ModBlocks.WHITE_CENTER_STUB_LONG, ::BlockItem, itemSettings())
 
         val WHITE_EDGE_DASH_MARKING = rItem(ModBlocks.WHITE_EDGE_DASH_MARKING, ::BlockItem, itemSettings())
         val WHITE_EDGE_MARKING = rItem(ModBlocks.WHITE_EDGE_MARKING, ::BlockItem, itemSettings())
         val WHITE_EDGE_TURN_MARKING_INSIDE = rItem(ModBlocks.WHITE_EDGE_TURN_MARKING_INSIDE, ::BlockItem, itemSettings())
         val WHITE_EDGE_TURN_MARKING_OUTSIDE = rItem(ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE, ::BlockItem, itemSettings())
+        val WHITE_EDGE_THICK = rItem(ModBlocks.WHITE_EDGE_THICK, ::BlockItem, itemSettings())
+        val WHITE_EDGE_STUB_SHORT_LEFT = rItem(ModBlocks.WHITE_EDGE_STUB_SHORT_LEFT, ::BlockItem, itemSettings())
+        val WHITE_EDGE_STUB_MEDIUM_LEFT = rItem(ModBlocks.WHITE_EDGE_STUB_MEDIUM_LEFT, ::BlockItem, itemSettings())
+        val WHITE_EDGE_STUB_LONG_LEFT = rItem(ModBlocks.WHITE_EDGE_STUB_LONG_LEFT, ::BlockItem, itemSettings())
+        val WHITE_EDGE_STUB_SHORT_RIGHT = rItem(ModBlocks.WHITE_EDGE_STUB_SHORT_RIGHT, ::BlockItem, itemSettings())
+        val WHITE_EDGE_STUB_MEDIUM_RIGHT = rItem(ModBlocks.WHITE_EDGE_STUB_MEDIUM_RIGHT, ::BlockItem, itemSettings())
+        val WHITE_EDGE_STUB_LONG_RIGHT = rItem(ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT, ::BlockItem, itemSettings())
 
+        val WHITE_T_CENTER_LONG = rItem(ModBlocks.WHITE_T_CENTER_LONG, ::BlockItem, itemSettings())
         val WHITE_T_CENTER = rItem(ModBlocks.WHITE_T_CENTER, ::BlockItem, itemSettings())
+        val WHITE_T_CENTER_SHORT = rItem(ModBlocks.WHITE_T_CENTER_SHORT, ::BlockItem, itemSettings())
+
+        val WHITE_L_THIN_LEFT = rItem(ModBlocks.WHITE_L_THIN_LEFT, ::BlockItem, itemSettings())
+        val WHITE_L_THIN_RIGHT = rItem(ModBlocks.WHITE_L_THIN_RIGHT, ::BlockItem, itemSettings())
+        val WHITE_L_LEFT = rItem(ModBlocks.WHITE_L_LEFT, ::BlockItem, itemSettings())
+        val WHITE_L_RIGHT = rItem(ModBlocks.WHITE_L_RIGHT, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
     }

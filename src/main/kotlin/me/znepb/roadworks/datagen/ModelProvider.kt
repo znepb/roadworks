@@ -99,9 +99,11 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addTurnMarking(generator, Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "marking_white_turn_center",
             "marking_white_fill_quarter_nw",
             "marking_white_fill_quarter_nw_opposite")
-        addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER,
-            "marking_white_t_center", "marking_white_fill_half",
-            "marking_white_fill_quarter_ne", "marking_white_fill_quarter_nw", true)
+        addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_CENTER_THICK, "marking_white_center_thick",
+            "marking_white_fill_half", "marking_white_fill_half")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_CENTER_STUB_SHORT, "marking_white_stub_short_center")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_CENTER_STUB_MEDIUM, "marking_white_stub_medium_center")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_CENTER_STUB_LONG, "marking_white_stub_long_center")
 
         // White edge
         addBasicMarking(generator, Registry.ModBlocks.WHITE_EDGE_DASH_MARKING, "marking_white_edge_dash")
@@ -114,6 +116,39 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addTurnMarking(generator, Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE,
             "marking_white_turn_outside", "marking_white_turn_wide_inside",
             "marking_white_turn_wide_outside")
+        addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_EDGE_THICK, "marking_white_edge_thick",
+            "marking_white_fill_half", "marking_white_fill_half")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_EDGE_STUB_SHORT_LEFT, "marking_white_stub_short_edge_left")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_EDGE_STUB_MEDIUM_LEFT, "marking_white_stub_medium_edge_left")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_EDGE_STUB_LONG_LEFT, "marking_white_stub_long_edge_left")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_EDGE_STUB_SHORT_RIGHT, "marking_white_stub_short_edge_right")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_EDGE_STUB_MEDIUM_RIGHT, "marking_white_stub_medium_edge_right")
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT, "marking_white_stub_long_edge_right")
+
+        // T
+        addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER_LONG,
+            "marking_white_t_center_long", "marking_white_edge_filled_left",
+            "marking_white_fill_quarter_ne_long", "marking_white_fill_quarter_nw_long", true)
+        addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER,
+            "marking_white_t_center", "marking_white_fill_half",
+            "marking_white_fill_quarter_ne", "marking_white_fill_quarter_nw", true)
+        addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER_SHORT,
+            "marking_white_t_center_short", "marking_white_edge_filled_right",
+            "marking_white_fill_quarter_ne_short", "marking_white_fill_quarter_nw_short", true)
+
+        // L
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_L_THIN_LEFT, "marking_white_l_thin_left",
+            "marking_white_l_left_thin_inside",
+            "marking_white_l_thin_outside")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_L_THIN_RIGHT, "marking_white_l_thin_right",
+            "marking_white_l_right_thin_inside",
+            "marking_white_l_thin_outside")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_L_LEFT, "marking_white_l_left",
+            "marking_white_l_left_inside",
+            "marking_white_l_left_outside")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_L_RIGHT, "marking_white_l_right",
+            "marking_white_l_right_inside",
+            "marking_white_l_right_outside")
 
         signals.forEach { addSignal(generator, it) }
     }

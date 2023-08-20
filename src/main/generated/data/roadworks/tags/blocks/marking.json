@@ -1,9 +1,29 @@
 {
   "replace": false,
   "values": [
+    "roadworks:marking_white_infill",
     "roadworks:marking_white_center",
     "roadworks:marking_white_turn_center",
     "roadworks:marking_white_center_dash",
-    "roadworks:marking_white_infill"
+    "roadworks:marking_white_center_thick",
+    "roadworks:marking_white_edge",
+    "roadworks:marking_white_edge_dash",
+    "roadworks:marking_white_turn_outside",
+    "roadworks:marking_white_turn_inside",
+    "roadworks:marking_white_edge_thick",
+    "roadworks:marking_white_t_center",
+    "roadworks:marking_white_stub_short_edge_left",
+    "roadworks:marking_white_stub_medium_edge_left",
+    "roadworks:marking_white_stub_long_edge_left",
+    "roadworks:marking_white_stub_short_edge_right",
+    "roadworks:marking_white_stub_medium_edge_right",
+    "roadworks:marking_white_stub_long_edge_right",
+    "roadworks:marking_white_stub_short_center",
+    "roadworks:marking_white_stub_medium_center",
+    "roadworks:marking_white_stub_long_center",
+    "roadworks:marking_white_l_thin_left",
+    "roadworks:marking_white_l_thin_right",
+    "roadworks:marking_white_l_left",
+    "roadworks:marking_white_l_right"
   ]
 }

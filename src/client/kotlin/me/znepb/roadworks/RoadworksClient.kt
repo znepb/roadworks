@@ -29,11 +29,31 @@ object RoadworksClient : ClientModInitializer {
 			Registry.ModBlocks.WHITE_CENTER_DASH_MARKING,
 			Registry.ModBlocks.WHITE_INFILL_MARKING,
 			Registry.ModBlocks.WHITE_CENTER_TURN_MARKING,
+			Registry.ModBlocks.WHITE_CENTER_THICK,
+			Registry.ModBlocks.WHITE_CENTER_STUB_SHORT,
+			Registry.ModBlocks.WHITE_CENTER_STUB_MEDIUM,
+			Registry.ModBlocks.WHITE_CENTER_STUB_LONG,
+
 			Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_INSIDE,
 			Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE,
 			Registry.ModBlocks.WHITE_EDGE_DASH_MARKING,
 			Registry.ModBlocks.WHITE_EDGE_MARKING,
-			Registry.ModBlocks.WHITE_T_CENTER
+			Registry.ModBlocks.WHITE_EDGE_THICK,
+			Registry.ModBlocks.WHITE_EDGE_STUB_SHORT_LEFT,
+			Registry.ModBlocks.WHITE_EDGE_STUB_MEDIUM_LEFT,
+			Registry.ModBlocks.WHITE_EDGE_STUB_LONG_LEFT,
+			Registry.ModBlocks.WHITE_EDGE_STUB_SHORT_RIGHT,
+			Registry.ModBlocks.WHITE_EDGE_STUB_MEDIUM_RIGHT,
+			Registry.ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT,
+
+			Registry.ModBlocks.WHITE_T_CENTER_LONG,
+			Registry.ModBlocks.WHITE_T_CENTER,
+			Registry.ModBlocks.WHITE_T_CENTER_SHORT,
+
+			Registry.ModBlocks.WHITE_L_THIN_LEFT,
+			Registry.ModBlocks.WHITE_L_THIN_RIGHT,
+			Registry.ModBlocks.WHITE_L_LEFT,
+			Registry.ModBlocks.WHITE_L_RIGHT
 		)
 
 		ModelLoader()

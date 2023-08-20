@@ -1,0 +1,44 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_stub_long_edge_right",
+        "uvlock": false,
+        "y": 0
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_stub_long_edge_right",
+        "uvlock": false,
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_stub_long_edge_right",
+        "uvlock": false,
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_stub_long_edge_right",
+        "uvlock": false,
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    }
+  ]
+}

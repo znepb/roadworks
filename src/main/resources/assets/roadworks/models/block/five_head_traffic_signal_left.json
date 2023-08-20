@@ -3,14 +3,14 @@
 	"texture_size": [64, 64],
 	"parent": "block/block",
 	"textures": {
-		"0": "roadworks:block/signal_frame_5",
+		"0": "roadworks:block/signals/signal_frame_5",
 		"1": "roadworks:block/signals/signal_back",
 		"2": "roadworks:block/signals/red_on",
 		"3": "roadworks:block/signals/green_left_on",
 		"4": "roadworks:block/signals/green_on",
 		"5": "roadworks:block/signals/yellow_left_on",
 		"6": "roadworks:block/signals/yellow_on",
-		"particle": "roadworks:block/signal_frame_5"
+		"particle": "roadworks:block/signals/signal_frame_5"
 	},
 	"elements": [
 		{

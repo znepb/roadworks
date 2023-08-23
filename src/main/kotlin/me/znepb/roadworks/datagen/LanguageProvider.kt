@@ -58,12 +58,16 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
 
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_LONG, "White Long Center T Marking")
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER, "White Center T Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_LEFT, "White Center T Marking, Left Line")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_RIGHT, "White Center T Marking, Right Line")
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_SHORT, "White Short Center T Marking")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_L_THIN_LEFT, "White Thin L Left")
         translationBuilder.add(Registry.ModBlocks.WHITE_L_THIN_RIGHT, "White Thin L Right")
         translationBuilder.add(Registry.ModBlocks.WHITE_L_LEFT, "White L Left")
         translationBuilder.add(Registry.ModBlocks.WHITE_L_RIGHT, "White L Right")
+        translationBuilder.add(Registry.ModBlocks.WHITE_L_SHORT_LEFT, "White L Thin, Short Left")
+        translationBuilder.add(Registry.ModBlocks.WHITE_L_SHORT_RIGHT, "White L Thin, Short Right")
 
         translationBuilder.add("itemGroup.${NAMESPACE}.main", "Roadworks")
     }

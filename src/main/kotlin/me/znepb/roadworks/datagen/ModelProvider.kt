@@ -129,9 +129,17 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER_LONG,
             "marking_white_t_center_long", "marking_white_edge_filled_left",
             "marking_white_fill_quarter_ne_long", "marking_white_fill_quarter_nw_long", true)
+
         addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER,
             "marking_white_t_center", "marking_white_fill_half",
             "marking_white_fill_quarter_ne", "marking_white_fill_quarter_nw", true)
+        addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER_LEFT,
+            "marking_white_t_left", "marking_white_fill_half",
+            "marking_white_t_left_left", "marking_white_t_left_right", true)
+        addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER_RIGHT,
+            "marking_white_t_right", "marking_white_fill_half",
+            "marking_white_t_right_left", "marking_white_t_right_right", true)
+
         addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER_SHORT,
             "marking_white_t_center_short", "marking_white_edge_filled_right",
             "marking_white_fill_quarter_ne_short", "marking_white_fill_quarter_nw_short", true)
@@ -149,6 +157,12 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addTurnMarking(generator, Registry.ModBlocks.WHITE_L_RIGHT, "marking_white_l_right",
             "marking_white_l_right_inside",
             "marking_white_l_right_outside")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_L_SHORT_LEFT, "marking_white_l_thin_short_left",
+            "marking_white_l_thin_short_left_inside",
+            "marking_white_l_thin_short_left_outside")
+        addTurnMarking(generator, Registry.ModBlocks.WHITE_L_SHORT_RIGHT, "marking_white_l_thin_short_right",
+            "marking_white_l_thin_short_right_inside",
+            "marking_white_l_thin_short_right_outside")
 
         signals.forEach { addSignal(generator, it) }
     }

@@ -1,0 +1,176 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right",
+        "uvlock": false,
+        "y": 0
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right",
+        "uvlock": false,
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right",
+        "uvlock": false,
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right",
+        "uvlock": false,
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right_right",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "facing": "north",
+        "right_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right_right",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "facing": "east",
+        "right_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right_right",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "facing": "south",
+        "right_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right_right",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "facing": "west",
+        "right_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right_left",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "facing": "north",
+        "left_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right_left",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "facing": "east",
+        "left_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right_left",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "facing": "south",
+        "left_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_t_right_left",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "facing": "west",
+        "left_fill": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_fill_half",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "back_fill": "true",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_fill_half",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "back_fill": "true",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_fill_half",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "back_fill": "true",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "roadworks:block/marking_white_fill_half",
+        "uvlock": true,
+        "y": 0
+      },
+      "when": {
+        "back_fill": "true",
+        "facing": "west"
+      }
+    }
+  ]
+}

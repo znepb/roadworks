@@ -48,12 +48,16 @@ object RoadworksClient : ClientModInitializer {
 
 			Registry.ModBlocks.WHITE_T_CENTER_LONG,
 			Registry.ModBlocks.WHITE_T_CENTER,
+			Registry.ModBlocks.WHITE_T_CENTER_LEFT,
+			Registry.ModBlocks.WHITE_T_CENTER_RIGHT,
 			Registry.ModBlocks.WHITE_T_CENTER_SHORT,
 
 			Registry.ModBlocks.WHITE_L_THIN_LEFT,
 			Registry.ModBlocks.WHITE_L_THIN_RIGHT,
 			Registry.ModBlocks.WHITE_L_LEFT,
-			Registry.ModBlocks.WHITE_L_RIGHT
+			Registry.ModBlocks.WHITE_L_RIGHT,
+			Registry.ModBlocks.WHITE_L_SHORT_LEFT,
+			Registry.ModBlocks.WHITE_L_SHORT_RIGHT
 		)
 
 		ModelLoader()

@@ -57,10 +57,14 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT, "White Edge Stub Long (Right)")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_LONG, "White Long Center T Marking")
+
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER, "White Center T Marking")
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_LEFT, "White Center T Marking, Left Line")
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_RIGHT, "White Center T Marking, Right Line")
+
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_SHORT, "White Short Center T Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_SHORT_LEFT, "White Short Left T Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_SHORT_RIGHT, "White Short Right T Marking")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_L_THIN_LEFT, "White Thin L Left")
         translationBuilder.add(Registry.ModBlocks.WHITE_L_THIN_RIGHT, "White Thin L Right")

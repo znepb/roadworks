@@ -56,6 +56,8 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
             .add(Registry.ModBlocks.WHITE_T_CENTER_LEFT)
             .add(Registry.ModBlocks.WHITE_T_CENTER_RIGHT)
             .add(Registry.ModBlocks.WHITE_T_CENTER_SHORT)
+            .add(Registry.ModBlocks.WHITE_T_SHORT_LEFT)
+            .add(Registry.ModBlocks.WHITE_T_SHORT_RIGHT)
             .add(Registry.ModBlocks.WHITE_L_THIN_LEFT)
             .add(Registry.ModBlocks.WHITE_L_THIN_RIGHT)
             .add(Registry.ModBlocks.WHITE_L_LEFT)

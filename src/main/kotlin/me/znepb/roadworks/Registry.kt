@@ -217,13 +217,17 @@ object Registry {
         val WHITE_EDGE_STUB_LONG_RIGHT = rBlock("marking_white_stub_long_edge_right", BasicMarking())
 
         val WHITE_T_CENTER_LONG = rBlock("marking_white_t_center_long", TMarking())
+
         val WHITE_T_CENTER = rBlock("marking_white_t_center", TMarking())
         val WHITE_T_CENTER_LEFT = rBlock("marking_white_t_left", TMarking())
         val WHITE_T_CENTER_RIGHT = rBlock("marking_white_t_right", TMarking())
-        val WHITE_T_CENTER_SHORT = rBlock("marking_white_t_center_short", TMarking())
 
-        val WHITE_L_THIN_LEFT = rBlock("marking_white_l_thin_left", TurnMarking())
-        val WHITE_L_THIN_RIGHT = rBlock("marking_white_l_thin_right", TurnMarking(true))
+        val WHITE_T_CENTER_SHORT = rBlock("marking_white_t_center_short", TMarking())
+        val WHITE_T_SHORT_LEFT = rBlock("marking_white_t_left_short", TMarking())
+        val WHITE_T_SHORT_RIGHT = rBlock("marking_white_t_right_short", TMarking())
+
+        val WHITE_L_THIN_LEFT = rBlock("marking_white_l_thin_left", TurnMarking(true))
+        val WHITE_L_THIN_RIGHT = rBlock("marking_white_l_thin_right", TurnMarking())
         val WHITE_L_LEFT = rBlock("marking_white_l_left", TurnMarking())
         val WHITE_L_RIGHT = rBlock("marking_white_l_right", TurnMarking(true))
         val WHITE_L_SHORT_LEFT = rBlock("marking_white_l_thin_short_left", TurnMarking())
@@ -296,10 +300,14 @@ object Registry {
         val WHITE_EDGE_STUB_LONG_RIGHT = rItem(ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT, ::BlockItem, itemSettings())
 
         val WHITE_T_CENTER_LONG = rItem(ModBlocks.WHITE_T_CENTER_LONG, ::BlockItem, itemSettings())
+
         val WHITE_T_CENTER = rItem(ModBlocks.WHITE_T_CENTER, ::BlockItem, itemSettings())
         val WHITE_T_CENTER_LEFT = rItem(ModBlocks.WHITE_T_CENTER_LEFT, ::BlockItem, itemSettings())
         val WHITE_T_CENTER_RIGHT = rItem(ModBlocks.WHITE_T_CENTER_RIGHT, ::BlockItem, itemSettings())
+
         val WHITE_T_CENTER_SHORT = rItem(ModBlocks.WHITE_T_CENTER_SHORT, ::BlockItem, itemSettings())
+        val WHITE_T_CENTER_SHORT_LEFT = rItem(ModBlocks.WHITE_T_SHORT_LEFT, ::BlockItem, itemSettings())
+        val WHITE_T_CENTER_SHORT_RIGHT = rItem(ModBlocks.WHITE_T_SHORT_RIGHT, ::BlockItem, itemSettings())
 
         val WHITE_L_THIN_LEFT = rItem(ModBlocks.WHITE_L_THIN_LEFT, ::BlockItem, itemSettings())
         val WHITE_L_THIN_RIGHT = rItem(ModBlocks.WHITE_L_THIN_RIGHT, ::BlockItem, itemSettings())

@@ -3,9 +3,9 @@ package me.znepb.roadworks.block.cabinet
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.ObjectLuaTable
 import dan200.computercraft.api.peripheral.IPeripheral
+import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
 import me.znepb.roadworks.block.signals.SignalLight
 import me.znepb.roadworks.block.signals.SignalType
-import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
 
 class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPeripheral {
     override fun getType() = "traffic_cabinet"
@@ -75,6 +75,30 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
         }
 
         return signals
+    }
+
+    /// Sets the balue of a beacon.
+    @LuaFunction
+    fun setBeacon(id: Int, on: Boolean): Boolean {
+        val type = blockEntity.getTypeOfId(id)
+
+        return when (type) {
+            SignalType.ONE_HEAD_RED -> {
+                blockEntity.queueSignalSet(id, SignalLight.RED, on)
+                true
+            }
+
+            SignalType.ONE_HEAD_YELLOW -> {
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW, on)
+                true
+            }
+
+            SignalType.ONE_HEAD_GREEN-> {
+                blockEntity.queueSignalSet(id, SignalLight.GREEN, on)
+                true
+            }
+            else -> false
+        }
     }
 
     /// Sets the colors of a three-head signal.

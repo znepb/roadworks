@@ -1,16 +1,12 @@
 package me.znepb.roadworks.datagen
 
-import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.Registry
+import me.znepb.roadworks.RoadworksMain.ModId
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.BlockTagProvider
-import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents.TagsLoaded
-import net.minecraft.block.Blocks
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper.WrapperLookup
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
 import java.util.concurrent.CompletableFuture
 
 class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture<WrapperLookup>) : BlockTagProvider(output, completableFuture) {
@@ -18,6 +14,7 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
         val POSTS = TagKey.of(RegistryKeys.BLOCK, ModId("posts"))
         val POST_MOUNTABLES = TagKey.of(RegistryKeys.BLOCK, ModId("post_mountables"))
         val MARKINGS = TagKey.of(RegistryKeys.BLOCK, ModId("marking"))
+        val STANDALONE_MARKINGS = TagKey.of(RegistryKeys.BLOCK, ModId("standalone_markings"))
 
         val SIGNS = listOf(
             Registry.ModBlocks.STOP_SIGN,
@@ -31,57 +28,88 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
     }
 
     override fun configure(arg: WrapperLookup) {
-        getOrCreateTagBuilder(MARKINGS)
-            .add(Registry.ModBlocks.WHITE_INFILL_MARKING)
-            .add(Registry.ModBlocks.WHITE_CENTER_DASH_MARKING)
-            .add(Registry.ModBlocks.WHITE_CENTER_TURN_MARKING)
-            .add(Registry.ModBlocks.WHITE_CENTER_MARKING)
-            .add(Registry.ModBlocks.WHITE_CENTER_THICK)
-            .add(Registry.ModBlocks.WHITE_CENTER_STUB_SHORT)
-            .add(Registry.ModBlocks.WHITE_CENTER_STUB_MEDIUM)
-            .add(Registry.ModBlocks.WHITE_CENTER_STUB_LONG)
-            .add(Registry.ModBlocks.WHITE_EDGE_DASH_MARKING)
-            .add(Registry.ModBlocks.WHITE_EDGE_MARKING)
-            .add(Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_INSIDE)
-            .add(Registry.ModBlocks.WHITE_EDGE_TURN_MARKING_OUTSIDE)
-            .add(Registry.ModBlocks.WHITE_EDGE_THICK)
-            .add(Registry.ModBlocks.WHITE_EDGE_STUB_SHORT_LEFT)
-            .add(Registry.ModBlocks.WHITE_EDGE_STUB_MEDIUM_LEFT)
-            .add(Registry.ModBlocks.WHITE_EDGE_STUB_LONG_LEFT)
-            .add(Registry.ModBlocks.WHITE_EDGE_STUB_SHORT_RIGHT)
-            .add(Registry.ModBlocks.WHITE_EDGE_STUB_MEDIUM_RIGHT)
-            .add(Registry.ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT)
-            .add(Registry.ModBlocks.WHITE_T_CENTER_LONG)
-            .add(Registry.ModBlocks.WHITE_T_CENTER)
-            .add(Registry.ModBlocks.WHITE_T_CENTER_LEFT)
-            .add(Registry.ModBlocks.WHITE_T_CENTER_RIGHT)
-            .add(Registry.ModBlocks.WHITE_T_CENTER_SHORT)
-            .add(Registry.ModBlocks.WHITE_T_SHORT_LEFT)
-            .add(Registry.ModBlocks.WHITE_T_SHORT_RIGHT)
-            .add(Registry.ModBlocks.WHITE_L_THIN_LEFT)
-            .add(Registry.ModBlocks.WHITE_L_THIN_RIGHT)
-            .add(Registry.ModBlocks.WHITE_L_LEFT)
-            .add(Registry.ModBlocks.WHITE_L_RIGHT)
-            .add(Registry.ModBlocks.WHITE_L_SHORT_LEFT)
-            .add(Registry.ModBlocks.WHITE_L_SHORT_RIGHT)
+        with(Registry.ModBlocks) {
+            getOrCreateTagBuilder(STANDALONE_MARKINGS).add(
+                WHITE_ARROW_LEFT_MARKING,
+                WHITE_ARROW_STRAIGHT_MARKING,
+                WHITE_ARROW_RIGHT_MARKING,
+                WHITE_ONLY_MARKING,
+                WHITE_HOV_MARKING,
+                WHITE_RAILROAD_MARKING,
+                WHITE_ARROW_LEFT_STRAIGHT_MARKING,
+                WHITE_ARROW_RIGHT_STRAIGHT_MARKING,
+                WHITE_ARROW_RIGHT_LEFT_MARKING,
+                WHITE_ARROW_U_TURN_MARKING,
+                WHITE_ZEBRA_CROSSING_MARKING
+            )
 
-        getOrCreateTagBuilder(POSTS)
-            .add(Registry.ModBlocks.POST)
-            .add(Registry.ModBlocks.THIN_POST)
-            .add(Registry.ModBlocks.THICK_POST)
+            getOrCreateTagBuilder(MARKINGS).add(
+                WHITE_INFILL_MARKING,
+                WHITE_ARROW_LEFT_MARKING,
+                WHITE_ARROW_STRAIGHT_MARKING,
+                WHITE_ARROW_RIGHT_MARKING,
+                WHITE_ONLY_MARKING,
+                WHITE_HOV_MARKING,
+                WHITE_RAILROAD_MARKING,
+                WHITE_ARROW_LEFT_STRAIGHT_MARKING,
+                WHITE_ARROW_RIGHT_STRAIGHT_MARKING,
+                WHITE_ARROW_RIGHT_LEFT_MARKING,
+                WHITE_ARROW_U_TURN_MARKING,
+                WHITE_ZEBRA_CROSSING_MARKING,
+                WHITE_CENTER_DASH_MARKING,
+                WHITE_CENTER_TURN_MARKING,
+                WHITE_CENTER_MARKING,
+                WHITE_CENTER_THICK,
+                WHITE_CENTER_STUB_SHORT,
+                WHITE_CENTER_STUB_MEDIUM,
+                WHITE_CENTER_STUB_LONG,
+                WHITE_EDGE_DASH_MARKING,
+                WHITE_EDGE_MARKING,
+                WHITE_EDGE_TURN_MARKING_INSIDE,
+                WHITE_EDGE_TURN_MARKING_OUTSIDE,
+                WHITE_EDGE_THICK,
+                WHITE_EDGE_STUB_SHORT_LEFT,
+                WHITE_EDGE_STUB_MEDIUM_LEFT,
+                WHITE_EDGE_STUB_LONG_LEFT,
+                WHITE_EDGE_STUB_SHORT_RIGHT,
+                WHITE_EDGE_STUB_MEDIUM_RIGHT,
+                WHITE_EDGE_STUB_LONG_RIGHT,
+                WHITE_T_CENTER_LONG,
+                WHITE_T_LEFT_LONG,
+                WHITE_T_RIGHT_LONG,
+                WHITE_T_CENTER,
+                WHITE_T_CENTER_LEFT,
+                WHITE_T_CENTER_RIGHT,
+                WHITE_T_CENTER_SHORT,
+                WHITE_T_SHORT_LEFT,
+                WHITE_T_SHORT_RIGHT,
+                WHITE_L_THIN_LEFT,
+                WHITE_L_THIN_RIGHT,
+                WHITE_L_LEFT,
+                WHITE_L_RIGHT,
+                WHITE_L_SHORT_LEFT,
+                WHITE_L_SHORT_RIGHT
+            )
 
-        with(getOrCreateTagBuilder(POST_MOUNTABLES)) {
-            SIGNS.forEach { this.add(it) }
+            getOrCreateTagBuilder(POSTS)
+                .add(POST, THIN_POST, THICK_POST)
+
+            with(getOrCreateTagBuilder(POST_MOUNTABLES)) {
+                SIGNS.forEach { this.add(it) }
+            }
+
+            getOrCreateTagBuilder(POST_MOUNTABLES).add(
+                ONE_HEAD_GREEN_TRAFFIC_SIGNAL,
+                ONE_HEAD_RED_TRAFFIC_SIGNAL,
+                ONE_HEAD_YELLOW_TRAFFIC_SIGNAL,
+                THREE_HEAD_TRAFFIC_SIGNAL,
+                THREE_HEAD_TRAFFIC_SIGNAL_RIGHT,
+                THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT,
+                THREE_HEAD_TRAFFIC_SIGNAL_LEFT,
+                FIVE_HEAD_TRAFFIC_SIGNAL_LEFT,
+                FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT
+            )
         }
-
-        getOrCreateTagBuilder(POST_MOUNTABLES).add(
-            Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL,
-            Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT,
-            Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT,
-            Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT,
-            Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT,
-            Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT
-        )
     }
 }
 

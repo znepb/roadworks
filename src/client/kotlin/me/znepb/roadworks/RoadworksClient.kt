@@ -3,12 +3,10 @@ package me.znepb.roadworks
 import me.znepb.roadworks.RoadworksMain.NAMESPACE
 import me.znepb.roadworks.init.ModelLoader
 import me.znepb.roadworks.render.*
-import me.znepb.roadworks.render.ThreeHeadTrafficSignalLeftBlockRenderer
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.client.gui.screen.ingame.ForgingScreen
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.RenderLayer
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import org.slf4j.LoggerFactory
 
 object RoadworksClient : ClientModInitializer {
@@ -17,6 +15,9 @@ object RoadworksClient : ClientModInitializer {
 	override fun onInitializeClient() {
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.POST_BLOCK_ENTITY, ::PostBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, ::SignBlockRenderer)
+		BlockEntityRendererFactories.register(Registry.ModBlockEntities.ONE_HEAD_TRAFFIC_SIGNAL_RED_BLOCK_ENTITY, ::RedBeaconRenderer)
+		BlockEntityRendererFactories.register(Registry.ModBlockEntities.ONE_HEAD_TRAFFIC_SIGNAL_YELLOW_BLOCK_ENTITY, ::YellowBeaconRenderer)
+		BlockEntityRendererFactories.register(Registry.ModBlockEntities.ONE_HEAD_TRAFFIC_SIGNAL_GREEN_BLOCK_ENTITY, ::GreenBeaconRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY, ::ThreeHeadTrafficSignalBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_LEFT_BLOCK_ENTITY, ::ThreeHeadTrafficSignalLeftBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT_BLOCK_ENTITY, ::ThreeHeadTrafficSignalStraightBlockRenderer)
@@ -26,6 +27,18 @@ object RoadworksClient : ClientModInitializer {
 
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 			Registry.ModBlocks.WHITE_CENTER_MARKING,
+			Registry.ModBlocks.WHITE_ARROW_LEFT_MARKING,
+			Registry.ModBlocks.WHITE_ARROW_STRAIGHT_MARKING,
+			Registry.ModBlocks.WHITE_ARROW_RIGHT_MARKING,
+			Registry.ModBlocks.WHITE_ONLY_MARKING,
+			Registry.ModBlocks.WHITE_HOV_MARKING,
+			Registry.ModBlocks.WHITE_RAILROAD_MARKING,
+			Registry.ModBlocks.WHITE_ARROW_LEFT_STRAIGHT_MARKING,
+			Registry.ModBlocks.WHITE_ARROW_RIGHT_STRAIGHT_MARKING,
+			Registry.ModBlocks.WHITE_ARROW_RIGHT_LEFT_MARKING,
+			Registry.ModBlocks.WHITE_ARROW_U_TURN_MARKING,
+			Registry.ModBlocks.WHITE_ZEBRA_CROSSING_MARKING,
+
 			Registry.ModBlocks.WHITE_CENTER_DASH_MARKING,
 			Registry.ModBlocks.WHITE_INFILL_MARKING,
 			Registry.ModBlocks.WHITE_CENTER_TURN_MARKING,
@@ -47,6 +60,8 @@ object RoadworksClient : ClientModInitializer {
 			Registry.ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT,
 
 			Registry.ModBlocks.WHITE_T_CENTER_LONG,
+			Registry.ModBlocks.WHITE_T_LEFT_LONG,
+			Registry.ModBlocks.WHITE_T_RIGHT_LONG,
 
 			Registry.ModBlocks.WHITE_T_CENTER,
 			Registry.ModBlocks.WHITE_T_CENTER_LEFT,

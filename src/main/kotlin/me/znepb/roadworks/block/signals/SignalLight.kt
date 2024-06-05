@@ -41,6 +41,9 @@ enum class SignalLight(val light: String, val genericType: SignalLight, val isGe
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT -> listOf(RED_STRAIGHT)
                 Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT -> listOf(RED)
                 Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT -> listOf(RED)
+                Registry.ModBlocks.ONE_HEAD_RED_TRAFFIC_SIGNAL -> listOf(RED)
+                Registry.ModBlocks.ONE_HEAD_YELLOW_TRAFFIC_SIGNAL -> listOf(YELLOW)
+                Registry.ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL -> listOf(GREEN)
                 else -> listOf()
             }
         }

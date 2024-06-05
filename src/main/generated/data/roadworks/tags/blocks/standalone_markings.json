@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "roadworks:marking_white_left_turn_arrow",
+    "roadworks:marking_white_straight_arrow",
+    "roadworks:marking_white_right_turn_arrow",
+    "roadworks:marking_white_only",
+    "roadworks:marking_white_hov_lane",
+    "roadworks:marking_white_rr",
+    "roadworks:marking_white_left_straight_turn_arrows",
+    "roadworks:marking_white_right_straight_turn_arrows",
+    "roadworks:marking_white_right_left_turn_arrows",
+    "roadworks:marking_white_u_turn_arrow",
+    "roadworks:marking_white_zebra_crossing"
+  ]
+}

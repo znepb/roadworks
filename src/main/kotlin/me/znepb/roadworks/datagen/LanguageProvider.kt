@@ -1,7 +1,7 @@
 package me.znepb.roadworks.datagen
 
-import me.znepb.roadworks.RoadworksMain.NAMESPACE
 import me.znepb.roadworks.Registry
+import me.znepb.roadworks.RoadworksMain.NAMESPACE
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 
@@ -28,6 +28,9 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
 
         translationBuilder.add(Registry.ModItems.LINKER, "Linker")
         translationBuilder.add(Registry.ModBlocks.TRAFFIC_CABINET, "Traffic Cabinet")
+        translationBuilder.add(Registry.ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL, "Green Beacon")
+        translationBuilder.add(Registry.ModBlocks.ONE_HEAD_RED_TRAFFIC_SIGNAL, "Red Beacon")
+        translationBuilder.add(Registry.ModBlocks.ONE_HEAD_YELLOW_TRAFFIC_SIGNAL, "Yellow Beacon")
         translationBuilder.add(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, "Three-head Traffic Signal")
         translationBuilder.add(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, "Three-head Traffic Signal Left")
         translationBuilder.add(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT, "Three-head Traffic Signal Right")
@@ -36,6 +39,18 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, "Five-head Traffic Signal Right")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_INFILL_MARKING, "White Infill Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_LEFT_MARKING, "White Left Arrow Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_STRAIGHT_MARKING, "White Straight Arrow Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_RIGHT_MARKING, "White Right Arrow Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ONLY_MARKING, "Only Marking, White")
+        translationBuilder.add(Registry.ModBlocks.WHITE_HOV_MARKING, "White HOV Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_RAILROAD_MARKING, "Railroad Marking, White")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_LEFT_STRAIGHT_MARKING, "White Left/Straight Arrows")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_RIGHT_STRAIGHT_MARKING, "White Right/Straight Arrows")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_RIGHT_LEFT_MARKING, "White Left/Right Arrows")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_U_TURN_MARKING, "White U-Turn Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_ZEBRA_CROSSING_MARKING, "White Zebra Crossing")
+
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "Centered White Dash")
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "Centered White Turn Line")
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_MARKING, "Centered Long White Line")
@@ -57,6 +72,8 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT, "White Edge Stub Long (Right)")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_LONG, "White Long Center T Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_RIGHT_LONG, "White Long Right T Marking")
+        translationBuilder.add(Registry.ModBlocks.WHITE_T_LEFT_LONG, "White Long Left T Marking")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER, "White Center T Marking")
         translationBuilder.add(Registry.ModBlocks.WHITE_T_CENTER_LEFT, "White Center T Marking, Left Line")

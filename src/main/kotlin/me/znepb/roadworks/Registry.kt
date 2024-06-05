@@ -2,7 +2,8 @@ package me.znepb.roadworks
 
 import dan200.computercraft.api.peripheral.PeripheralLookup
 import me.znepb.roadworks.RoadworksMain.ModId
-import me.znepb.roadworks.block.*
+import me.znepb.roadworks.block.SignBlock
+import me.znepb.roadworks.block.SignBlockEntity
 import me.znepb.roadworks.block.cabinet.TrafficCabinet
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.block.cone.*
@@ -29,12 +30,11 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries.*
+import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.util.Identifier
-import net.minecraft.registry.Registry
 import net.minecraft.text.Text
-import org.spongepowered.asm.service.modlauncher.ModLauncherAuditTrail
+import net.minecraft.util.Identifier
 
 // TODO: Transfer registries into their own class files
 
@@ -84,6 +84,21 @@ object Registry {
             ::TrafficCabinetBlockEntity,
             listOf(ModBlocks.TRAFFIC_CABINET),
             ModId("traffic_cabinet_block_entity")
+        )
+        val ONE_HEAD_TRAFFIC_SIGNAL_GREEN_BLOCK_ENTITY = registerBlockEntities(
+            ::OneHeadTrafficSignalGreenBlockEntity,
+            listOf(ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL),
+            ModId("green_beacon_block_entity")
+        )
+        val ONE_HEAD_TRAFFIC_SIGNAL_YELLOW_BLOCK_ENTITY = registerBlockEntities(
+            ::OneHeadTrafficSignalYellowBlockEntity,
+            listOf(ModBlocks.ONE_HEAD_YELLOW_TRAFFIC_SIGNAL),
+            ModId("yellow_beacon_block_entity")
+        )
+        val ONE_HEAD_TRAFFIC_SIGNAL_RED_BLOCK_ENTITY = registerBlockEntities(
+            ::OneHeadTrafficSignalRedBlockEntity,
+            listOf(ModBlocks.ONE_HEAD_RED_TRAFFIC_SIGNAL),
+            ModId("red_beacon_block_entity")
         )
         val THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY = registerBlockEntities(
             ::ThreeHeadTrafficSignalBlockEntity,
@@ -169,6 +184,18 @@ object Registry {
 
         val TRAFFIC_CABINET =
             rBlock("traffic_cabinet", TrafficCabinet(AbstractBlock.Settings.copy(Blocks.WHITE_CONCRETE)))
+        val ONE_HEAD_GREEN_TRAFFIC_SIGNAL = rBlock(
+            "green_beacon",
+            OneHeadTrafficSignalGreen(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
+        val ONE_HEAD_YELLOW_TRAFFIC_SIGNAL = rBlock(
+            "yellow_beacon",
+            OneHeadTrafficSignalYellow(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
+        val ONE_HEAD_RED_TRAFFIC_SIGNAL = rBlock(
+            "red_beacon",
+            OneHeadTrafficSignalRed(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
         val THREE_HEAD_TRAFFIC_SIGNAL = rBlock(
             "three_head_traffic_signal",
             ThreeHeadTrafficSignal(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
@@ -195,6 +222,17 @@ object Registry {
         )
 
         val WHITE_INFILL_MARKING = rBlock("marking_white_infill", BasicMarking())
+        val WHITE_ARROW_LEFT_MARKING = rBlock("marking_white_left_turn_arrow", BasicMarking())
+        val WHITE_ARROW_STRAIGHT_MARKING = rBlock("marking_white_straight_arrow", BasicMarking())
+        val WHITE_ARROW_RIGHT_MARKING = rBlock("marking_white_right_turn_arrow", BasicMarking())
+        val WHITE_ARROW_LEFT_STRAIGHT_MARKING = rBlock("marking_white_left_straight_turn_arrows", BasicMarking())
+        val WHITE_ARROW_RIGHT_STRAIGHT_MARKING = rBlock("marking_white_right_straight_turn_arrows", BasicMarking())
+        val WHITE_ARROW_RIGHT_LEFT_MARKING = rBlock("marking_white_right_left_turn_arrows", BasicMarking())
+        val WHITE_ARROW_U_TURN_MARKING = rBlock("marking_white_u_turn_arrow", BasicMarking())
+        val WHITE_ONLY_MARKING = rBlock("marking_white_only", BasicMarking())
+        val WHITE_HOV_MARKING = rBlock("marking_white_hov_lane", BasicMarking())
+        val WHITE_RAILROAD_MARKING = rBlock("marking_white_rr", BasicMarking())
+        val WHITE_ZEBRA_CROSSING_MARKING = rBlock("marking_white_zebra_crossing", BasicMarking())
 
         val WHITE_CENTER_DASH_MARKING = rBlock("marking_white_center_dash", BasicMarking())
         val WHITE_CENTER_MARKING = rBlock("marking_white_center", OneSideFilledMarking())
@@ -217,6 +255,8 @@ object Registry {
         val WHITE_EDGE_STUB_LONG_RIGHT = rBlock("marking_white_stub_long_edge_right", BasicMarking())
 
         val WHITE_T_CENTER_LONG = rBlock("marking_white_t_center_long", TMarking())
+        val WHITE_T_LEFT_LONG = rBlock("marking_white_t_left_long", TMarking())
+        val WHITE_T_RIGHT_LONG = rBlock("marking_white_t_right_long", TMarking())
 
         val WHITE_T_CENTER = rBlock("marking_white_t_center", TMarking())
         val WHITE_T_CENTER_LEFT = rBlock("marking_white_t_left", TMarking())
@@ -267,6 +307,9 @@ object Registry {
         val ROAD_WORK_AHEAD = rItem(ModBlocks.ROAD_WORK_AHEAD, ::BlockItem, itemSettings())
 
         val TRAFFIC_CABINET = rItem(ModBlocks.TRAFFIC_CABINET, ::BlockItem, itemSettings())
+        val ONE_HEAD_GREEN_TRAFFIC_SIGNAL = rItem(ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())
+        val ONE_HEAD_RED_TRAFFIC_SIGNAL = rItem(ModBlocks.ONE_HEAD_RED_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())
+        val ONE_HEAD_YELLOW_TRAFFIC_SIGNAL = rItem(ModBlocks.ONE_HEAD_YELLOW_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())
         val THREE_HEAD_TRAFFIC_SIGNAL = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())
         val THREE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem,
                 itemSettings())
@@ -279,6 +322,18 @@ object Registry {
         val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
 
         val WHITE_INFILL_MARKING = rItem(ModBlocks.WHITE_INFILL_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ARROW_LEFT_MARKING = rItem(ModBlocks.WHITE_ARROW_LEFT_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ARROW_STRAIGHT_MARKING = rItem(ModBlocks.WHITE_ARROW_STRAIGHT_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ARROW_RIGHT_MARKING = rItem(ModBlocks.WHITE_ARROW_RIGHT_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ONLY_MARKING = rItem(ModBlocks.WHITE_ONLY_MARKING, ::BlockItem, itemSettings())
+        val WHITE_HOV_MARKING = rItem(ModBlocks.WHITE_HOV_MARKING, ::BlockItem, itemSettings())
+        val WHITE_RAILROAD_MARKING = rItem(ModBlocks.WHITE_RAILROAD_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ARROW_LEFT_STRAIGHT_MARKING = rItem(ModBlocks.WHITE_ARROW_LEFT_STRAIGHT_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ARROW_RIGHT_STRAIGHT_MARKING = rItem(ModBlocks.WHITE_ARROW_RIGHT_STRAIGHT_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ARROW_RIGHT_LEFT_MARKING = rItem(ModBlocks.WHITE_ARROW_RIGHT_LEFT_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ARROW_U_TURN_MARKING = rItem(ModBlocks.WHITE_ARROW_U_TURN_MARKING, ::BlockItem, itemSettings())
+        val WHITE_ZEBRA_CROSSING_MARKING = rItem(ModBlocks.WHITE_ZEBRA_CROSSING_MARKING, ::BlockItem, itemSettings())
+
         val WHITE_CENTER_DASH_MARKING = rItem(ModBlocks.WHITE_CENTER_DASH_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_MARKING = rItem(ModBlocks.WHITE_CENTER_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_TURN_MARKING = rItem(ModBlocks.WHITE_CENTER_TURN_MARKING, ::BlockItem, itemSettings())
@@ -300,6 +355,8 @@ object Registry {
         val WHITE_EDGE_STUB_LONG_RIGHT = rItem(ModBlocks.WHITE_EDGE_STUB_LONG_RIGHT, ::BlockItem, itemSettings())
 
         val WHITE_T_CENTER_LONG = rItem(ModBlocks.WHITE_T_CENTER_LONG, ::BlockItem, itemSettings())
+        val WHITE_T_LEFT_LONG = rItem(ModBlocks.WHITE_T_LEFT_LONG, ::BlockItem, itemSettings())
+        val WHITE_T_RIGHT_LONG = rItem(ModBlocks.WHITE_T_RIGHT_LONG, ::BlockItem, itemSettings())
 
         val WHITE_T_CENTER = rItem(ModBlocks.WHITE_T_CENTER, ::BlockItem, itemSettings())
         val WHITE_T_CENTER_LEFT = rItem(ModBlocks.WHITE_T_CENTER_LEFT, ::BlockItem, itemSettings())

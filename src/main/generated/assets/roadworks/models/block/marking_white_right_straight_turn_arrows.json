@@ -1,0 +1,6 @@
+{
+  "parent": "roadworks:block/marking_basic",
+  "textures": {
+    "texture": "roadworks:block/markings/marking_white_right_straight_turn_arrows"
+  }
+}

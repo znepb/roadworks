@@ -14,6 +14,7 @@ class MarkingUtil {
             if(!from.contains(Properties.HORIZONTAL_FACING)
                 || !other.contains(Properties.HORIZONTAL_FACING)) return false
             if(!from.isIn(TagProvider.MARKINGS) || !other.isIn(TagProvider.MARKINGS)) return false
+            if(from.isIn(TagProvider.STANDALONE_MARKINGS) || other.isIn(TagProvider.STANDALONE_MARKINGS)) return false
 
             val thisState = from.get(Properties.HORIZONTAL_FACING)
             val otherState = other.get(Properties.HORIZONTAL_FACING)

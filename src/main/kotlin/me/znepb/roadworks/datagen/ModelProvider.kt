@@ -1,7 +1,7 @@
 package me.znepb.roadworks.datagen
 
-import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.Registry
+import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.block.SignBlock
 import me.znepb.roadworks.block.marking.AbstractMarking.Companion.addBasicMarking
 import me.znepb.roadworks.block.marking.OneSideFilledMarking.Companion.addMarkingWithFilledSides
@@ -60,6 +60,10 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addDoubleHighConeBlock(generator, Registry.ModBlocks.CHANNELER, "channeler")
         addDoubleHighConeBlock(generator, Registry.ModBlocks.DRUM, "drum")
 
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL, ModId("block/beacon_green")))
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.ONE_HEAD_RED_TRAFFIC_SIGNAL, ModId("block/beacon_red")))
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.ONE_HEAD_YELLOW_TRAFFIC_SIGNAL, ModId("block/beacon_green")))
+
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL, ModId("block/three_head_traffic_signal")))
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_LEFT, ModId("block/three_head_traffic_signal_left")))
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT, ModId("block/three_head_traffic_signal_right")))
@@ -91,6 +95,17 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         )
 
         addBasicMarking(generator, Registry.ModBlocks.WHITE_INFILL_MARKING, "marking_white_infill", true)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_LEFT_MARKING, "marking_white_left_turn_arrow", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_STRAIGHT_MARKING, "marking_white_straight_arrow", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_RIGHT_MARKING, "marking_white_right_turn_arrow", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ONLY_MARKING, "marking_white_only", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_HOV_MARKING, "marking_white_hov_lane", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_RAILROAD_MARKING, "marking_white_rr", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_LEFT_STRAIGHT_MARKING, "marking_white_left_straight_turn_arrows", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_RIGHT_STRAIGHT_MARKING, "marking_white_right_straight_turn_arrows", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_RIGHT_LEFT_MARKING, "marking_white_right_left_turn_arrows", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_U_TURN_MARKING, "marking_white_u_turn_arrow", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_ZEBRA_CROSSING_MARKING, "marking_white_zebra_crossing", false)
 
         // White center
         addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_CENTER_MARKING, "marking_white_center",
@@ -129,7 +144,14 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER_LONG,
             "marking_white_t_center_long", "marking_white_edge_filled_left",
             "marking_white_fill_quarter_ne_long", "marking_white_fill_quarter_nw_long", true)
+        addTMarking(generator, Registry.ModBlocks.WHITE_T_LEFT_LONG,
+            "marking_white_t_left_long", "marking_white_edge_filled_left",
+            "marking_white_t_long_left_left", "marking_white_t_long_left_right", true)
+        addTMarking(generator, Registry.ModBlocks.WHITE_T_RIGHT_LONG,
+            "marking_white_t_right_long", "marking_white_edge_filled_left",
+            "marking_white_t_long_right_left", "marking_white_t_long_right_right", true)
 
+        // T medium
         addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER,
             "marking_white_t_center", "marking_white_fill_half",
             "marking_white_fill_quarter_ne", "marking_white_fill_quarter_nw", true)
@@ -140,6 +162,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
             "marking_white_t_right", "marking_white_fill_half",
             "marking_white_t_right_left", "marking_white_t_right_right", true)
 
+        // T short
         addTMarking(generator, Registry.ModBlocks.WHITE_T_CENTER_SHORT,
             "marking_white_t_center_short", "marking_white_edge_filled_right",
             "marking_white_fill_quarter_ne_short", "marking_white_fill_quarter_nw_short", true)

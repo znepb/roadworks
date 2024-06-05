@@ -16,6 +16,7 @@ class ModelLoader {
             PostBlockRenderer.POST_MEDIUM_EXT_MODEL,
             PostBlockRenderer.POST_MEDIUM_FOOTER_MODEL,
             PostBlockRenderer.POST_MEDIUM_MID_MODEL,
+            AbstractBeaconRenderer.SIGNAL_FRAME_1,
             AbstractFiveHeadSignalBlockRenderer.SIGNAL_FRAME_5,
             AbstractThreeHeadSignalBlockRenderer.SIGNAL_FRAME_3,
             AbstractThreeHeadSignalBlockRenderer.SIGNAL

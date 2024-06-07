@@ -23,8 +23,10 @@ abstract class AbstractThreeHeadSignal<T: AbstractTrafficSignalBlockEntity>
     }
 
     override fun getAttachmentShape(world: BlockView, pos: BlockPos): VoxelShape {
-        val blockEntity = world.getBlockEntity(pos) as AbstractTrafficSignalBlockEntity?
-            ?: return VoxelShapes.empty()
+        if(world.getBlockEntity(pos) !is AbstractPostMountableBlockEntity)
+            return VoxelShapes.empty()
+
+        val blockEntity = world.getBlockEntity(pos) as AbstractPostMountableBlockEntity
 
         return if(blockEntity.wall) {
             RotateVoxelShape.rotateVoxelShape(

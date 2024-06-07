@@ -70,6 +70,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT, ModId("block/three_head_traffic_signal_straight")))
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ModId("block/five_head_traffic_signal_left")))
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, ModId("block/five_head_traffic_signal_right")))
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.PEDESTRIAN_SIGNAL, ModId("block/pedestrian_signal")))
 
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.TRAFFIC_CONE, ModId( "block/traffic_cone")))
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.BOLLARD_THIN, ModId("block/bollard_thin")))
@@ -193,6 +194,108 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addTurnMarking(generator, Registry.ModBlocks.WHITE_L_SHORT_RIGHT, "marking_white_l_thin_short_right",
             "marking_white_l_thin_short_right_inside",
             "marking_white_l_thin_short_right_outside")
+
+        ///
+        /// Yellow
+        ///
+
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_INFILL_MARKING, "marking_yellow_infill", true)
+
+        // Yellow center
+        addMarkingWithFilledSides(generator, Registry.ModBlocks.YELLOW_CENTER_MARKING, "marking_yellow_center",
+            "marking_yellow_fill_half", "marking_yellow_fill_half")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_DOUBLE, "marking_yellow_double_center")
+
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_CENTER_OFFSET, "marking_yellow_offset_center")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_DOUBLE_TURN, "marking_yellow_double_center_turn")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_DOUBLE_SPLIT_LEFT, "marking_yellow_double_center_split_left")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_DOUBLE_SPLIT_RIGHT, "marking_yellow_double_center_split_right")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_CENTER_OFFSET_INSIDE, "marking_yellow_turn_offset_center_in")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_CENTER_OFFSET_OUTSIDE, "marking_yellow_turn_offset_center_out")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_OFFSET_OUTSIDE_TO_CENTER_R, "marking_yellow_turn_offset_out_center_r")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_OFFSET_OUTSIDE_TO_CENTER_L, "marking_yellow_turn_offset_out_center_l")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_OFFSET_INSIDE_TO_CENTER_R, "marking_yellow_turn_offset_in_center_r")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_OFFSET_INSIDE_TO_CENTER_L, "marking_yellow_turn_offset_in_center_l")
+
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_CENTER_DASH_MARKING, "marking_yellow_center_dash")
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_CENTER_TURN_MARKING, "marking_yellow_turn_center",
+            "marking_yellow_fill_quarter_nw",
+            "marking_yellow_fill_quarter_nw_opposite")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_CENTER_STUB_SHORT, "marking_yellow_stub_short_center")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_CENTER_STUB_MEDIUM, "marking_yellow_stub_medium_center")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_CENTER_STUB_LONG, "marking_yellow_stub_long_center")
+
+        // Yellow edge
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_EDGE_DASH_MARKING, "marking_yellow_edge_dash")
+        addMarkingWithFilledSides(generator, Registry.ModBlocks.YELLOW_EDGE_MARKING,
+            "marking_yellow_edge", "marking_yellow_edge_filled_left",
+            "marking_yellow_edge_filled_right")
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_EDGE_TURN_MARKING_INSIDE,
+            "marking_yellow_turn_inside", "marking_yellow_turn_tight_inside",
+            "marking_yellow_turn_tight_outside")
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_EDGE_TURN_MARKING_OUTSIDE,
+            "marking_yellow_turn_outside", "marking_yellow_turn_wide_inside",
+            "marking_yellow_turn_wide_outside")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_EDGE_STUB_SHORT_LEFT, "marking_yellow_stub_short_edge_left")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_EDGE_STUB_MEDIUM_LEFT, "marking_yellow_stub_medium_edge_left")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_EDGE_STUB_LONG_LEFT, "marking_yellow_stub_long_edge_left")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_EDGE_STUB_SHORT_RIGHT, "marking_yellow_stub_short_edge_right")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_EDGE_STUB_MEDIUM_RIGHT, "marking_yellow_stub_medium_edge_right")
+        addBasicMarking(generator, Registry.ModBlocks.YELLOW_EDGE_STUB_LONG_RIGHT, "marking_yellow_stub_long_edge_right")
+
+        // T
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_CENTER_LONG,
+            "marking_yellow_t_center_long", "marking_yellow_edge_filled_left",
+            "marking_yellow_fill_quarter_ne_long", "marking_yellow_fill_quarter_nw_long", true)
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_LEFT_LONG,
+            "marking_yellow_t_left_long", "marking_yellow_edge_filled_left",
+            "marking_yellow_t_long_left_left", "marking_yellow_t_long_left_right", true)
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_RIGHT_LONG,
+            "marking_yellow_t_right_long", "marking_yellow_edge_filled_left",
+            "marking_yellow_t_long_right_left", "marking_yellow_t_long_right_right", true)
+
+        // T medium
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_CENTER,
+            "marking_yellow_t_center", "marking_yellow_fill_half",
+            "marking_yellow_fill_quarter_ne", "marking_yellow_fill_quarter_nw", true)
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_CENTER_LEFT,
+            "marking_yellow_t_left", "marking_yellow_fill_half",
+            "marking_yellow_t_left_left", "marking_yellow_t_left_right", true)
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_CENTER_RIGHT,
+            "marking_yellow_t_right", "marking_yellow_fill_half",
+            "marking_yellow_t_right_left", "marking_yellow_t_right_right", true)
+
+        // T short
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_CENTER_SHORT,
+            "marking_yellow_t_center_short", "marking_yellow_edge_filled_right",
+            "marking_yellow_fill_quarter_ne_short", "marking_yellow_fill_quarter_nw_short", true)
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_SHORT_LEFT,
+            "marking_yellow_t_left_short", "marking_yellow_edge_filled_right",
+            "marking_yellow_turn_tight_inside_opposite", "marking_yellow_l_left_short_inside", true)
+        addTMarking(generator, Registry.ModBlocks.YELLOW_T_SHORT_RIGHT,
+            "marking_yellow_t_right_short", "marking_yellow_edge_filled_right",
+            "marking_yellow_l_right_short_inside", "marking_yellow_turn_tight_inside", true)
+
+        // L
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_L_THIN_LEFT, "marking_yellow_l_thin_left",
+            "marking_yellow_l_left_short_inside",
+            "marking_yellow_l_left_short_outside")
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_L_THIN_RIGHT, "marking_yellow_l_thin_right",
+            "marking_yellow_l_right_short_inside",
+            "marking_yellow_l_right_short_outside")
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_L_LEFT, "marking_yellow_l_left",
+            "marking_yellow_l_left_inside",
+            "marking_yellow_l_left_outside")
+
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_L_RIGHT, "marking_yellow_l_right",
+            "marking_yellow_l_right_inside",
+            "marking_yellow_l_right_outside")
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_L_SHORT_LEFT, "marking_yellow_l_thin_short_left",
+            "marking_yellow_l_thin_short_left_inside",
+            "marking_yellow_l_thin_short_left_outside")
+        addTurnMarking(generator, Registry.ModBlocks.YELLOW_L_SHORT_RIGHT, "marking_yellow_l_thin_short_right",
+            "marking_yellow_l_thin_short_right_inside",
+            "marking_yellow_l_thin_short_right_outside")
 
         signals.forEach { addSignal(generator, it) }
     }

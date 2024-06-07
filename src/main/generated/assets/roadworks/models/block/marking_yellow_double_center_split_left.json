@@ -1,0 +1,6 @@
+{
+  "parent": "roadworks:block/marking_basic",
+  "textures": {
+    "texture": "roadworks:block/markings/marking_yellow_double_center_split_left"
+  }
+}

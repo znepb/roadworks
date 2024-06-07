@@ -13,6 +13,8 @@ import me.znepb.roadworks.block.marking.TMarking
 import me.znepb.roadworks.block.marking.TurnMarking
 import me.znepb.roadworks.block.post.PostBlock
 import me.znepb.roadworks.block.post.PostBlockEntity
+import me.znepb.roadworks.block.signals.PedestrianSignal
+import me.znepb.roadworks.block.signals.PedestrianSignalBlockEntity
 import me.znepb.roadworks.block.signals.impl.*
 import me.znepb.roadworks.datagen.TagProvider.Companion.SIGNS
 import me.znepb.roadworks.item.Linker
@@ -130,6 +132,11 @@ object Registry {
             listOf(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT),
             ModId("five_head_traffic_signal_right_block_entity")
         )
+        val PEDESTRIAN_SIGNAL_BLOCK_ENTITY = registerBlockEntities(
+            ::PedestrianSignalBlockEntity,
+            listOf(ModBlocks.PEDESTRIAN_SIGNAL),
+            ModId("pedestrian_signal_block_entity")
+        )
     }
 
     object ModBlocks {
@@ -220,6 +227,59 @@ object Registry {
             "five_head_traffic_signal_right",
             FiveHeadTrafficSignalRight(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
         )
+        val PEDESTRIAN_SIGNAL = rBlock("pedestrian_signal", PedestrianSignal(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
+
+        val YELLOW_INFILL_MARKING = rBlock("marking_yellow_infill", BasicMarking())
+        val YELLOW_CENTER_DASH_MARKING = rBlock("marking_yellow_center_dash", BasicMarking())
+        val YELLOW_CENTER_MARKING = rBlock("marking_yellow_center", OneSideFilledMarking())
+        val YELLOW_CENTER_OFFSET = rBlock("marking_yellow_offset_center", BasicMarking())
+
+        val YELLOW_DOUBLE = rBlock("marking_yellow_double_center", BasicMarking())
+        val YELLOW_DOUBLE_TURN = rBlock("marking_yellow_double_center_turn", BasicMarking())
+        val YELLOW_DOUBLE_SPLIT_LEFT = rBlock("marking_yellow_double_center_split_left", BasicMarking())
+        val YELLOW_DOUBLE_SPLIT_RIGHT = rBlock("marking_yellow_double_center_split_right", BasicMarking())
+
+        val YELLOW_CENTER_OFFSET_INSIDE = rBlock("marking_yellow_turn_offset_center_in", BasicMarking())
+        val YELLOW_CENTER_OFFSET_OUTSIDE = rBlock("marking_yellow_turn_offset_center_out", BasicMarking())
+        val YELLOW_OFFSET_OUTSIDE_TO_CENTER_R = rBlock("marking_yellow_turn_offset_out_center_r", BasicMarking())
+        val YELLOW_OFFSET_OUTSIDE_TO_CENTER_L = rBlock("marking_yellow_turn_offset_out_center_l", BasicMarking())
+        val YELLOW_OFFSET_INSIDE_TO_CENTER_R = rBlock("marking_yellow_turn_offset_in_center_r", BasicMarking())
+        val YELLOW_OFFSET_INSIDE_TO_CENTER_L = rBlock("marking_yellow_turn_offset_in_center_l", BasicMarking())
+
+        val YELLOW_CENTER_TURN_MARKING = rBlock("marking_yellow_turn_center", TurnMarking())
+        val YELLOW_CENTER_STUB_SHORT = rBlock("marking_yellow_stub_short_center", BasicMarking())
+        val YELLOW_CENTER_STUB_MEDIUM = rBlock("marking_yellow_stub_medium_center", BasicMarking())
+        val YELLOW_CENTER_STUB_LONG = rBlock("marking_yellow_stub_long_center", BasicMarking())
+
+        val YELLOW_EDGE_DASH_MARKING = rBlock("marking_yellow_edge_dash", BasicMarking())
+        val YELLOW_EDGE_MARKING = rBlock("marking_yellow_edge", OneSideFilledMarking())
+        val YELLOW_EDGE_TURN_MARKING_INSIDE = rBlock("marking_yellow_turn_inside", TurnMarking())
+        val YELLOW_EDGE_TURN_MARKING_OUTSIDE = rBlock("marking_yellow_turn_outside", TurnMarking())
+        val YELLOW_EDGE_STUB_SHORT_LEFT = rBlock("marking_yellow_stub_short_edge_left", BasicMarking())
+        val YELLOW_EDGE_STUB_MEDIUM_LEFT = rBlock("marking_yellow_stub_medium_edge_left", BasicMarking())
+        val YELLOW_EDGE_STUB_LONG_LEFT = rBlock("marking_yellow_stub_long_edge_left", BasicMarking())
+        val YELLOW_EDGE_STUB_SHORT_RIGHT = rBlock("marking_yellow_stub_short_edge_right", BasicMarking())
+        val YELLOW_EDGE_STUB_MEDIUM_RIGHT = rBlock("marking_yellow_stub_medium_edge_right", BasicMarking())
+        val YELLOW_EDGE_STUB_LONG_RIGHT = rBlock("marking_yellow_stub_long_edge_right", BasicMarking())
+
+        val YELLOW_T_CENTER_LONG = rBlock("marking_yellow_t_center_long", TMarking())
+        val YELLOW_T_LEFT_LONG = rBlock("marking_yellow_t_left_long", TMarking())
+        val YELLOW_T_RIGHT_LONG = rBlock("marking_yellow_t_right_long", TMarking())
+
+        val YELLOW_T_CENTER = rBlock("marking_yellow_t_center", TMarking())
+        val YELLOW_T_CENTER_LEFT = rBlock("marking_yellow_t_left", TMarking())
+        val YELLOW_T_CENTER_RIGHT = rBlock("marking_yellow_t_right", TMarking())
+
+        val YELLOW_T_CENTER_SHORT = rBlock("marking_yellow_t_center_short", TMarking())
+        val YELLOW_T_SHORT_LEFT = rBlock("marking_yellow_t_left_short", TMarking())
+        val YELLOW_T_SHORT_RIGHT = rBlock("marking_yellow_t_right_short", TMarking())
+
+        val YELLOW_L_THIN_LEFT = rBlock("marking_yellow_l_thin_left", TurnMarking(true))
+        val YELLOW_L_THIN_RIGHT = rBlock("marking_yellow_l_thin_right", TurnMarking())
+        val YELLOW_L_LEFT = rBlock("marking_yellow_l_left", TurnMarking())
+        val YELLOW_L_RIGHT = rBlock("marking_yellow_l_right", TurnMarking(true))
+        val YELLOW_L_SHORT_LEFT = rBlock("marking_yellow_l_thin_short_left", TurnMarking())
+        val YELLOW_L_SHORT_RIGHT = rBlock("marking_yellow_l_thin_short_right", TurnMarking(true))
 
         val WHITE_INFILL_MARKING = rBlock("marking_white_infill", BasicMarking())
         val WHITE_ARROW_LEFT_MARKING = rBlock("marking_white_left_turn_arrow", BasicMarking())
@@ -320,6 +380,7 @@ object Registry {
         val FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, ::BlockItem,
                 itemSettings())
         val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
+        val PEDESTRIAN_SIGNAL = rItem(ModBlocks.PEDESTRIAN_SIGNAL, ::BlockItem, itemSettings())
 
         val WHITE_INFILL_MARKING = rItem(ModBlocks.WHITE_INFILL_MARKING, ::BlockItem, itemSettings())
         val WHITE_ARROW_LEFT_MARKING = rItem(ModBlocks.WHITE_ARROW_LEFT_MARKING, ::BlockItem, itemSettings())
@@ -372,6 +433,57 @@ object Registry {
         val WHITE_L_RIGHT = rItem(ModBlocks.WHITE_L_RIGHT, ::BlockItem, itemSettings())
         val WHITE_L_SHORT_LEFT = rItem(ModBlocks.WHITE_L_SHORT_LEFT, ::BlockItem, itemSettings())
         val WHITE_L_SHORT_RIGHT = rItem(ModBlocks.WHITE_L_SHORT_RIGHT, ::BlockItem, itemSettings())
+
+        val YELLOW_INFILL_MARKING = rItem(ModBlocks.YELLOW_INFILL_MARKING, ::BlockItem, itemSettings())
+        val YELLOW_CENTER_DASH_MARKING = rItem(ModBlocks.YELLOW_CENTER_DASH_MARKING, ::BlockItem, itemSettings())
+        val YELLOW_CENTER_MARKING = rItem(ModBlocks.YELLOW_CENTER_MARKING, ::BlockItem, itemSettings())
+        val YELLOW_CENTER_OFFSET = rItem(ModBlocks.YELLOW_CENTER_OFFSET, ::BlockItem, itemSettings())
+
+        val YELLOW_DOUBLE = rItem(ModBlocks.YELLOW_DOUBLE, ::BlockItem, itemSettings())
+        val YELLOW_DOUBLE_TURN = rItem(ModBlocks.YELLOW_DOUBLE_TURN, ::BlockItem, itemSettings())
+        val YELLOW_DOUBLE_SPLIT_LEFT = rItem(ModBlocks.YELLOW_DOUBLE_SPLIT_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_DOUBLE_SPLIT_RIGHT = rItem(ModBlocks.YELLOW_DOUBLE_SPLIT_RIGHT, ::BlockItem, itemSettings())
+        val YELLOW_CENTER_OFFSET_INSIDE = rItem(ModBlocks.YELLOW_CENTER_OFFSET_INSIDE, ::BlockItem, itemSettings())
+        val YELLOW_CENTER_OFFSET_OUTSIDE = rItem(ModBlocks.YELLOW_CENTER_OFFSET_OUTSIDE, ::BlockItem, itemSettings())
+        val YELLOW_OFFSET_OUTSIDE_TO_CENTER_R = rItem(ModBlocks.YELLOW_OFFSET_OUTSIDE_TO_CENTER_R, ::BlockItem, itemSettings())
+        val YELLOW_OFFSET_OUTSIDE_TO_CENTER_L = rItem(ModBlocks.YELLOW_OFFSET_OUTSIDE_TO_CENTER_L, ::BlockItem, itemSettings())
+        val YELLOW_OFFSET_INSIDE_TO_CENTER_R = rItem(ModBlocks.YELLOW_OFFSET_INSIDE_TO_CENTER_R, ::BlockItem, itemSettings())
+        val YELLOW_OFFSET_INSIDE_TO_CENTER_L = rItem(ModBlocks.YELLOW_OFFSET_INSIDE_TO_CENTER_L, ::BlockItem, itemSettings())
+
+        val YELLOW_CENTER_TURN_MARKING = rItem(ModBlocks.YELLOW_CENTER_TURN_MARKING, ::BlockItem, itemSettings())
+        val YELLOW_CENTER_STUB_SHORT = rItem(ModBlocks.YELLOW_CENTER_STUB_SHORT, ::BlockItem, itemSettings())
+        val YELLOW_CENTER_STUB_MEDIUM = rItem(ModBlocks.YELLOW_CENTER_STUB_MEDIUM, ::BlockItem, itemSettings())
+        val YELLOW_CENTER_STUB_LONG = rItem(ModBlocks.YELLOW_CENTER_STUB_LONG, ::BlockItem, itemSettings())
+
+        val YELLOW_EDGE_DASH_MARKING = rItem(ModBlocks.YELLOW_EDGE_DASH_MARKING, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_MARKING = rItem(ModBlocks.YELLOW_EDGE_MARKING, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_TURN_MARKING_INSIDE = rItem(ModBlocks.YELLOW_EDGE_TURN_MARKING_INSIDE, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_TURN_MARKING_OUTSIDE = rItem(ModBlocks.YELLOW_EDGE_TURN_MARKING_OUTSIDE, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_STUB_SHORT_LEFT = rItem(ModBlocks.YELLOW_EDGE_STUB_SHORT_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_STUB_MEDIUM_LEFT = rItem(ModBlocks.YELLOW_EDGE_STUB_MEDIUM_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_STUB_LONG_LEFT = rItem(ModBlocks.YELLOW_EDGE_STUB_LONG_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_STUB_SHORT_RIGHT = rItem(ModBlocks.YELLOW_EDGE_STUB_SHORT_RIGHT, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_STUB_MEDIUM_RIGHT = rItem(ModBlocks.YELLOW_EDGE_STUB_MEDIUM_RIGHT, ::BlockItem, itemSettings())
+        val YELLOW_EDGE_STUB_LONG_RIGHT = rItem(ModBlocks.YELLOW_EDGE_STUB_LONG_RIGHT, ::BlockItem, itemSettings())
+
+        val YELLOW_T_CENTER_LONG = rItem(ModBlocks.YELLOW_T_CENTER_LONG, ::BlockItem, itemSettings())
+        val YELLOW_T_LEFT_LONG = rItem(ModBlocks.YELLOW_T_LEFT_LONG, ::BlockItem, itemSettings())
+        val YELLOW_T_RIGHT_LONG = rItem(ModBlocks.YELLOW_T_RIGHT_LONG, ::BlockItem, itemSettings())
+
+        val YELLOW_T_CENTER = rItem(ModBlocks.YELLOW_T_CENTER, ::BlockItem, itemSettings())
+        val YELLOW_T_CENTER_LEFT = rItem(ModBlocks.YELLOW_T_CENTER_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_T_CENTER_RIGHT = rItem(ModBlocks.YELLOW_T_CENTER_RIGHT, ::BlockItem, itemSettings())
+
+        val YELLOW_T_CENTER_SHORT = rItem(ModBlocks.YELLOW_T_CENTER_SHORT, ::BlockItem, itemSettings())
+        val YELLOW_T_CENTER_SHORT_LEFT = rItem(ModBlocks.YELLOW_T_SHORT_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_T_CENTER_SHORT_RIGHT = rItem(ModBlocks.YELLOW_T_SHORT_RIGHT, ::BlockItem, itemSettings())
+
+        val YELLOW_L_THIN_LEFT = rItem(ModBlocks.YELLOW_L_THIN_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_L_THIN_RIGHT = rItem(ModBlocks.YELLOW_L_THIN_RIGHT, ::BlockItem, itemSettings())
+        val YELLOW_L_LEFT = rItem(ModBlocks.YELLOW_L_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_L_RIGHT = rItem(ModBlocks.YELLOW_L_RIGHT, ::BlockItem, itemSettings())
+        val YELLOW_L_SHORT_LEFT = rItem(ModBlocks.YELLOW_L_SHORT_LEFT, ::BlockItem, itemSettings())
+        val YELLOW_L_SHORT_RIGHT = rItem(ModBlocks.YELLOW_L_SHORT_RIGHT, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
     }

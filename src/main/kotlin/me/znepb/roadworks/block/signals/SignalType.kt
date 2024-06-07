@@ -4,6 +4,7 @@ enum class SignalType(
     val type: String,
     val lights: List<SignalLight>,
 ) {
+    PEDESTRIAN("pedestrian", listOf(SignalLight.DONT_WALK, SignalLight.WALK)),
     ONE_HEAD_GREEN("green_beacon", listOf(SignalLight.GREEN)),
     ONE_HEAD_YELLOW("yellow_beacon", listOf(SignalLight.YELLOW)),
     ONE_HEAD_RED("rec_beacon", listOf(SignalLight.RED)),

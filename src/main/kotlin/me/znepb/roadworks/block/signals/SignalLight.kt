@@ -15,7 +15,9 @@ enum class SignalLight(val light: String, val genericType: SignalLight, val isGe
     RED_STRAIGHT("red_straight", RED, false, SignalDirection.STRAIGHT),
     GREEN_RIGHT("green_right", GREEN, false, SignalDirection.RIGHT),
     YELLOW_RIGHT("yellow_right", YELLOW, false, SignalDirection.RIGHT),
-    RED_RIGHT("red_right", RED, false, SignalDirection.RIGHT);
+    RED_RIGHT("red_right", RED, false, SignalDirection.RIGHT),
+    WALK("walk", GREEN, false, SignalDirection.NONE),
+    DONT_WALK("dont_walk", RED, false, SignalDirection.NONE);
 
     enum class SignalDirection {
         STRAIGHT,
@@ -44,6 +46,7 @@ enum class SignalLight(val light: String, val genericType: SignalLight, val isGe
                 Registry.ModBlocks.ONE_HEAD_RED_TRAFFIC_SIGNAL -> listOf(RED)
                 Registry.ModBlocks.ONE_HEAD_YELLOW_TRAFFIC_SIGNAL -> listOf(YELLOW)
                 Registry.ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL -> listOf(GREEN)
+                Registry.ModBlocks.PEDESTRIAN_SIGNAL -> listOf(DONT_WALK)
                 else -> listOf()
             }
         }
@@ -68,6 +71,7 @@ enum class SignalLight(val light: String, val genericType: SignalLight, val isGe
                 Registry.ModBlocks.THREE_HEAD_TRAFFIC_SIGNAL_STRAIGHT -> listOf(YELLOW_STRAIGHT)
                 Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT -> listOf(YELLOW_LEFT, YELLOW)
                 Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT -> listOf(YELLOW_RIGHT, YELLOW)
+                Registry.ModBlocks.PEDESTRIAN_SIGNAL -> listOf(WALK)
                 else -> listOf()
             }
         }

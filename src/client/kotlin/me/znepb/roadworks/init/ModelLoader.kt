@@ -19,7 +19,9 @@ class ModelLoader {
             AbstractBeaconRenderer.SIGNAL_FRAME_1,
             AbstractFiveHeadSignalBlockRenderer.SIGNAL_FRAME_5,
             AbstractThreeHeadSignalBlockRenderer.SIGNAL_FRAME_3,
-            AbstractThreeHeadSignalBlockRenderer.SIGNAL
+            AbstractThreeHeadSignalBlockRenderer.SIGNAL,
+            PedestrianSignalRenderer.DONT_WALK,
+            PedestrianSignalRenderer.WALK
         )
     }
 

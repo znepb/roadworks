@@ -1,0 +1,6 @@
+{
+  "parent": "roadworks:block/marking_basic",
+  "textures": {
+    "texture": "roadworks:block/markings/marking_yellow_stub_short_center"
+  }
+}

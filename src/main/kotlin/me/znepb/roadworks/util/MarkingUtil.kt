@@ -2,6 +2,7 @@ package me.znepb.roadworks.util
 
 import me.znepb.roadworks.Registry
 import me.znepb.roadworks.block.marking.OneSideFilledMarking
+import me.znepb.roadworks.block.marking.OneSideFilledMarking.Companion.SHOULD_FILL
 import me.znepb.roadworks.datagen.TagProvider
 import net.minecraft.block.BlockState
 import net.minecraft.state.property.Properties
@@ -15,6 +16,7 @@ class MarkingUtil {
                 || !other.contains(Properties.HORIZONTAL_FACING)) return false
             if(!from.isIn(TagProvider.MARKINGS) || !other.isIn(TagProvider.MARKINGS)) return false
             if(from.isIn(TagProvider.STANDALONE_MARKINGS) || other.isIn(TagProvider.STANDALONE_MARKINGS)) return false
+            if(other.contains(SHOULD_FILL) && other.get(SHOULD_FILL) == false) return false
 
             val thisState = from.get(Properties.HORIZONTAL_FACING)
             val otherState = other.get(Properties.HORIZONTAL_FACING)

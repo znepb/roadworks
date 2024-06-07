@@ -3,7 +3,10 @@ package me.znepb.roadworks.block.post
 import me.znepb.roadworks.Registry
 import me.znepb.roadworks.util.PostThickness
 import me.znepb.roadworks.util.RotateVoxelShape.Companion.rotateVoxelShape
-import net.minecraft.block.*
+import net.minecraft.block.BlockEntityProvider
+import net.minecraft.block.BlockState
+import net.minecraft.block.BlockWithEntity
+import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
@@ -145,8 +148,10 @@ open class PostBlock(
     }
 
     private fun getShape(world: BlockView, pos: BlockPos): VoxelShape {
-        val blockEntity = world.getBlockEntity(pos) as PostBlockEntity?
-            ?: return VoxelShapes.empty()
+        if(world.getBlockEntity(pos) !is PostBlockEntity)
+            return VoxelShapes.empty()
+
+        val blockEntity = world.getBlockEntity(pos) as PostBlockEntity
 
         var shape = this.getMidsectionShape()
         if (blockEntity.footer) shape = VoxelShapes.union(shape, this.getFooterShape())

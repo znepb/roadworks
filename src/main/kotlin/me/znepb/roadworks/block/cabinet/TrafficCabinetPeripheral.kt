@@ -1,5 +1,6 @@
 package me.znepb.roadworks.block.cabinet
 
+import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.ObjectLuaTable
 import dan200.computercraft.api.peripheral.IPeripheral
@@ -80,9 +81,7 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     /// Sets the balue of a beacon.
     @LuaFunction
     fun setBeacon(id: Int, on: Boolean): Boolean {
-        val type = blockEntity.getTypeOfId(id)
-
-        return when (type) {
+        return when (val type = blockEntity.getTypeOfId(id)) {
             SignalType.ONE_HEAD_RED -> {
                 blockEntity.queueSignalSet(id, SignalLight.RED, on)
                 true
@@ -97,16 +96,14 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
                 blockEntity.queueSignalSet(id, SignalLight.GREEN, on)
                 true
             }
-            else -> false
+            else -> throw LuaException("invalid signal type, got $type")
         }
     }
 
     /// Sets the colors of a three-head signal.
     @LuaFunction
     fun setThreeHead(id: Int, red: Boolean, yellow: Boolean, green: Boolean): Boolean {
-        val type = blockEntity.getTypeOfId(id)
-
-        when (type) {
+        when (val type = blockEntity.getTypeOfId(id)) {
             SignalType.THREE_HEAD -> {
                 blockEntity.queueSignalSet(id, SignalLight.RED, red)
                 blockEntity.queueSignalSet(id, SignalLight.YELLOW, yellow)
@@ -131,16 +128,14 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
                 blockEntity.queueSignalSet(id, SignalLight.GREEN_RIGHT, green)
                 return true
             }
-            else -> return false
+            else -> throw LuaException("invalid signal type, got $type")
         }
 
     }
 
     @LuaFunction
     fun setFiveHead(id: Int, red: Boolean, yellowLeft: Boolean, greenLeft: Boolean, yellowRight: Boolean, greenRight: Boolean): Boolean {
-        val type = blockEntity.getTypeOfId(id)
-
-        return when (type) {
+        return when (val type = blockEntity.getTypeOfId(id)) {
             SignalType.FIVE_HEAD_LEFT -> {
                 blockEntity.queueSignalSet(id, SignalLight.RED, red)
                 blockEntity.queueSignalSet(id, SignalLight.YELLOW, yellowRight)
@@ -157,10 +152,23 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
                 blockEntity.queueSignalSet(id, SignalLight.GREEN_RIGHT, greenRight)
                 true
             }
-            else -> false
+            else -> throw LuaException("invalid signal type, got $type")
         }
-
     }
+
+    /// Sets the state of a pedestrian signal.
+    @LuaFunction
+    fun setPedestrianSignal(id: Int, walk: Boolean): Boolean {
+        return when (val type = blockEntity.getTypeOfId(id)) {
+            SignalType.PEDESTRIAN -> {
+                blockEntity.queueSignalSet(id, SignalLight.WALK, walk)
+                blockEntity.queueSignalSet(id, SignalLight.DONT_WALK, !walk)
+                true
+            }
+            else -> throw LuaException("invalid signal type, got $type")
+        }
+    }
+
 
     override fun equals(other: IPeripheral?): Boolean {
         return other is TrafficCabinetPeripheral

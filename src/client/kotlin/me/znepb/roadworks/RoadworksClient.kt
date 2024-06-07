@@ -24,6 +24,7 @@ object RoadworksClient : ClientModInitializer {
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_RIGHT_BLOCK_ENTITY, ::ThreeHeadTrafficSignalRightBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT_BLOCK_ENTITY, ::FiveHeadTrafficSignalLeftBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT_BLOCK_ENTITY, ::FiveHeadTrafficSignalRightBlockRenderer)
+		BlockEntityRendererFactories.register(Registry.ModBlockEntities.PEDESTRIAN_SIGNAL_BLOCK_ENTITY, ::PedestrianSignalRenderer)
 
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 			Registry.ModBlocks.WHITE_CENTER_MARKING,
@@ -76,7 +77,58 @@ object RoadworksClient : ClientModInitializer {
 			Registry.ModBlocks.WHITE_L_LEFT,
 			Registry.ModBlocks.WHITE_L_RIGHT,
 			Registry.ModBlocks.WHITE_L_SHORT_LEFT,
-			Registry.ModBlocks.WHITE_L_SHORT_RIGHT
+			Registry.ModBlocks.WHITE_L_SHORT_RIGHT,
+
+			Registry.ModBlocks.YELLOW_CENTER_MARKING,
+			Registry.ModBlocks.YELLOW_CENTER_OFFSET,
+			Registry.ModBlocks.YELLOW_DOUBLE,
+			Registry.ModBlocks.YELLOW_DOUBLE_TURN,
+			Registry.ModBlocks.YELLOW_DOUBLE_SPLIT_LEFT,
+			Registry.ModBlocks.YELLOW_DOUBLE_SPLIT_RIGHT,
+
+			Registry.ModBlocks.YELLOW_CENTER_OFFSET_INSIDE,
+			Registry.ModBlocks.YELLOW_CENTER_OFFSET_OUTSIDE,
+			Registry.ModBlocks.YELLOW_OFFSET_OUTSIDE_TO_CENTER_R,
+			Registry.ModBlocks.YELLOW_OFFSET_OUTSIDE_TO_CENTER_L,
+			Registry.ModBlocks.YELLOW_OFFSET_INSIDE_TO_CENTER_R,
+			Registry.ModBlocks.YELLOW_OFFSET_INSIDE_TO_CENTER_L,
+
+			Registry.ModBlocks.YELLOW_CENTER_DASH_MARKING,
+			Registry.ModBlocks.YELLOW_INFILL_MARKING,
+			Registry.ModBlocks.YELLOW_CENTER_TURN_MARKING,
+			Registry.ModBlocks.YELLOW_CENTER_STUB_SHORT,
+			Registry.ModBlocks.YELLOW_CENTER_STUB_MEDIUM,
+			Registry.ModBlocks.YELLOW_CENTER_STUB_LONG,
+
+			Registry.ModBlocks.YELLOW_EDGE_TURN_MARKING_INSIDE,
+			Registry.ModBlocks.YELLOW_EDGE_TURN_MARKING_OUTSIDE,
+			Registry.ModBlocks.YELLOW_EDGE_DASH_MARKING,
+			Registry.ModBlocks.YELLOW_EDGE_MARKING,
+			Registry.ModBlocks.YELLOW_EDGE_STUB_SHORT_LEFT,
+			Registry.ModBlocks.YELLOW_EDGE_STUB_MEDIUM_LEFT,
+			Registry.ModBlocks.YELLOW_EDGE_STUB_LONG_LEFT,
+			Registry.ModBlocks.YELLOW_EDGE_STUB_SHORT_RIGHT,
+			Registry.ModBlocks.YELLOW_EDGE_STUB_MEDIUM_RIGHT,
+			Registry.ModBlocks.YELLOW_EDGE_STUB_LONG_RIGHT,
+
+			Registry.ModBlocks.YELLOW_T_CENTER_LONG,
+			Registry.ModBlocks.YELLOW_T_LEFT_LONG,
+			Registry.ModBlocks.YELLOW_T_RIGHT_LONG,
+
+			Registry.ModBlocks.YELLOW_T_CENTER,
+			Registry.ModBlocks.YELLOW_T_CENTER_LEFT,
+			Registry.ModBlocks.YELLOW_T_CENTER_RIGHT,
+
+			Registry.ModBlocks.YELLOW_T_CENTER_SHORT,
+			Registry.ModBlocks.YELLOW_T_SHORT_LEFT,
+			Registry.ModBlocks.YELLOW_T_SHORT_RIGHT,
+
+			Registry.ModBlocks.YELLOW_L_THIN_LEFT,
+			Registry.ModBlocks.YELLOW_L_THIN_RIGHT,
+			Registry.ModBlocks.YELLOW_L_LEFT,
+			Registry.ModBlocks.YELLOW_L_RIGHT,
+			Registry.ModBlocks.YELLOW_L_SHORT_LEFT,
+			Registry.ModBlocks.YELLOW_L_SHORT_RIGHT
 		)
 
 		ModelLoader()

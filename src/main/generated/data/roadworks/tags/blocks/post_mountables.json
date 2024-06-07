@@ -16,6 +16,7 @@
     "roadworks:three_head_traffic_signal_straight",
     "roadworks:three_head_traffic_signal_left",
     "roadworks:five_head_traffic_signal_left",
-    "roadworks:five_head_traffic_signal_right"
+    "roadworks:five_head_traffic_signal_right",
+    "roadworks:pedestrian_signal"
   ]
 }

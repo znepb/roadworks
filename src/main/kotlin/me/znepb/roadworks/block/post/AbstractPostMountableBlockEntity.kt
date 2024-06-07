@@ -106,7 +106,7 @@ open class AbstractPostMountableBlockEntity(
 
         if(ctx == null && this.ctx != null) context = this.ctx
 
-        if(context != null) {
+        if(context != null && context.blockPos == this.getPos()) {
             val facing =  context.horizontalPlayerFacing.opposite
             val placedOnPos = pos.offset(facing.opposite)
             val placedOnState = world?.getBlockState(placedOnPos)

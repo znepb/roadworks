@@ -2,6 +2,8 @@ package me.znepb.roadworks
 
 import dan200.computercraft.api.peripheral.PeripheralLookup
 import me.znepb.roadworks.RoadworksMain.ModId
+import me.znepb.roadworks.block.PedestrianButton
+import me.znepb.roadworks.block.PedestrianButtonBlockEntity
 import me.znepb.roadworks.block.SignBlock
 import me.znepb.roadworks.block.SignBlockEntity
 import me.znepb.roadworks.block.cabinet.TrafficCabinet
@@ -137,6 +139,11 @@ object Registry {
             listOf(ModBlocks.PEDESTRIAN_SIGNAL),
             ModId("pedestrian_signal_block_entity")
         )
+        val PEDESTRIAN_BUTTON_BLOCK_ENTITY = registerBlockEntities(
+            ::PedestrianButtonBlockEntity,
+            listOf(ModBlocks.PEDESTRIAN_BUTTON),
+            ModId("pedestrian_button_block_entity")
+        )
     }
 
     object ModBlocks {
@@ -228,6 +235,7 @@ object Registry {
             FiveHeadTrafficSignalRight(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
         )
         val PEDESTRIAN_SIGNAL = rBlock("pedestrian_signal", PedestrianSignal(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
+        val PEDESTRIAN_BUTTON = rBlock("pedestrian_button", PedestrianButton(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
 
         val YELLOW_INFILL_MARKING = rBlock("marking_yellow_infill", BasicMarking())
         val YELLOW_CENTER_DASH_MARKING = rBlock("marking_yellow_center_dash", BasicMarking())
@@ -381,6 +389,7 @@ object Registry {
                 itemSettings())
         val FIVE_HEAD_TRAFFIC_SIGNAL_LEFT = rItem(ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ::BlockItem, itemSettings())
         val PEDESTRIAN_SIGNAL = rItem(ModBlocks.PEDESTRIAN_SIGNAL, ::BlockItem, itemSettings())
+        val PEDESTRIAN_BUTTON = rItem(ModBlocks.PEDESTRIAN_BUTTON, ::BlockItem, itemSettings())
 
         val WHITE_INFILL_MARKING = rItem(ModBlocks.WHITE_INFILL_MARKING, ::BlockItem, itemSettings())
         val WHITE_ARROW_LEFT_MARKING = rItem(ModBlocks.WHITE_ARROW_LEFT_MARKING, ::BlockItem, itemSettings())

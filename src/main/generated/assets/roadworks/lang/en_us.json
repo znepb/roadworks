@@ -95,6 +95,7 @@
   "block.roadworks.marking_yellow_turn_offset_out_center_l": "Center-Offset Outside to Center Turn (Left)",
   "block.roadworks.marking_yellow_turn_offset_out_center_r": "Center-Offset Outside to Center Turn (Right)",
   "block.roadworks.marking_yellow_turn_outside": "Outside Yellow Edge Turn Line",
+  "block.roadworks.pedestrian_button": "Pedestrian Button",
   "block.roadworks.pedestrian_signal": "Pedestrian Signal",
   "block.roadworks.post": "Post",
   "block.roadworks.red_beacon": "Red Beacon",

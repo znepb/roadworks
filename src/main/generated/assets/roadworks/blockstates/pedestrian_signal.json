@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "roadworks:block/pedestrian_walk"
+      "model": "roadworks:block/pedestrian_signal"
     }
   }
 }

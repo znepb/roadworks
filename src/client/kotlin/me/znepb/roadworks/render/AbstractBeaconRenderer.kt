@@ -44,10 +44,10 @@ abstract class AbstractBeaconRenderer(
             }).toDouble() / 16
         }.toDouble()
 
-        val renderer = SignalRenderer(entity, matrices, vertexConsumers, light, overlay, direction, translateBy)
+        val renderer = PostMountRenderer(entity, matrices, vertexConsumers, light, overlay, direction, translateBy)
 
         matrices.push()
-        renderer.rotateForSignalRender()
+        renderer.rotateForRender()
         matrices.translate(0.0, 0.0, translateBy)
         RenderUtils.renderModel(matrices, renderer.buffer, light, overlay, SIGNAL_FRAME_1, null)
         matrices.pop()

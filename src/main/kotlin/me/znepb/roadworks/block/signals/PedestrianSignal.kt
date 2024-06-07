@@ -28,8 +28,9 @@ class PedestrianSignal
     }
 
     override fun getAttachmentShape(world: BlockView, pos: BlockPos): VoxelShape {
-        val blockEntity = world.getBlockEntity(pos) as AbstractTrafficSignalBlockEntity?
-            ?: return VoxelShapes.empty()
+        if(world.getBlockEntity(pos) !is PedestrianSignalBlockEntity) return VoxelShapes.empty();
+
+        val blockEntity = world.getBlockEntity(pos) as PedestrianSignalBlockEntity
 
         return if(blockEntity.wall) {
             RotateVoxelShape.rotateVoxelShape(

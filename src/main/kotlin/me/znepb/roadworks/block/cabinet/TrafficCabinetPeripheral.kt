@@ -3,24 +3,41 @@ package me.znepb.roadworks.block.cabinet
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.ObjectLuaTable
+import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
-import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
+import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.block.signals.SignalLight
 import me.znepb.roadworks.block.signals.SignalType
 
 class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPeripheral {
     override fun getType() = "traffic_cabinet"
     override fun getTarget() = blockEntity
+    private val attachedComputers: MutableList<IComputerAccess> = mutableListOf()
 
-    fun getSignalBlockEntity(id: Int): AbstractTrafficSignalBlockEntity? {
-        val signal = blockEntity.getSignalBlockEntityFromId(id)
-        return if(signal is AbstractTrafficSignalBlockEntity) signal else null
+    override fun attach(computer: IComputerAccess) {
+        this.attachedComputers.add(computer)
+        logger.info("Attach " + computer.id)
+        super.attach(computer)
+    }
+
+    override fun detach(computer: IComputerAccess) {
+        this.attachedComputers.remove(computer)
+        logger.info("Detach " + computer.id)
+        super.detach(computer)
+    }
+
+    fun notifyButtonPush(id: Int) {
+        this.attachedComputers.forEach {
+            it.queueEvent("cabinet_trigger", it.attachmentName, "pedestrian_button", id)
+        }
+
+        logger.info("Push Button " + id)
     }
 
     /// Returns whether this traffic cabinet has the specified ID available.
     @LuaFunction
     fun hasId(id: Int): Boolean {
-        blockEntity.getSignals().getSignals().forEach {
+        blockEntity.getConnections().getAll().forEach {
             if(it.getId() == id) {
                 return true
             }
@@ -38,11 +55,11 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
 
     /// Gets the signal's type from its ID.
     @LuaFunction
-    fun getSignalType(id: Int): String? {
+    fun getType(id: Int): String? {
         if(!hasId(id)) return null
 
-        blockEntity.getSignals().getSignals().forEach {
-            return blockEntity.getTypeOfId(it.getId())?.type
+        blockEntity.getConnections().getAll().forEach {
+            return blockEntity.getTypeOfId(it.getId())
         }
 
         return null
@@ -50,11 +67,11 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
 
     /// Gets signals of a type.
     @LuaFunction
-    fun getSignalsOfType(type: String): List<Int> {
+    fun getConnectionsOfType(type: String): List<Int> {
         val list = mutableListOf<Int>()
 
-        blockEntity.getSignals().getSignals().forEach {
-            if(blockEntity.getTypeOfId(it.getId())?.type == type) {
+        blockEntity.getConnections().getAll().forEach {
+            if(blockEntity.getTypeOfId(it.getId()) == type) {
                 list.add(it.getId())
             }
         }
@@ -64,13 +81,13 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
 
     /// Gets all signals on this traffic cabinet.
     @LuaFunction
-    fun getSignals(): List<Any> {
+    fun getConnections(): List<Any> {
         val signals = mutableListOf<ObjectLuaTable>();
 
-        blockEntity.getSignals().getSignals().forEach {
+        blockEntity.getConnections().getAll().forEach {
                 val map = hashMapOf<Any, Any?>()
                 map["id"] = it.getId()
-                map["type"] = blockEntity.getTypeOfId(it.getId())?.type
+                map["type"] = blockEntity.getTypeOfId(it.getId())
 
                 signals.add(ObjectLuaTable(map))
         }
@@ -81,7 +98,7 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     /// Sets the balue of a beacon.
     @LuaFunction
     fun setBeacon(id: Int, on: Boolean): Boolean {
-        return when (val type = blockEntity.getTypeOfId(id)) {
+        return when (val type = blockEntity.getTypeOfId(id)?.let { SignalType.fromType(it) }) {
             SignalType.ONE_HEAD_RED -> {
                 blockEntity.queueSignalSet(id, SignalLight.RED, on)
                 true
@@ -103,7 +120,7 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     /// Sets the colors of a three-head signal.
     @LuaFunction
     fun setThreeHead(id: Int, red: Boolean, yellow: Boolean, green: Boolean): Boolean {
-        when (val type = blockEntity.getTypeOfId(id)) {
+        when (val type = blockEntity.getTypeOfId(id)?.let { SignalType.fromType(it) }) {
             SignalType.THREE_HEAD -> {
                 blockEntity.queueSignalSet(id, SignalLight.RED, red)
                 blockEntity.queueSignalSet(id, SignalLight.YELLOW, yellow)
@@ -135,7 +152,7 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
 
     @LuaFunction
     fun setFiveHead(id: Int, red: Boolean, yellowLeft: Boolean, greenLeft: Boolean, yellowRight: Boolean, greenRight: Boolean): Boolean {
-        return when (val type = blockEntity.getTypeOfId(id)) {
+        return when (val type = blockEntity.getTypeOfId(id)?.let { SignalType.fromType(it) }) {
             SignalType.FIVE_HEAD_LEFT -> {
                 blockEntity.queueSignalSet(id, SignalLight.RED, red)
                 blockEntity.queueSignalSet(id, SignalLight.YELLOW, yellowRight)
@@ -159,7 +176,7 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     /// Sets the state of a pedestrian signal.
     @LuaFunction
     fun setPedestrianSignal(id: Int, walk: Boolean): Boolean {
-        return when (val type = blockEntity.getTypeOfId(id)) {
+        return when (val type = blockEntity.getTypeOfId(id)?.let { SignalType.fromType(it) }) {
             SignalType.PEDESTRIAN -> {
                 blockEntity.queueSignalSet(id, SignalLight.WALK, walk)
                 blockEntity.queueSignalSet(id, SignalLight.DONT_WALK, !walk)

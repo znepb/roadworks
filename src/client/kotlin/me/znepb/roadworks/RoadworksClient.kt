@@ -25,6 +25,7 @@ object RoadworksClient : ClientModInitializer {
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT_BLOCK_ENTITY, ::FiveHeadTrafficSignalLeftBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT_BLOCK_ENTITY, ::FiveHeadTrafficSignalRightBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.PEDESTRIAN_SIGNAL_BLOCK_ENTITY, ::PedestrianSignalRenderer)
+		BlockEntityRendererFactories.register(Registry.ModBlockEntities.PEDESTRIAN_BUTTON_BLOCK_ENTITY, ::PedestrianButtonRenderer)
 
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 			Registry.ModBlocks.WHITE_CENTER_MARKING,

@@ -1,7 +1,7 @@
 package me.znepb.roadworks
 
+import me.znepb.roadworks.block.Linkable
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
-import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.minecraft.block.BlockState
@@ -27,7 +27,7 @@ object RoadworksMain : ModInitializer {
 		Registry.init()
 
 		PlayerBlockBreakEvents.BEFORE.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, blockEntity: BlockEntity? ->
-			if(blockEntity is AbstractTrafficSignalBlockEntity) { blockEntity.remove() }
+			if(blockEntity is Linkable) { blockEntity.remove() }
 			if(blockEntity is TrafficCabinetBlockEntity) { blockEntity.remove() }
 
 			true

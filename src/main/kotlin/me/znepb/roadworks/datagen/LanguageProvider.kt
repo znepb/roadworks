@@ -38,6 +38,7 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, "Five-head Traffic Signal Left")
         translationBuilder.add(Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, "Five-head Traffic Signal Right")
         translationBuilder.add(Registry.ModBlocks.PEDESTRIAN_SIGNAL, "Pedestrian Signal")
+        translationBuilder.add(Registry.ModBlocks.PEDESTRIAN_BUTTON, "Pedestrian Button")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_INFILL_MARKING, "White Infill Marking")
         translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_LEFT_MARKING, "White Left Arrow Marking")

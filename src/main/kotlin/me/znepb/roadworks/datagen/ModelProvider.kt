@@ -71,6 +71,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_LEFT, ModId("block/five_head_traffic_signal_left")))
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT, ModId("block/five_head_traffic_signal_right")))
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.PEDESTRIAN_SIGNAL, ModId("block/pedestrian_signal")))
+        generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.PEDESTRIAN_BUTTON, ModId("block/pedestrian_button")))
 
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.TRAFFIC_CONE, ModId( "block/traffic_cone")))
         generator.blockStateCollector.accept(createSingletonBlockState(Registry.ModBlocks.BOLLARD_THIN, ModId("block/bollard_thin")))

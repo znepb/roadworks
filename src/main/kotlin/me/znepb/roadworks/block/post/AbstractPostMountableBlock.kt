@@ -20,6 +20,7 @@ abstract class AbstractPostMountableBlock<T : AbstractPostMountableBlockEntity>
     : BlockWithEntity(settings), BlockEntityProvider
 {
     private var placementContext: ItemPlacementContext? = null
+    protected var blockEntity: T? = null
 
     override fun isTransparent(state: BlockState?, world: BlockView?, pos: BlockPos?): Boolean {
         return true
@@ -47,6 +48,7 @@ abstract class AbstractPostMountableBlock<T : AbstractPostMountableBlockEntity>
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
         val be = blockEntityFactory.create(pos, state)
         this.placementContext?.let { be.setContext(it) }
+        this.blockEntity = be
         return be
     }
 

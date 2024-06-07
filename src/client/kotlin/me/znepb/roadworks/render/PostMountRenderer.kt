@@ -1,6 +1,7 @@
 package me.znepb.roadworks.render
 
 import me.znepb.roadworks.RoadworksMain.ModId
+import me.znepb.roadworks.block.post.AbstractPostMountableBlockEntity
 import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
 import me.znepb.roadworks.block.signals.SignalLight
 import me.znepb.roadworks.datagen.ModelProvider
@@ -13,8 +14,8 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Direction
 import org.joml.Quaternionf
 
-class SignalRenderer(
-    private val entity: AbstractTrafficSignalBlockEntity,
+class PostMountRenderer(
+    private val entity: AbstractPostMountableBlockEntity,
     private val matrices: MatrixStack,
     private val vertexConsumer: VertexConsumerProvider,
     private val light: Int,
@@ -28,7 +29,7 @@ class SignalRenderer(
 
     val buffer: VertexConsumer = vertexConsumer.getBuffer(TexturedRenderLayers.getEntityTranslucentCull())
 
-    fun rotateForSignalRender() {
+    fun rotateForRender() {
         matrices.multiply(
             Quaternionf().rotateXYZ(
                 Math.toRadians(180.0).toFloat(),
@@ -44,8 +45,10 @@ class SignalRenderer(
         x: Double,
         y: Double
     ) {
+        if(entity !is AbstractTrafficSignalBlockEntity) return
+
         matrices.push()
-        rotateForSignalRender()
+        rotateForRender()
         matrices.translate(x, y, postOffset)
         renderModel(
             matrices, buffer, light, overlay,

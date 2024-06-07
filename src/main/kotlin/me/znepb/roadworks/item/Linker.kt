@@ -1,8 +1,8 @@
 package me.znepb.roadworks.item
 
 import me.znepb.roadworks.Registry
+import me.znepb.roadworks.block.Linkable
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
-import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
@@ -21,38 +21,38 @@ class Linker(settings: Settings) : Item(settings) {
     var linkingWith: BlockEntityType<*>? = null
 
     companion object {
-        val MAX_DEVICES = 16
-        val MAX_SIGNAL_DISTANCE = 32.0
+        val MAX_DEVICES = 24
+        val MAX_DEVICE_DISTANCE = 48.0
     }
 
-    private fun getCabinet(blockEntity: AbstractTrafficSignalBlockEntity, context: ItemUsageContext): TrafficCabinetBlockEntity? {
+    private fun getCabinet(blockEntity: Linkable, context: ItemUsageContext): TrafficCabinetBlockEntity? {
         val be = context.world?.getBlockEntity(blockEntity.getLinkPos())
         return if(be is TrafficCabinetBlockEntity) { be } else null
     }
 
     private fun unlink(
-        signal: AbstractTrafficSignalBlockEntity,
+        device: Linkable,
         cabinet: TrafficCabinetBlockEntity,
         context: ItemUsageContext)
     {
-        signal.unlink()
-        cabinet.removeSignal(context.blockPos)
-        context.player?.sendMessage(Text.literal("Signal unlinked"), true)
+        device.unlink()
+        cabinet.removeConnection(context.blockPos)
+        context.player?.sendMessage(Text.literal("Device unlinked"), true)
     }
 
     private fun alreadyLinked(
-        signal: AbstractTrafficSignalBlockEntity,
+        device: Linkable,
         cabinet: TrafficCabinetBlockEntity,
         context: ItemUsageContext
     ) {
         if(context.player?.isSneaking == true) {
-            unlink(signal, cabinet, context)
+            unlink(device, cabinet, context)
         } else {
             context.player?.sendMessage(
                 // Notify player this is already linked
                 Text.literal(
-                    "Block is already linked as ID " +
-                            "${cabinet.getSignalIdentifierFromBlockPos(context.blockPos)}. " +
+                    "Device is already linked as ID " +
+                            "${cabinet.getConnectionIdentifierFromBlockPos(context.blockPos)}. " +
                             "Crouch-Right click to unlink."
                 ),
                 true
@@ -62,14 +62,14 @@ class Linker(settings: Settings) : Item(settings) {
 
     private fun linkCabinet(cabinet: TrafficCabinetBlockEntity, context: ItemUsageContext): ActionResult {
         if(cabinet.getTotalDevices() > MAX_DEVICES) {
-            // Too many signals connected to this box!
+            // Too many devices connected to this box!
             context.player?.sendMessage(Text.literal("There are too many devices connected to this box! Max is $MAX_DEVICES"), true)
             return ActionResult.SUCCESS
         }
 
         linking = context.blockPos
         linkingWith = Registry.ModBlockEntities.CABINET_BLOCK_ENTITY
-        context.player?.sendMessage(Text.literal("Right-click a traffic signal to link to this cabinet"), true)
+        context.player?.sendMessage(Text.literal("Right-click a traffic device to link to this cabinet"), true)
 
         return ActionResult.SUCCESS
     }
@@ -83,39 +83,39 @@ class Linker(settings: Settings) : Item(settings) {
             return
         }
 
-        if(!linkedFrom.pos.isWithinDistance(block.pos, MAX_SIGNAL_DISTANCE)) {
+        if(!linkedFrom.pos.isWithinDistance(block.pos, MAX_DEVICE_DISTANCE)) {
             // Device is too far!
-            context.player?.sendMessage(Text.literal("This device is too far! Max distance is $MAX_SIGNAL_DISTANCE blocks"), true)
+            context.player?.sendMessage(Text.literal("This device is too far! Max distance is $MAX_DEVICE_DISTANCE blocks"), true)
             return
         }
 
-        if(block is AbstractTrafficSignalBlockEntity) {
+        if(block is Linkable) {
             val id = block.link(linkedFrom)
 
             if(id != null) {
-                // Signal connected!
-                context.player?.sendMessage(Text.literal("Signal successfully connected with ID $id"), true)
+                // Device connected!
+                context.player?.sendMessage(Text.literal("Device successfully connected with ID $id"), true)
             } else {
-                // Something funky happened to the signal
-                context.player?.sendMessage(Text.literal("Could not link signal"), true)
+                // Something funky happened to the device
+                context.player?.sendMessage(Text.literal("Could not link device"), true)
             }
         } else {
-            context.player?.sendMessage(Text.literal("Cabinet must be connected to a signal"), true)
+            context.player?.sendMessage(Text.literal("Cabinet must be connected to a device"), true)
             return
         }
     }
 
-    private fun linkSignal(signal: AbstractTrafficSignalBlockEntity, context: ItemUsageContext): ActionResult {
+    private fun linkDevice(device: Linkable, context: ItemUsageContext): ActionResult {
         fun startLink() {
             linking = context.blockPos
             linkingWith = Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY
-            context.player?.sendMessage(Text.literal("Right-click a traffic cabinet to link this signal"), true)
+            context.player?.sendMessage(Text.literal("Right-click a traffic cabinet to link this device"), true)
         }
 
-        if (signal.isLinked()) {
-            val cabinet = getCabinet(signal, context)
+        if (device.isLinked()) {
+            val cabinet = getCabinet(device, context)
             if(cabinet != null) {
-                alreadyLinked(signal, cabinet, context)
+                alreadyLinked(device, cabinet, context)
             } else {
                 startLink()
             }
@@ -126,40 +126,40 @@ class Linker(settings: Settings) : Item(settings) {
         return ActionResult.SUCCESS
     }
 
-    private fun completeSignalToCabinetLink(cabinet: BlockEntity, context: ItemUsageContext) {
+    private fun completeDeviceToCabinetLink(cabinet: BlockEntity, context: ItemUsageContext) {
         if(cabinet !is TrafficCabinetBlockEntity) {
             // Player right-clicked on something other than a cabinet
-            context.player?.sendMessage(Text.literal("Signal must be connected to a traffic cabinet"), true)
+            context.player?.sendMessage(Text.literal("Device must be connected to a traffic cabinet"), true)
             return
         }
 
-        if(cabinet.getTotalSignals() >= MAX_DEVICES) {
-            // Too many signals connected to this box!
-            context.player?.sendMessage(Text.literal("There are too many signals connected to this box! Max is $MAX_DEVICES"), true)
+        if(cabinet.getTotalDevices() >= MAX_DEVICES) {
+            // Too many devices connected to this box!
+            context.player?.sendMessage(Text.literal("There are too many devices connected to this box! Max is $MAX_DEVICES"), true)
             return
         }
 
         val linkedFrom = context.world.getBlockEntity(linking)
 
-        if(linkedFrom !is AbstractTrafficSignalBlockEntity) {
-            // Traffic signal disappeared somehow
-            context.player?.sendMessage(Text.literal("The signal is no longer there"), true)
+        if(linkedFrom !is Linkable) {
+            // Traffic device disappeared somehow
+            context.player?.sendMessage(Text.literal("The device is no longer there"), true)
             return
         }
 
-        if(!linkedFrom.pos.isWithinDistance(cabinet.pos, MAX_SIGNAL_DISTANCE)) {
-            // Signal is too far!
-            context.player?.sendMessage(Text.literal("This signal is too far! Max distance is $MAX_SIGNAL_DISTANCE blocks"), true)
+        if(!linkedFrom.pos.isWithinDistance(cabinet.pos, MAX_DEVICE_DISTANCE)) {
+            // Device is too far!
+            context.player?.sendMessage(Text.literal("This device is too far! Max distance is $MAX_DEVICE_DISTANCE blocks"), true)
             return
         }
 
         val id = linkedFrom.link(cabinet)
         if(id != null) {
-            // Signal connected!
-            context.player?.sendMessage(Text.literal("Signal successfully connected with ID $id"), true)
+            // Device connected!
+            context.player?.sendMessage(Text.literal("Device successfully connected with ID $id"), true)
         } else {
-            // Something funky happened to the signal
-            context.player?.sendMessage(Text.literal("Could not link signal"), true)
+            // Something funky happened to the device
+            context.player?.sendMessage(Text.literal("Could not link device"), true)
         }
     }
 
@@ -184,16 +184,16 @@ class Linker(settings: Settings) : Item(settings) {
             val blockEntity = context.world?.getBlockEntity(context.blockPos)
 
             if(linking == null) {
-                if (blockEntity is AbstractTrafficSignalBlockEntity) {
-                    return linkSignal(blockEntity, context)
+                if (blockEntity is Linkable) {
+                    return linkDevice(blockEntity, context)
                 } else if(blockEntity is TrafficCabinetBlockEntity) {
                     return linkCabinet(blockEntity, context)
                 } else {
-                    context.player?.sendMessage(Text.literal("Right-click a signal or traffic cabinet"), true)
+                    context.player?.sendMessage(Text.literal("Right-click a device or traffic cabinet"), true)
                 }
             } else if(blockEntity != null) {
                 if(linkingWith == Registry.ModBlockEntities.THREE_HEAD_TRAFFIC_SIGNAL_BLOCK_ENTITY) {
-                    completeSignalToCabinetLink(blockEntity, context)
+                    completeDeviceToCabinetLink(blockEntity, context)
                     reset()
                 } else if(linkingWith == Registry.ModBlockEntities.CABINET_BLOCK_ENTITY) {
                     completeLinkToCabinet(blockEntity, context)

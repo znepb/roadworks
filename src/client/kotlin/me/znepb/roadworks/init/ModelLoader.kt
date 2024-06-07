@@ -21,7 +21,9 @@ class ModelLoader {
             AbstractThreeHeadSignalBlockRenderer.SIGNAL_FRAME_3,
             AbstractThreeHeadSignalBlockRenderer.SIGNAL,
             PedestrianSignalRenderer.DONT_WALK,
-            PedestrianSignalRenderer.WALK
+            PedestrianSignalRenderer.WALK,
+            PedestrianButtonRenderer.PEDESTRIAN_BUTTON_ON,
+            PedestrianButtonRenderer.PEDESTRIAN_BUTTON_OFF
         )
     }
 
@@ -30,7 +32,7 @@ class ModelLoader {
             run {
                 logger.info("Registering block models")
                 plugin.addModels(models)
-                plugin.addModels(SignalRenderer.SIGNAL_MODEL_IDS)
+                plugin.addModels(PostMountRenderer.SIGNAL_MODEL_IDS)
             }
         }
     }

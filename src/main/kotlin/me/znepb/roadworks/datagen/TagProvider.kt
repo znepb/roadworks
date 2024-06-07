@@ -151,7 +151,8 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
                 THREE_HEAD_TRAFFIC_SIGNAL_LEFT,
                 FIVE_HEAD_TRAFFIC_SIGNAL_LEFT,
                 FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT,
-                PEDESTRIAN_SIGNAL
+                PEDESTRIAN_SIGNAL,
+                PEDESTRIAN_BUTTON
             )
         }
     }

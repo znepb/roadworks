@@ -9,6 +9,13 @@ Roadworks add immersive, American-style traffic management features to Minecraft
 - Pedestrian crossing signals
 - Make CC an optional dependency
 
+## Installation Requirements
+- Minecraft 1.20.1
+- Fabric Loader >+ 0.14.22
+- Fabric API >= 1.87.0
+- Fabric Language Kotlin >= 1.10.8
+- CC: Tweaked >= 1.107.0
+
 ## Features
 ### Signals
 Controllable via a Traffic Controller and can be connected to one with a linker. Signals connected to a traffic controller can be controlled via a ComputerCraft computer, wrapped as a peripheral.

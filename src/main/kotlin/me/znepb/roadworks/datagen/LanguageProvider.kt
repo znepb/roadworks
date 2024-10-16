@@ -18,13 +18,7 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.BOLLARD, "Bollard")
         translationBuilder.add(Registry.ModBlocks.BOLLARD_THICK, "Thick Bollard")
 
-        translationBuilder.add(Registry.ModBlocks.STOP_SIGN, "Stop Sign")
-        translationBuilder.add(Registry.ModBlocks.STOP_SIGN_4_WAY, "4-way Stop Sign")
-        translationBuilder.add(Registry.ModBlocks.STOP_SIGN_AHEAD, "Stop Ahead Sign")
-        translationBuilder.add(Registry.ModBlocks.YIELD_SIGN, "Yield Sign")
-        translationBuilder.add(Registry.ModBlocks.YIELD_SIGN_AHEAD, "Yield Ahead Sign")
-        translationBuilder.add(Registry.ModBlocks.SIGNAL_AHEAD, "Signal Ahead Sign")
-        translationBuilder.add(Registry.ModBlocks.ROAD_WORK_AHEAD, "Road Work Ahead Sign")
+        translationBuilder.add(Registry.ModBlocks.SIGN, "Sign")
 
         translationBuilder.add(Registry.ModItems.LINKER, "Linker")
         translationBuilder.add(Registry.ModBlocks.TRAFFIC_CABINET, "Traffic Cabinet")
@@ -147,5 +141,6 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.YELLOW_L_SHORT_RIGHT, "Yellow L Thin, Short Right")
 
         translationBuilder.add("itemGroup.${NAMESPACE}.main", "Roadworks")
+        translationBuilder.add("block.${NAMESPACE}.stop_sign", "Stop Sign")
     }
 }

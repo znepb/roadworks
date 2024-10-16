@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.road_closed",
+  "front_texture": "roadworks:block/signs/road_closed",
+  "back_texture": "roadworks:block/signs/back_diamond"
+}

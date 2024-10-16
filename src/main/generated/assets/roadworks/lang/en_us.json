@@ -99,11 +99,8 @@
   "block.roadworks.pedestrian_signal": "Pedestrian Signal",
   "block.roadworks.post": "Post",
   "block.roadworks.red_beacon": "Red Beacon",
-  "block.roadworks.road_work_ahead_sign": "Road Work Ahead Sign",
-  "block.roadworks.signal_ahead_sign": "Signal Ahead Sign",
-  "block.roadworks.stop_ahead_sign": "Stop Ahead Sign",
+  "block.roadworks.sign": "Sign",
   "block.roadworks.stop_sign": "Stop Sign",
-  "block.roadworks.stop_sign_4_way": "4-way Stop Sign",
   "block.roadworks.thick_post": "Thick Post",
   "block.roadworks.thin_post": "Thin Post",
   "block.roadworks.three_head_traffic_signal": "Three-head Traffic Signal",
@@ -113,8 +110,6 @@
   "block.roadworks.traffic_cabinet": "Traffic Cabinet",
   "block.roadworks.traffic_cone": "Traffic Cone",
   "block.roadworks.yellow_beacon": "Yellow Beacon",
-  "block.roadworks.yield_ahead_sign": "Yield Ahead Sign",
-  "block.roadworks.yield_sign": "Yield Sign",
   "item.roadworks.linker": "Linker",
   "itemGroup.roadworks.main": "Roadworks"
 }

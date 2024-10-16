@@ -1,15 +1,15 @@
 package me.znepb.roadworks.render
 
-import me.znepb.roadworks.RoadworksMain.ModId
-import me.znepb.roadworks.block.SignBlock
-import me.znepb.roadworks.block.SignBlockEntity
+import me.znepb.roadworks.RoadworksMain.SIGN_TYPES
 import me.znepb.roadworks.block.post.AbstractPostMountableBlockEntity
+import me.znepb.roadworks.block.sign.SignBlockEntity
 import me.znepb.roadworks.util.PostThickness
 import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import java.util.*
 
@@ -32,17 +32,14 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) :
         val POST_SIGN_THICK_BACK = ModelPart.Cuboid(0, 0, 0F, 0F, 4.99F, 16F, 16F, 0F, 0F, 0F, 0F, false, 16F, 16F, SOUTH_ONLY)
     }
 
-    private fun getSignFrontTexture(entity: SignBlockEntity): String? {
-        return if (entity.cachedState.block is SignBlock)
-                (entity.cachedState.block as SignBlock).frontTexture
-            else null
-
+    private fun getSignFrontTexture(entity: SignBlockEntity): Identifier? {
+        val tex = SIGN_TYPES.get(entity.signType)?.frontTexture ?: return null
+        return Identifier(tex.namespace, "textures/" + tex.path + ".png")
     }
 
-    private fun getSignBackTexture(entity: SignBlockEntity): String? {
-        return if (entity.cachedState.block is SignBlock)
-            (entity.cachedState.block as SignBlock).backTexture
-        else null
+    private fun getSignBackTexture(entity: SignBlockEntity): Identifier? {
+        val tex = SIGN_TYPES.get(entity.signType)?.backTexture ?: return null
+        return Identifier(tex.namespace, "textures/" + tex.path + ".png")
     }
 
     override fun renderAttachment(
@@ -54,8 +51,8 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) :
         overlay: Int
     ) {
         val maxThickness = AbstractPostMountableBlockEntity.getThickest(entity)
-        val frontTexture = ModId("textures/block/signs/${getSignFrontTexture(entity)}.png")
-        val backTexture = ModId("textures/block/signs/${getSignBackTexture(entity)}.png")
+        val frontTexture = getSignFrontTexture(entity)
+        val backTexture = getSignBackTexture(entity)
 
         val signObjectFront = if(entity.wall) WALL_SIGN_FRONT else {
             when (maxThickness) {
@@ -96,11 +93,12 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) :
             },
             Math.toRadians(180.0).toFloat()
         )
-        front.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(frontTexture)), light, overlay)
+
+        if(backTexture != null) front.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(backTexture)), light, overlay)
 
         // Render back
         val back = ModelPart(mutableListOf(signObjectBack), Collections.emptyMap())
         back.copyTransform(front)
-        back.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(backTexture)), light, overlay)
+        if(frontTexture != null) back.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(frontTexture)), light, overlay)
     }
 }

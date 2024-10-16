@@ -37,10 +37,11 @@ class RenderUtils {
             model: BakedModel,
             direction: Direction?
         ) {
-            val random = Random.create(0);
+            val random = Random.create(0)
 
             random.setSeed(42L)
-            renderQuads(transform, renderer, lightmapCoord, overlayLight, model.getQuads(null as BlockState?, direction as Direction?, random))
+            renderQuads(transform, renderer, lightmapCoord, overlayLight, model.getQuads(null as BlockState?,
+                direction, random))
         }
 
         fun renderQuads(transform: MatrixStack, buffer: VertexConsumer, lightmapCoord: Int, overlayLight: Int, quads: List<BakedQuad>) {

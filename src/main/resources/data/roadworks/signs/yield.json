@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.yield",
+  "front_texture": "roadworks:block/signs/yield",
+  "back_texture": "roadworks:block/signs/back_yield"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.right_lane_ends",
+  "front_texture": "roadworks:block/signs/right_lane_ends",
+  "back_texture": "roadworks:block/signs/back_diamond"
+}

@@ -1,13 +1,7 @@
 {
   "replace": false,
   "values": [
-    "roadworks:stop_sign",
-    "roadworks:stop_sign_4_way",
-    "roadworks:stop_ahead_sign",
-    "roadworks:yield_sign",
-    "roadworks:yield_ahead_sign",
-    "roadworks:signal_ahead_sign",
-    "roadworks:road_work_ahead_sign",
+    "roadworks:sign",
     "roadworks:green_beacon",
     "roadworks:red_beacon",
     "roadworks:yellow_beacon",

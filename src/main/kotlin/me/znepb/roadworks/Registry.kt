@@ -4,8 +4,7 @@ import dan200.computercraft.api.peripheral.PeripheralLookup
 import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.block.PedestrianButton
 import me.znepb.roadworks.block.PedestrianButtonBlockEntity
-import me.znepb.roadworks.block.SignBlock
-import me.znepb.roadworks.block.SignBlockEntity
+import me.znepb.roadworks.block.sign.SignBlock
 import me.znepb.roadworks.block.cabinet.TrafficCabinet
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.block.cone.*
@@ -15,10 +14,12 @@ import me.znepb.roadworks.block.marking.TMarking
 import me.znepb.roadworks.block.marking.TurnMarking
 import me.znepb.roadworks.block.post.PostBlock
 import me.znepb.roadworks.block.post.PostBlockEntity
+import me.znepb.roadworks.block.sign.SignBlockEntity
+import me.znepb.roadworks.block.sign.SignBlockItem
 import me.znepb.roadworks.block.signals.PedestrianSignal
 import me.znepb.roadworks.block.signals.PedestrianSignalBlockEntity
 import me.znepb.roadworks.block.signals.impl.*
-import me.znepb.roadworks.datagen.TagProvider.Companion.SIGNS
+
 import me.znepb.roadworks.item.Linker
 import me.znepb.roadworks.util.PostThickness
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -43,7 +44,7 @@ import net.minecraft.util.Identifier
 // TODO: Transfer registries into their own class files
 
 object Registry {
-    private val itemGroup = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier(RoadworksMain.NAMESPACE))
+    val itemGroup = RegistryKey.of(RegistryKeys.ITEM_GROUP, Identifier(RoadworksMain.NAMESPACE))
     private val items = mutableListOf<Item>()
 
     internal fun init() {
@@ -81,7 +82,7 @@ object Registry {
         )
         val SIGN_BLOCK_ENTITY = registerBlockEntities(
             ::SignBlockEntity,
-            SIGNS,
+            listOf(ModBlocks.SIGN),
             ModId("sign_block_entity")
         )
         val CABINET_BLOCK_ENTITY = registerBlockEntities(
@@ -167,31 +168,9 @@ object Registry {
 
         //
 
-        val STOP_SIGN = rBlock(
-            "stop_sign",
-            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_sign", "back_octagon")
-        )
-        val STOP_SIGN_4_WAY = rBlock(
-            "stop_sign_4_way",
-            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "4_way", "back_4_way")
-        )
-        val STOP_SIGN_AHEAD = rBlock(
-            "stop_ahead_sign",
-            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "stop_ahead", "back_diamond")
-        )
-        val YIELD_SIGN =
-            rBlock("yield_sign", SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield", "back_yield"))
-        val YIELD_SIGN_AHEAD = rBlock(
-            "yield_ahead_sign",
-            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "yield_ahead", "back_diamond")
-        )
-        val SIGNAL_AHEAD = rBlock(
-            "signal_ahead_sign",
-            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "signal_ahead", "back_diamond")
-        )
-        val ROAD_WORK_AHEAD = rBlock(
-            "road_work_ahead_sign",
-            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL), "road_work_ahead", "back_diamond")
+        val SIGN = rBlock(
+            "sign",
+            SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
         )
 
         //
@@ -366,13 +345,7 @@ object Registry {
         val BOLLARD = rItem(ModBlocks.BOLLARD, ::BlockItem, itemSettings())
         val BOLLARD_THICK = rItem(ModBlocks.BOLLARD_THICK, ::BlockItem, itemSettings())
 
-        val STOP_SIGN = rItem(ModBlocks.STOP_SIGN, ::BlockItem, itemSettings())
-        val STOP_SIGN_4_WAY = rItem(ModBlocks.STOP_SIGN_4_WAY, ::BlockItem, itemSettings())
-        val STOP_SIGN_AHEAD = rItem(ModBlocks.STOP_SIGN_AHEAD, ::BlockItem, itemSettings())
-        val YIELD_SIGN = rItem(ModBlocks.YIELD_SIGN, ::BlockItem, itemSettings())
-        val YIELD_SIGN_AHEAD = rItem(ModBlocks.YIELD_SIGN_AHEAD, ::BlockItem, itemSettings())
-        val SIGNAL_AHEAD = rItem(ModBlocks.SIGNAL_AHEAD, ::BlockItem, itemSettings())
-        val ROAD_WORK_AHEAD = rItem(ModBlocks.ROAD_WORK_AHEAD, ::BlockItem, itemSettings())
+        val SIGN = rItem(ModBlocks.SIGN, ::SignBlockItem, itemSettings())
 
         val TRAFFIC_CABINET = rItem(ModBlocks.TRAFFIC_CABINET, ::BlockItem, itemSettings())
         val ONE_HEAD_GREEN_TRAFFIC_SIGNAL = rItem(ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())

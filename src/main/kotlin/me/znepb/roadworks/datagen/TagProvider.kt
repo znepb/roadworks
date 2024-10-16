@@ -15,16 +15,6 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
         val POST_MOUNTABLES = TagKey.of(RegistryKeys.BLOCK, ModId("post_mountables"))
         val MARKINGS = TagKey.of(RegistryKeys.BLOCK, ModId("marking"))
         val STANDALONE_MARKINGS = TagKey.of(RegistryKeys.BLOCK, ModId("standalone_markings"))
-
-        val SIGNS = listOf(
-            Registry.ModBlocks.STOP_SIGN,
-            Registry.ModBlocks.STOP_SIGN_4_WAY,
-            Registry.ModBlocks.STOP_SIGN_AHEAD,
-            Registry.ModBlocks.YIELD_SIGN,
-            Registry.ModBlocks.YIELD_SIGN_AHEAD,
-            Registry.ModBlocks.SIGNAL_AHEAD,
-            Registry.ModBlocks.ROAD_WORK_AHEAD
-        )
     }
 
     override fun configure(arg: WrapperLookup) {
@@ -138,7 +128,7 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
                 .add(POST, THIN_POST, THICK_POST)
 
             with(getOrCreateTagBuilder(POST_MOUNTABLES)) {
-                SIGNS.forEach { this.add(it) }
+                this.add(SIGN)
             }
 
             getOrCreateTagBuilder(POST_MOUNTABLES).add(

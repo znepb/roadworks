@@ -138,7 +138,7 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
         val chunkW = world.chunkManager.isChunkLoaded((pos.x / 16) - 1, pos.z / 16)
 
         if(chunk && chunkN && chunkE && chunkS && chunkW) {
-            this.getPlacementState(pos);
+            this.getPlacementState(pos)
         }
     }
     companion object {

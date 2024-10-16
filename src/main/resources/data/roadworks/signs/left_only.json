@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.left_only",
+  "front_texture": "roadworks:block/signs/left_only",
+  "back_texture": "roadworks:block/signs/back_rectangle"
+}

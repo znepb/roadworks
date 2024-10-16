@@ -5,14 +5,21 @@ import me.znepb.roadworks.init.ModelLoader
 import me.znepb.roadworks.render.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry
+import net.fabricmc.fabric.api.client.model.ModelResourceProvider
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
+import net.minecraft.client.render.entity.ItemEntityRenderer
 import org.slf4j.LoggerFactory
 
 object RoadworksClient : ClientModInitializer {
 	val logger = LoggerFactory.getLogger(NAMESPACE)
 
 	override fun onInitializeClient() {
+		logger.info("Roadworks Client Init")
+		ModelLoadingPlugin.register( me.znepb.roadworks.ModelLoader())
+
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.POST_BLOCK_ENTITY, ::PostBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, ::SignBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.ONE_HEAD_TRAFFIC_SIGNAL_RED_BLOCK_ENTITY, ::RedBeaconRenderer)

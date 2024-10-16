@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.4_way",
+  "front_texture": "roadworks:block/signs/4_way",
+  "back_texture": "roadworks:block/signs/back_4_way"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.speed_limit_25",
+  "front_texture": "roadworks:block/signs/speed_limit_25",
+  "back_texture": "roadworks:block/signs/back_rectangle"
+}

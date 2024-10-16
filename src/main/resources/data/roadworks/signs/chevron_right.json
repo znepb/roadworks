@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.chevron_right",
+  "front_texture": "roadworks:block/signs/chevron_right",
+  "back_texture": "roadworks:block/signs/back_rectangle"
+}

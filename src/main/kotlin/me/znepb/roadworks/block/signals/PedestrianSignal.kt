@@ -1,4 +1,4 @@
-package me.znepb.roadworks.block.signals;
+package me.znepb.roadworks.block.signals
 
 import me.znepb.roadworks.Registry
 import me.znepb.roadworks.block.post.AbstractPostMountableBlockEntity
@@ -28,7 +28,7 @@ class PedestrianSignal
     }
 
     override fun getAttachmentShape(world: BlockView, pos: BlockPos): VoxelShape {
-        if(world.getBlockEntity(pos) !is PedestrianSignalBlockEntity) return VoxelShapes.empty();
+        if(world.getBlockEntity(pos) !is PedestrianSignalBlockEntity) return VoxelShapes.empty()
 
         val blockEntity = world.getBlockEntity(pos) as PedestrianSignalBlockEntity
 

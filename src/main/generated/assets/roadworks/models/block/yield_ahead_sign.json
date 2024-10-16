@@ -1,7 +1,0 @@
-{
-  "parent": "roadworks:block/sign_base",
-  "textures": {
-    "back": "roadworks:block/signs/back_diamond",
-    "front": "roadworks:block/signs/yield_ahead"
-  }
-}

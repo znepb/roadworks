@@ -33,7 +33,7 @@ class TrafficCabinet(settings: Settings) : BlockWithEntity(settings) {
     }
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
-        val be = TrafficCabinetBlockEntity(pos, state);
+        val be = TrafficCabinetBlockEntity(pos, state)
         return be
     }
 

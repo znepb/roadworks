@@ -16,13 +16,11 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
 
     override fun attach(computer: IComputerAccess) {
         this.attachedComputers.add(computer)
-        logger.info("Attach " + computer.id)
         super.attach(computer)
     }
 
     override fun detach(computer: IComputerAccess) {
         this.attachedComputers.remove(computer)
-        logger.info("Detach " + computer.id)
         super.detach(computer)
     }
 
@@ -30,8 +28,6 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
         this.attachedComputers.forEach {
             it.queueEvent("cabinet_trigger", it.attachmentName, "pedestrian_button", id)
         }
-
-        logger.info("Push Button " + id)
     }
 
     /// Returns whether this traffic cabinet has the specified ID available.
@@ -82,7 +78,7 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     /// Gets all signals on this traffic cabinet.
     @LuaFunction
     fun getConnections(): List<Any> {
-        val signals = mutableListOf<ObjectLuaTable>();
+        val signals = mutableListOf<ObjectLuaTable>()
 
         blockEntity.getConnections().getAll().forEach {
                 val map = hashMapOf<Any, Any?>()

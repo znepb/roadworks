@@ -55,7 +55,7 @@ object Registry {
                 .displayName(Text.translatable("itemGroup.${RoadworksMain.NAMESPACE}.main"))
                 .icon{ ItemStack(ModItems.TRAFFIC_CONE) }
                 .entries { _, entries ->
-                    items.forEach(entries::add)
+                    items.filter { it !is SignBlockItem } .forEach { entries.add(it) }
                 }
                 .build()
         )

@@ -102,6 +102,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_RIGHT_LEFT_MARKING, "marking_white_right_left_turn_arrows", false)
         addBasicMarking(generator, Registry.ModBlocks.WHITE_ARROW_U_TURN_MARKING, "marking_white_u_turn_arrow", false)
         addBasicMarking(generator, Registry.ModBlocks.WHITE_ZEBRA_CROSSING_MARKING, "marking_white_zebra_crossing", false)
+        addBasicMarking(generator, Registry.ModBlocks.WHITE_YIELD_MARKING, "marking_white_yield", false)
 
         // White center
         addMarkingWithFilledSides(generator, Registry.ModBlocks.WHITE_CENTER_MARKING, "marking_white_center",

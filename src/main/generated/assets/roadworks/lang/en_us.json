@@ -65,6 +65,7 @@
   "block.roadworks.marking_white_turn_inside": "Inside White Edge Turn Line",
   "block.roadworks.marking_white_turn_outside": "Outside White Edge Turn Line",
   "block.roadworks.marking_white_u_turn_arrow": "White U-Turn Marking",
+  "block.roadworks.marking_white_yield": "White Yield Marking",
   "block.roadworks.marking_white_zebra_crossing": "White Zebra Crossing",
   "block.roadworks.marking_yellow_center": "Centered Long Yellow Line",
   "block.roadworks.marking_yellow_center_dash": "Centered Yellow Dash",

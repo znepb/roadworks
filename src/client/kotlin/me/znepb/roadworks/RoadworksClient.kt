@@ -47,6 +47,7 @@ object RoadworksClient : ClientModInitializer {
 			Registry.ModBlocks.WHITE_ARROW_RIGHT_LEFT_MARKING,
 			Registry.ModBlocks.WHITE_ARROW_U_TURN_MARKING,
 			Registry.ModBlocks.WHITE_ZEBRA_CROSSING_MARKING,
+			Registry.ModBlocks.WHITE_YIELD_MARKING,
 
 			Registry.ModBlocks.WHITE_CENTER_DASH_MARKING,
 			Registry.ModBlocks.WHITE_INFILL_MARKING,

@@ -46,6 +46,7 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_RIGHT_LEFT_MARKING, "White Left/Right Arrows")
         translationBuilder.add(Registry.ModBlocks.WHITE_ARROW_U_TURN_MARKING, "White U-Turn Marking")
         translationBuilder.add(Registry.ModBlocks.WHITE_ZEBRA_CROSSING_MARKING, "White Zebra Crossing")
+        translationBuilder.add(Registry.ModBlocks.WHITE_YIELD_MARKING, "White Yield Marking")
 
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_DASH_MARKING, "Centered White Dash")
         translationBuilder.add(Registry.ModBlocks.WHITE_CENTER_TURN_MARKING, "Centered White Turn Line")

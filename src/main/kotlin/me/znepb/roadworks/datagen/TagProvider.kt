@@ -30,7 +30,8 @@ class TagProvider(output: FabricDataOutput, completableFuture: CompletableFuture
                 WHITE_ARROW_RIGHT_STRAIGHT_MARKING,
                 WHITE_ARROW_RIGHT_LEFT_MARKING,
                 WHITE_ARROW_U_TURN_MARKING,
-                WHITE_ZEBRA_CROSSING_MARKING
+                WHITE_ZEBRA_CROSSING_MARKING,
+                WHITE_YIELD_MARKING
             )
 
             getOrCreateTagBuilder(MARKINGS).add(

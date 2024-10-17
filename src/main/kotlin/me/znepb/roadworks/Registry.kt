@@ -280,6 +280,7 @@ object Registry {
         val WHITE_HOV_MARKING = rBlock("marking_white_hov_lane", BasicMarking())
         val WHITE_RAILROAD_MARKING = rBlock("marking_white_rr", BasicMarking())
         val WHITE_ZEBRA_CROSSING_MARKING = rBlock("marking_white_zebra_crossing", BasicMarking())
+        val WHITE_YIELD_MARKING = rBlock("marking_white_yield", BasicMarking())
 
         val WHITE_CENTER_DASH_MARKING = rBlock("marking_white_center_dash", BasicMarking())
         val WHITE_CENTER_MARKING = rBlock("marking_white_center", OneSideFilledMarking())
@@ -376,6 +377,7 @@ object Registry {
         val WHITE_ARROW_RIGHT_LEFT_MARKING = rItem(ModBlocks.WHITE_ARROW_RIGHT_LEFT_MARKING, ::BlockItem, itemSettings())
         val WHITE_ARROW_U_TURN_MARKING = rItem(ModBlocks.WHITE_ARROW_U_TURN_MARKING, ::BlockItem, itemSettings())
         val WHITE_ZEBRA_CROSSING_MARKING = rItem(ModBlocks.WHITE_ZEBRA_CROSSING_MARKING, ::BlockItem, itemSettings())
+        val WHITE_YIELD_MARKING = rItem(ModBlocks.WHITE_YIELD_MARKING, ::BlockItem, itemSettings())
 
         val WHITE_CENTER_DASH_MARKING = rItem(ModBlocks.WHITE_CENTER_DASH_MARKING, ::BlockItem, itemSettings())
         val WHITE_CENTER_MARKING = rItem(ModBlocks.WHITE_CENTER_MARKING, ::BlockItem, itemSettings())

@@ -6,6 +6,7 @@ import dan200.computercraft.api.lua.ObjectLuaTable
 import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
 import me.znepb.roadworks.RoadworksMain.logger
+import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
 import me.znepb.roadworks.block.signals.SignalLight
 import me.znepb.roadworks.block.signals.SignalType
 
@@ -53,12 +54,7 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     @LuaFunction
     fun getType(id: Int): String? {
         if(!hasId(id)) return null
-
-        blockEntity.getConnections().getAll().forEach {
-            return blockEntity.getTypeOfId(it.getId())
-        }
-
-        return null
+        return blockEntity.getTypeOfId(id)
     }
 
     /// Gets signals of a type.

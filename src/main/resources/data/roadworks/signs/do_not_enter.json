@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.do_not_enter",
+  "front_texture": "roadworks:block/signs/do_not_enter",
+  "back_texture": "roadworks:block/signs/back_do_not_enter"
+}

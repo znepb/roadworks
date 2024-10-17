@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.pedestrian",
+  "front_texture": "roadworks:block/signs/pedestrian",
+  "back_texture": "roadworks:block/signs/back_diamond"
+}

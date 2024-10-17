@@ -84,6 +84,8 @@ abstract class AbstractPostMountableBlock<T : AbstractPostMountableBlockEntity>
         val blockEntity = world.getBlockEntity(pos)
 
         if(blockEntity !is AbstractPostMountableBlockEntity) return VoxelShapes.empty()
+        // Don't try to add post parts if this block mounted on a wall
+        if(blockEntity.wall) return shape
 
         shape = VoxelShapes.union(
             shape,

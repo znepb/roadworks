@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.roundabout_ahead",
+  "front_texture": "roadworks:block/signs/roundabout_ahead",
+  "back_texture": "roadworks:block/signs/back_diamond"
+}

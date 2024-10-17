@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.wrong_way",
+  "front_texture": "roadworks:block/signs/wrong_way",
+  "back_texture": "roadworks:block/signs/back_wrong_way"
+}

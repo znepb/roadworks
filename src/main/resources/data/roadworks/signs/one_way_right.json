@@ -1,0 +1,5 @@
+{
+  "name": "block.roadworks.one_way_right",
+  "front_texture": "roadworks:block/signs/one_way_right",
+  "back_texture": "roadworks:block/signs/back_one_way"
+}

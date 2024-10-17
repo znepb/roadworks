@@ -41,7 +41,7 @@ open class PostBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Regis
             // Don't attach to the front of blocks that are post-mountable
             val blockEntity = this.world?.getBlockEntity(this.pos.offset(dir))
             if(blockEntity is AbstractPostMountableBlockEntity) {
-                return if(Direction.byId(blockEntity.facing).equals(dir.opposite)) {
+                return if(Direction.byId(blockEntity.facing).equals(dir.opposite) || blockEntity.wall) {
                     PostThickness.NONE
                 } else {
                     AbstractPostMountableBlockEntity.getThickest(blockEntity)

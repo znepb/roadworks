@@ -1,6 +1,7 @@
 package me.znepb.roadworks.block.post
 
 import me.znepb.roadworks.Registry
+import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.util.PostThickness
 import me.znepb.roadworks.util.RotateVoxelShape.Companion.rotateVoxelShape
 import net.minecraft.block.BlockEntityProvider
@@ -21,7 +22,7 @@ import net.minecraft.world.WorldAccess
 
 open class PostBlock(
     settings: Settings,
-    val size: PostThickness) : BlockWithEntity(settings), BlockEntityProvider
+    private val size: PostThickness) : BlockWithEntity(settings), BlockEntityProvider
 {
     companion object {
         val BOTTOM_SHAPE_THICK = createCuboidShape(5.0, 0.0, 5.0, 11.0, 5.0, 11.0)
@@ -42,20 +43,22 @@ open class PostBlock(
             BOTTOM_SHAPE_THIN, createCuboidShape(6.0, 0.0, 6.0, 10.0, 1.0, 10.0)
         )
 
-        fun getShapeFromDirectionAndSize(direction: Direction, size: PostThickness): VoxelShape {
+        fun getShapeFromDirectionAndSize(direction: Direction, otherSize: PostThickness, thisSize: PostThickness): VoxelShape {
+            val shapeIndex = (otherSize.id.coerceAtMost(thisSize.id) - 1).coerceAtLeast(0)
+
             return when(direction) {
-                Direction.DOWN -> listOf(BOTTOM_SHAPE_THIN, BOTTOM_SHAPE_MEDIUM, BOTTOM_SHAPE_THICK)[size.id - 1]
+                Direction.DOWN -> listOf(BOTTOM_SHAPE_THIN, BOTTOM_SHAPE_MEDIUM, BOTTOM_SHAPE_THICK)[shapeIndex]
                 Direction.UP -> listOf(
                     rotateVoxelShape(BOTTOM_SHAPE_THIN, Direction.DOWN, Direction.UP),
                     rotateVoxelShape(BOTTOM_SHAPE_MEDIUM, Direction.DOWN, Direction.UP),
                     rotateVoxelShape(BOTTOM_SHAPE_THICK, Direction.DOWN, Direction.UP)
-                )[size.id - 1]
+                )[shapeIndex]
                 else -> {
                     listOf(
                         rotateVoxelShape(BOTTOM_SHAPE_THIN, Direction.DOWN, direction),
                         rotateVoxelShape(BOTTOM_SHAPE_MEDIUM, Direction.DOWN, direction),
                         rotateVoxelShape(BOTTOM_SHAPE_THICK, Direction.DOWN, direction)
-                    )[size.id - 1]
+                    )[shapeIndex]
                 }
             }
         }
@@ -113,18 +116,19 @@ open class PostBlock(
         return when(connectingSize) {
             PostThickness.THICK -> {
                 when(size) {
-                    PostThickness.THICK -> getShapeFromDirectionAndSize(direction, connectingSize)
-                    PostThickness.MEDIUM -> getShapeFromDirectionAndSize(direction, PostThickness.MEDIUM)
-                    PostThickness.THIN -> getShapeFromDirectionAndSize(direction, PostThickness.THIN)
+                    PostThickness.THICK -> getShapeFromDirectionAndSize(direction, connectingSize, size)
+                    PostThickness.MEDIUM -> getShapeFromDirectionAndSize(direction, PostThickness.MEDIUM, size)
+                    PostThickness.THIN -> getShapeFromDirectionAndSize(direction, PostThickness.THIN, size)
                     else -> VoxelShapes.empty()
                 }
             }
             PostThickness.MEDIUM ->
                 getShapeFromDirectionAndSize(
                     direction,
-                    if(size == PostThickness.THICK) PostThickness.MEDIUM else connectingSize
+                    if(size == PostThickness.THICK) PostThickness.MEDIUM else connectingSize,
+                    size
                 )
-            PostThickness.THIN -> getShapeFromDirectionAndSize(direction, PostThickness.THIN)
+            PostThickness.THIN -> getShapeFromDirectionAndSize(direction, PostThickness.THIN, size)
             else -> VoxelShapes.empty()
         }
     }

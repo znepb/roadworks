@@ -72,9 +72,9 @@ abstract class AbstractPostMountableBlock<T : AbstractPostMountableBlockEntity>
 
     fun pickSideShape(connectingSize: PostThickness, direction: Direction): VoxelShape {
         return when(connectingSize) {
-            PostThickness.THICK -> PostBlock.getShapeFromDirectionAndSize(direction, PostThickness.THICK)
-            PostThickness.MEDIUM -> PostBlock.getShapeFromDirectionAndSize(direction, PostThickness.MEDIUM)
-            PostThickness.THIN -> PostBlock.getShapeFromDirectionAndSize(direction, PostThickness.THIN)
+            PostThickness.THICK -> PostBlock.getShapeFromDirectionAndSize(direction, PostThickness.THICK, PostThickness.THICK)
+            PostThickness.MEDIUM -> PostBlock.getShapeFromDirectionAndSize(direction, PostThickness.MEDIUM, PostThickness.THICK)
+            PostThickness.THIN -> PostBlock.getShapeFromDirectionAndSize(direction, PostThickness.THIN, PostThickness.THICK)
             else -> VoxelShapes.empty()
         }
     }

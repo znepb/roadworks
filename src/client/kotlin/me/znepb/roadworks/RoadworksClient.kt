@@ -21,7 +21,7 @@ object RoadworksClient : ClientModInitializer {
 
 	override fun onInitializeClient() {
 		logger.info("Roadworks Client Init")
-		ModelLoadingPlugin.register( me.znepb.roadworks.ModelLoader())
+		ModelLoadingPlugin.register( me.znepb.roadworks.ModelLoader() )
 
 		// Item Groups
 		ItemGroupEvents.modifyEntriesEvent(Registry.itemGroup).register {

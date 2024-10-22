@@ -1,6 +1,7 @@
 package me.znepb.roadworks.item
 
 import me.znepb.roadworks.Registry
+import me.znepb.roadworks.RoadworksMain
 import me.znepb.roadworks.block.Linkable
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
 import net.minecraft.block.entity.BlockEntity
@@ -19,11 +20,6 @@ import net.minecraft.world.World
 class Linker(settings: Settings) : Item(settings) {
     var linking: BlockPos? = null
     var linkingWith: BlockEntityType<*>? = null
-
-    companion object {
-        const val MAX_DEVICES = 24
-        val MAX_DEVICE_DISTANCE = 48.0
-    }
 
     private fun getCabinet(blockEntity: Linkable, context: ItemUsageContext): TrafficCabinetBlockEntity? {
         val be = context.world?.getBlockEntity(blockEntity.getLinkPos())
@@ -61,9 +57,9 @@ class Linker(settings: Settings) : Item(settings) {
     }
 
     private fun linkCabinet(cabinet: TrafficCabinetBlockEntity, context: ItemUsageContext): ActionResult {
-        if(cabinet.getTotalDevices() > MAX_DEVICES) {
+        if(cabinet.getTotalDevices() > RoadworksMain.CONFIG!!.trafficCabinet.maxDevices) {
             // Too many devices connected to this box!
-            context.player?.sendMessage(Text.literal("There are too many devices connected to this box! Max is $MAX_DEVICES"), true)
+            context.player?.sendMessage(Text.literal("There are too many devices connected to this box! Max is ${RoadworksMain.CONFIG!!.trafficCabinet.maxDevices}"), true)
             return ActionResult.SUCCESS
         }
 
@@ -83,9 +79,9 @@ class Linker(settings: Settings) : Item(settings) {
             return
         }
 
-        if(!linkedFrom.pos.isWithinDistance(block.pos, MAX_DEVICE_DISTANCE)) {
+        if(!linkedFrom.pos.isWithinDistance(block.pos, RoadworksMain.CONFIG!!.trafficCabinet.maxLinkDistance)) {
             // Device is too far!
-            context.player?.sendMessage(Text.literal("This device is too far! Max distance is $MAX_DEVICE_DISTANCE blocks"), true)
+            context.player?.sendMessage(Text.literal("This device is too far! Max distance is ${RoadworksMain.CONFIG!!.trafficCabinet.maxLinkDistance} blocks"), true)
             return
         }
 
@@ -133,9 +129,9 @@ class Linker(settings: Settings) : Item(settings) {
             return
         }
 
-        if(cabinet.getTotalDevices() >= MAX_DEVICES) {
+        if(cabinet.getTotalDevices() >= RoadworksMain.CONFIG!!.trafficCabinet.maxDevices) {
             // Too many devices connected to this box!
-            context.player?.sendMessage(Text.literal("There are too many devices connected to this box! Max is $MAX_DEVICES"), true)
+            context.player?.sendMessage(Text.literal("There are too many devices connected to this box! Max is ${RoadworksMain.CONFIG!!.trafficCabinet.maxDevices}"), true)
             return
         }
 
@@ -147,9 +143,9 @@ class Linker(settings: Settings) : Item(settings) {
             return
         }
 
-        if(!linkedFrom.pos.isWithinDistance(cabinet.pos, MAX_DEVICE_DISTANCE)) {
+        if(!linkedFrom.pos.isWithinDistance(cabinet.pos, RoadworksMain.CONFIG!!.trafficCabinet.maxLinkDistance)) {
             // Device is too far!
-            context.player?.sendMessage(Text.literal("This device is too far! Max distance is $MAX_DEVICE_DISTANCE blocks"), true)
+            context.player?.sendMessage(Text.literal("This device is too far! Max distance is ${RoadworksMain.CONFIG!!.trafficCabinet.maxLinkDistance} blocks"), true)
             return
         }
 

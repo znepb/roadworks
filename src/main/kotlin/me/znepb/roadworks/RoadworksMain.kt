@@ -3,6 +3,10 @@ package me.znepb.roadworks
 import com.google.gson.JsonParser
 import com.mojang.serialization.JsonOps
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
+import me.shedaniel.autoconfig.AutoConfig
+import me.shedaniel.autoconfig.ConfigHolder
+import me.shedaniel.autoconfig.serializer.ConfigSerializer
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer
 import me.znepb.roadworks.block.Linkable
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.block.sign.SignType
@@ -27,6 +31,7 @@ object RoadworksMain : ModInitializer {
 	val logger = LoggerFactory.getLogger(NAMESPACE)
 
 	val SIGN_TYPES = Object2ObjectOpenHashMap<Identifier, SignType>()
+	var CONFIG: Config? = null
 
 	fun ModId(id: String): Identifier {
 		return Identifier(NAMESPACE, id)
@@ -35,7 +40,10 @@ object RoadworksMain : ModInitializer {
 	override fun onInitialize() {
 		logger.info("Roadworks is initalizing")
 
+		AutoConfig.register(Config::class.java, ::Toml4jConfigSerializer)
 		Registry.init()
+
+		CONFIG = AutoConfig.getConfigHolder(Config::class.java).config
 
 		PlayerBlockBreakEvents.BEFORE.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, blockEntity: BlockEntity? ->
 			if (blockEntity is Linkable) {

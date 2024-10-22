@@ -11,6 +11,7 @@
   "block.roadworks.channeler": "Channeler",
   "block.roadworks.chevron_left": "Chevron Left Sign",
   "block.roadworks.chevron_right": "Chevron Right Sign",
+  "block.roadworks.custom_sign": "Custom Sign",
   "block.roadworks.do_not_enter": "Do Not Enter Sign",
   "block.roadworks.drum": "Drum",
   "block.roadworks.five_head_traffic_signal_left": "Five-head Traffic Signal Left",
@@ -149,6 +150,9 @@
   "block.roadworks.traffic_cone": "Traffic Cone",
   "block.roadworks.yellow_beacon": "Yellow Beacon",
   "block.roadworks.yield": "Yield Sign",
+  "gui.roadworks.sign_editor.name": "Sign Editor",
+  "gui.roadworks.sign_editor.set": "Set",
   "item.roadworks.linker": "Linker",
+  "item.roadworks.sign_editor": "Sign Editor",
   "itemGroup.roadworks.main": "Roadworks"
 }

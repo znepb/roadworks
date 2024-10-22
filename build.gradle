@@ -14,6 +14,7 @@ base {
 loom {
     splitEnvironmentSourceSets()
 
+	accessWidenerPath = file("src/main/resources/roadworks.accesswidener")
 	mods {
 		"roadworks" {
 			sourceSet sourceSets.main

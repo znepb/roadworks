@@ -1,13 +1,12 @@
 package me.znepb.roadworks.render
 
-import me.znepb.roadworks.RoadworksClient.logger
 import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.block.post.AbstractPostMountableBlockEntity
 import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
 import me.znepb.roadworks.block.signals.SignalLight
 import me.znepb.roadworks.datagen.ModelProvider
 import me.znepb.roadworks.util.RenderUtils
-import me.znepb.roadworks.util.RenderUtils.Companion.renderModel
+import me.znepb.roadworks.util.RenderUtils.renderModel
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.LightmapTextureManager
@@ -16,7 +15,6 @@ import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.model.BakedQuad
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import org.joml.Quaternionf

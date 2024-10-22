@@ -1,6 +1,7 @@
 package me.znepb.roadworks.util
 
 import com.mojang.serialization.*
+import me.znepb.roadworks.RoadworksMain
 import org.joml.Vector4d
 import java.util.*
 
@@ -84,6 +85,7 @@ enum class Charset(val char: String, val x: Int, val y: Int, val w: Int) {
     companion object {
         const val CHARSET_WIDTH = 128
         const val CHARSET_HEIGHT = 128
+        val TEXTURE = RoadworksMain.ModId("textures/block/signs/charset.png")
         val ARRAY_CODEC: Codec<List<Charset>> = Codec.INT.listOf().xmap(Charset::fromArray, Charset::toArray)
 
         fun fromInt(int: Int) = Charset.entries[int]

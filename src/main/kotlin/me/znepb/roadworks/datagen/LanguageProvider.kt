@@ -18,9 +18,12 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.BOLLARD, "Bollard")
         translationBuilder.add(Registry.ModBlocks.BOLLARD_THICK, "Thick Bollard")
 
+        translationBuilder.add(Registry.ModBlocks.CUSTOM_SIGN, "Custom Sign")
         translationBuilder.add(Registry.ModBlocks.SIGN, "Sign")
 
         translationBuilder.add(Registry.ModItems.LINKER, "Linker")
+        translationBuilder.add(Registry.ModItems.SIGN_EDITOR, "Sign Editor")
+
         translationBuilder.add(Registry.ModBlocks.TRAFFIC_CABINET, "Traffic Cabinet")
         translationBuilder.add(Registry.ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL, "Green Beacon")
         translationBuilder.add(Registry.ModBlocks.ONE_HEAD_RED_TRAFFIC_SIGNAL, "Red Beacon")
@@ -140,6 +143,9 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(Registry.ModBlocks.YELLOW_L_RIGHT, "Yellow L Right")
         translationBuilder.add(Registry.ModBlocks.YELLOW_L_SHORT_LEFT, "Yellow L Thin, Short Left")
         translationBuilder.add(Registry.ModBlocks.YELLOW_L_SHORT_RIGHT, "Yellow L Thin, Short Right")
+
+        translationBuilder.add("gui.${NAMESPACE}.sign_editor.name", "Sign Editor")
+        translationBuilder.add("gui.${NAMESPACE}.sign_editor.set", "Set")
 
         translationBuilder.add("itemGroup.${NAMESPACE}.main", "Roadworks")
         translationBuilder.add("block.${NAMESPACE}.stop_sign", "Stop Sign")

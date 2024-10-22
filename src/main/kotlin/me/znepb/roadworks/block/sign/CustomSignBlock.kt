@@ -1,4 +1,4 @@
-package me.znepb.roadworks.block.sign.custom
+package me.znepb.roadworks.block.sign
 
 import me.znepb.roadworks.Registry
 import me.znepb.roadworks.block.post.AbstractPostMountableBlockEntity
@@ -9,6 +9,9 @@ import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.item.BlockItem
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
@@ -18,14 +21,6 @@ import net.minecraft.world.World
 
 class CustomSignBlock(settings: Settings):
     AbstractPostMountableBlock<CustomSignBlockEntity>(settings, ::CustomSignBlockEntity) {
-
-    companion object {
-        val SIGN_SHAPE_WALL = createCuboidShape(0.0, 0.0, 15.5, 16.0, 16.0, 16.0)
-        val SIGN_SHAPE_POST_NONE = SIGN_SHAPE_WALL.offset(0.0, 0.0, (-7.75 / 16))
-        val SIGN_SHAPE_POST_THIN = SIGN_SHAPE_WALL.offset(0.0, 0.0, (-8.75 / 16))
-        val SIGN_SHAPE_POST_MEDIUM = SIGN_SHAPE_WALL.offset(0.0, 0.0, (-9.75 / 16))
-        val SIGN_SHAPE_POST_THICK = SIGN_SHAPE_WALL.offset(0.0, 0.0, (-10.75 / 16))
-    }
 
     override fun <T : BlockEntity?> getTicker(
         world: World,
@@ -58,32 +53,34 @@ class CustomSignBlock(settings: Settings):
         val blockEntity = world.getBlockEntity(pos) as CustomSignBlockEntity?
             ?: return VoxelShapes.empty()
 
+        val width = (world.getBlockEntity(pos) as CustomSignBlockEntity).getContentsPixelWidth()
+
+        var shape = createCuboidShape((8 - width / 2).toDouble(), 6.0, 15.5, (8 + width / 2).toDouble(), 10.0, 16.0)
+
         return if(blockEntity.wall) {
-            rotateVoxelShape(SIGN_SHAPE_WALL, Direction.NORTH, Direction.byId(blockEntity.facing))
+            rotateVoxelShape(shape, Direction.NORTH, Direction.byId(blockEntity.facing))
         } else {
             val maxThickness = AbstractPostMountableBlockEntity.getThickest(blockEntity)
 
             rotateVoxelShape(when(maxThickness) {
-                PostThickness.THIN -> SIGN_SHAPE_POST_THIN
-                PostThickness.MEDIUM -> SIGN_SHAPE_POST_MEDIUM
-                PostThickness.THICK -> SIGN_SHAPE_POST_THICK
-                else -> SIGN_SHAPE_POST_NONE
+                PostThickness.THIN -> shape.offset(0.0, 0.0, (-8.75 / 16))
+                PostThickness.MEDIUM -> shape.offset(0.0, 0.0, (-9.75 / 16))
+                PostThickness.THICK -> shape.offset(0.0, 0.0, (-10.75 / 16))
+                else -> shape.offset(0.0, 0.0, (-7.75 / 16))
             }, Direction.NORTH, Direction.byId(blockEntity.facing))
         }
     }
 
-    //override fun getPickStack(world: BlockView, pos: BlockPos, state: BlockState): ItemStack {
-    //    val pickStack = super.getPickStack(world, pos, state)
-    //    val blockEntity = world.getBlockEntity(pos)
-    //    logger.info(blockEntity!!.createNbt().toString())
-    //    logger.info((blockEntity is SignBlockEntity).toString())
-    //    if(blockEntity is SignBlockEntity) {
-    //        val nbt = NbtCompound()
-    //        nbt.putString("sign_type", blockEntity.signType.toString())
-    //        BlockItem.setBlockEntityNbt(pickStack, blockEntity.type, nbt)
-    //    }
-//
-    //    return pickStack
-    //}
+    override fun getPickStack(world: BlockView, pos: BlockPos, state: BlockState): ItemStack {
+        val pickStack = super.getPickStack(world, pos, state)
+        val blockEntity = world.getBlockEntity(pos)
 
+        if(blockEntity is CustomSignBlockEntity) {
+            val nbt = NbtCompound()
+            blockEntity.writeExtraNBT(nbt)
+            BlockItem.setBlockEntityNbt(pickStack, blockEntity.type, nbt)
+        }
+
+        return pickStack
+    }
 }

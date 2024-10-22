@@ -3,20 +3,17 @@ package me.znepb.roadworks.network
 import com.mojang.serialization.*
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.znepb.roadworks.RoadworksMain
-import me.znepb.roadworks.RoadworksMain.logger
-import me.znepb.roadworks.block.sign.custom.CustomSignBlockEntity
+import me.znepb.roadworks.block.sign.CustomSignBlockEntity
 import me.znepb.roadworks.util.Charset
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
-import net.minecraft.registry.RegistryKey
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 import java.util.stream.Stream
 
 data class EditSignPacket(val blockPos: BlockPos, val characters: List<Charset>) {
     companion object {
         val UPDATE_SIGN_PACKET_ID = RoadworksMain.ModId("update_sign_packet")
 
-        private val MAP_CODEC = RecordCodecBuilder.mapCodec<EditSignPacket> { it.group(
+        private val MAP_CODEC = RecordCodecBuilder.mapCodec<EditSignPacket>{ it.group(
             BlockPos.CODEC.fieldOf("blockPos").forGetter(EditSignPacket::blockPos),
             Charset.ARRAY_CODEC.fieldOf("characters").forGetter(EditSignPacket::characters)
         ).apply(it, ::EditSignPacket) }

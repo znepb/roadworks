@@ -13,6 +13,7 @@
 	"license": "MIT",
 	"icon": "assets/roadworks/icon.png",
 	"environment": "*",
+	"accessWidener": "roadworks.accesswidener",
 	"entrypoints": {
 		"main": [
 			{

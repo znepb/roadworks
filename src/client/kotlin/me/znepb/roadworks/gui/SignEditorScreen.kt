@@ -1,17 +1,21 @@
 package me.znepb.roadworks.gui
 
 import me.znepb.roadworks.RoadworksMain.ModId
+import me.znepb.roadworks.RoadworksMain.NAMESPACE
 import me.znepb.roadworks.RoadworksMain.logger
+import me.znepb.roadworks.block.sign.CustomSignBlockEntity
 import me.znepb.roadworks.item.SignEditorScreenHandler
 import me.znepb.roadworks.network.EditSignPacket
 import me.znepb.roadworks.network.EditSignPacketClient.Companion.sendUpdateSignPacket
 import me.znepb.roadworks.util.Charset
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.ingame.HandledScreen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
+import net.minecraft.util.math.BlockPos
 import org.lwjgl.glfw.GLFW
 import kotlin.math.floor
 
@@ -24,6 +28,7 @@ class SignEditorScreen(handler: SignEditorScreenHandler, playerInventory: Player
     private lateinit var nameField: TextFieldWidget
     private val customButtons: MutableMap<Charset, ButtonWidget> = mutableMapOf()
     private lateinit var completedButton: ButtonWidget
+    private var hasSetName = false
 
     private fun renderCharsetCharacter(context: DrawContext, char: Charset, x: Int, y: Int) {
         context.drawTexture(
@@ -55,7 +60,7 @@ class SignEditorScreen(handler: SignEditorScreenHandler, playerInventory: Player
         val buttonY =
             this.nameField.y + this.nameField.height + ((floor((customCharactersToShow.size).toDouble() / 7.0) + 1) * 24).toInt() + 6
 
-        this.completedButton = ButtonWidget.builder(Text.literal("Set")) { this.complete() }
+        this.completedButton = ButtonWidget.builder(Text.translatable("gui.${NAMESPACE}.sign_editor.set")) { this.complete() }
             .dimensions(this.x + 6, buttonY, this.backgroundWidth - 12, 20)
             .build()
 
@@ -147,6 +152,20 @@ class SignEditorScreen(handler: SignEditorScreenHandler, playerInventory: Player
     }
 
     override fun render(drawContext: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        if(!hasSetName && this.screenHandler.getBlockPosition() != BlockPos.ORIGIN) {
+            val be = MinecraftClient.getInstance().player?.world?.getBlockEntity(this.handler.getBlockPosition())
+
+            if (be != null && be is CustomSignBlockEntity) {
+                var text = ""
+                be.contents.forEach {
+                    text += it.toString()
+                }
+                this.nameField.text = text
+            }
+
+            hasSetName = true
+        }
+
         super.render(drawContext, mouseX, mouseY, delta)
         this.nameField.render(drawContext, mouseX, mouseY, delta)
     }

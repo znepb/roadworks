@@ -49,8 +49,6 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         addPole(generator, Registry.ModBlocks.THICK_POST, "thick_post")
         addPole(generator, Registry.ModBlocks.THIN_POST, "thin_post")
 
-        addSign(generator, Registry.ModBlocks.SIGN, "sign")
-
         addDoubleHighConeBlock(generator, Registry.ModBlocks.CHANNELER, "channeler")
         addDoubleHighConeBlock(generator, Registry.ModBlocks.DRUM, "drum")
 
@@ -325,20 +323,10 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         generator.blockStateCollector.accept(createSingletonBlockState(block, ModId("block/$name")))
     }
 
-    private fun addSign(generator: BlockStateModelGenerator, block: SignBlock, name: String) {
-        generator.blockStateCollector.accept(createSingletonBlockState(block, ModId("block/$name")))
-
-        //signModel.upload(
-        //    block,
-        //    TextureMap()
-        //        .put(TextureKey.FRONT, ModId("block/signs/${block.frontTexture}"))
-        //        .put(TextureKey.BACK, ModId("block/signs/${block.backTexture}")),
-        //    generator.modelCollector
-        //)
-    }
-
     override fun generateItemModels(generator: ItemModelGenerator) {
         generator.register(Registry.ModItems.LINKER, Models.GENERATED)
+        generator.register(Registry.ModItems.SIGN_EDITOR, Models.GENERATED)
+        generator.register(Registry.ModItems.CUSTOM_SIGN, Models.GENERATED)
 
         fun markingItem(name: String): Model {
             return Model(Optional.of(ModId("block/$name")), Optional.empty())

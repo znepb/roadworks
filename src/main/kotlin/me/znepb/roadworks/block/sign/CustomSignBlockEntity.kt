@@ -1,7 +1,6 @@
-package me.znepb.roadworks.block.sign.custom
+package me.znepb.roadworks.block.sign
 
 import me.znepb.roadworks.Registry
-import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.block.post.AbstractPostMountableBlockEntity
 import me.znepb.roadworks.util.Charset
 import net.minecraft.block.BlockState
@@ -13,6 +12,17 @@ class CustomSignBlockEntity(pos: BlockPos, state: BlockState)
 {
     var color = "green"
     var contents = listOf<Charset>()
+
+    fun getContentsPixelWidth(): Float {
+        var size = -1
+        contents.forEach {
+            size += (it.w + 1)
+        }
+
+        val pixelCount = size.toFloat()
+
+        return (pixelCount + 8) / 4
+    }
 
     override fun writeExtraNBT(nbt: NbtCompound) {
         val contents = mutableListOf<Int>()

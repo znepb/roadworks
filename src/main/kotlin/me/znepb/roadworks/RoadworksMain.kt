@@ -9,6 +9,7 @@ import me.znepb.roadworks.Registry.itemGroup
 import me.znepb.roadworks.block.Linkable
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.block.sign.SignType
+import me.znepb.roadworks.network.EditSignPacket
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.Event.DEFAULT_PHASE
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
@@ -56,6 +57,7 @@ object RoadworksMain : ModInitializer {
 
 		val id = ModId("early_reload")
 
+		// Server Event Registries
 		ServerLifecycleEvents.SERVER_STARTED.addPhaseOrdering(id, DEFAULT_PHASE)
 		ServerLifecycleEvents.SERVER_STARTED.register(id, RoadworksMain::loadCustomSignage)
 
@@ -64,20 +66,13 @@ object RoadworksMain : ModInitializer {
 			loadCustomSignage(minecraftServer)
 		}
 
-		ItemGroupEvents.modifyEntriesEvent(itemGroup).register {
-			SIGN_TYPES.forEach { sign ->
-				val item = ItemStack(SIGN)
-				val nbt = NbtCompound()
-				nbt.putString("sign_type", sign.key.toString())
-				BlockItem.setBlockEntityNbt(item, SIGN_BLOCK_ENTITY, nbt)
-				it.add(item)
-			}
-		}
-
+		// Networking Registration
+		EditSignPacket.register()
 	}
 
 	private fun addCustomSign(server: MinecraftServer, identifier: Identifier, type: SignType) {
-		SIGN_TYPES.put(identifier, type)
+		logger.debug("Loading custom sign {}", identifier)
+		SIGN_TYPES[identifier] = type
 	}
 
 	private fun loadCustomSignage(server: MinecraftServer) {

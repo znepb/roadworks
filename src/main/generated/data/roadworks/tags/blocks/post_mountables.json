@@ -12,6 +12,7 @@
     "roadworks:five_head_traffic_signal_left",
     "roadworks:five_head_traffic_signal_right",
     "roadworks:pedestrian_signal",
-    "roadworks:pedestrian_button"
+    "roadworks:pedestrian_button",
+    "roadworks:custom_sign"
   ]
 }

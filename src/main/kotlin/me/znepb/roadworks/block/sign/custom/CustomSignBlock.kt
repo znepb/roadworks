@@ -1,7 +1,6 @@
-package me.znepb.roadworks.block.sign
+package me.znepb.roadworks.block.sign.custom
 
 import me.znepb.roadworks.Registry
-import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.block.post.AbstractPostMountableBlockEntity
 import me.znepb.roadworks.block.post.AbstractPostMountableBlock
 import me.znepb.roadworks.util.PostThickness
@@ -10,9 +9,6 @@ import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.item.BlockItem
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
@@ -20,8 +16,8 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
-class SignBlock(settings: Settings):
-    AbstractPostMountableBlock<SignBlockEntity>(settings, ::SignBlockEntity) {
+class CustomSignBlock(settings: Settings):
+    AbstractPostMountableBlock<CustomSignBlockEntity>(settings, ::CustomSignBlockEntity) {
 
     companion object {
         val SIGN_SHAPE_WALL = createCuboidShape(0.0, 0.0, 15.5, 16.0, 16.0, 16.0)
@@ -37,7 +33,7 @@ class SignBlock(settings: Settings):
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
         if (world.isClient) return null
-        return checkType(type, Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, AbstractPostMountableBlockEntity.Companion::onTick)
+        return checkType(type, Registry.ModBlockEntities.CUSTOM_SIGN_BLOCK_ENTITY, AbstractPostMountableBlockEntity.Companion::onTick)
     }
 
     override fun getCollisionShape(
@@ -59,7 +55,7 @@ class SignBlock(settings: Settings):
     }
 
     override fun getAttachmentShape(world: BlockView, pos: BlockPos): VoxelShape {
-        val blockEntity = world.getBlockEntity(pos) as SignBlockEntity?
+        val blockEntity = world.getBlockEntity(pos) as CustomSignBlockEntity?
             ?: return VoxelShapes.empty()
 
         return if(blockEntity.wall) {
@@ -76,17 +72,18 @@ class SignBlock(settings: Settings):
         }
     }
 
-    override fun getPickStack(world: BlockView, pos: BlockPos, state: BlockState): ItemStack {
-        val pickStack = super.getPickStack(world, pos, state)
-        val blockEntity = world.getBlockEntity(pos)
-
-        if(blockEntity is SignBlockEntity) {
-            val nbt = NbtCompound()
-            nbt.putString("sign_type", blockEntity.signType.toString())
-            BlockItem.setBlockEntityNbt(pickStack, blockEntity.type, nbt)
-        }
-
-        return pickStack
-    }
+    //override fun getPickStack(world: BlockView, pos: BlockPos, state: BlockState): ItemStack {
+    //    val pickStack = super.getPickStack(world, pos, state)
+    //    val blockEntity = world.getBlockEntity(pos)
+    //    logger.info(blockEntity!!.createNbt().toString())
+    //    logger.info((blockEntity is SignBlockEntity).toString())
+    //    if(blockEntity is SignBlockEntity) {
+    //        val nbt = NbtCompound()
+    //        nbt.putString("sign_type", blockEntity.signType.toString())
+    //        BlockItem.setBlockEntityNbt(pickStack, blockEntity.type, nbt)
+    //    }
+//
+    //    return pickStack
+    //}
 
 }

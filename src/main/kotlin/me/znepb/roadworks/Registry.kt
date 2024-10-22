@@ -4,7 +4,6 @@ import dan200.computercraft.api.peripheral.PeripheralLookup
 import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.block.PedestrianButton
 import me.znepb.roadworks.block.PedestrianButtonBlockEntity
-import me.znepb.roadworks.block.sign.SignBlock
 import me.znepb.roadworks.block.cabinet.TrafficCabinet
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.block.cone.*
@@ -14,13 +13,16 @@ import me.znepb.roadworks.block.marking.TMarking
 import me.znepb.roadworks.block.marking.TurnMarking
 import me.znepb.roadworks.block.post.PostBlock
 import me.znepb.roadworks.block.post.PostBlockEntity
-import me.znepb.roadworks.block.sign.SignBlockEntity
-import me.znepb.roadworks.block.sign.SignBlockItem
+import me.znepb.roadworks.block.sign.*
+import me.znepb.roadworks.block.sign.custom.CustomSignBlock
+import me.znepb.roadworks.block.sign.custom.CustomSignBlockEntity
 import me.znepb.roadworks.block.signals.PedestrianSignal
 import me.znepb.roadworks.block.signals.PedestrianSignalBlockEntity
 import me.znepb.roadworks.block.signals.impl.*
 
 import me.znepb.roadworks.item.Linker
+import me.znepb.roadworks.item.SignEditor
+import me.znepb.roadworks.item.SignEditorScreenHandler
 import me.znepb.roadworks.util.PostThickness
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
@@ -38,6 +40,10 @@ import net.minecraft.registry.Registries.*
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.resource.featuretoggle.FeatureFlag
+import net.minecraft.resource.featuretoggle.FeatureFlags
+import net.minecraft.screen.ScreenHandler
+import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
@@ -48,7 +54,7 @@ object Registry {
     private val items = mutableListOf<Item>()
 
     internal fun init() {
-        listOf(ModBlockEntities, ModBlocks, ModItems)
+        listOf(ModBlockEntities, ModBlocks, ModItems, ModScreens)
 
         Registry.register(
             ITEM_GROUP, itemGroup, FabricItemGroup.builder()
@@ -61,6 +67,14 @@ object Registry {
         )
 
         PeripheralLookup.get().registerForBlockEntity({ be, _ -> be.peripheral }, ModBlockEntities.CABINET_BLOCK_ENTITY)
+    }
+
+    object ModScreens {
+        val SIGN_EDITOR_SCREEN_HANDLER: ScreenHandlerType<SignEditorScreenHandler> = Registry.register(
+            SCREEN_HANDLER,
+            ModId("sign_editor"),
+            ScreenHandlerType(::SignEditorScreenHandler, FeatureFlags.VANILLA_FEATURES)
+        )
     }
 
     object ModBlockEntities {
@@ -84,6 +98,11 @@ object Registry {
             ::SignBlockEntity,
             listOf(ModBlocks.SIGN),
             ModId("sign_block_entity")
+        )
+        val CUSTOM_SIGN_BLOCK_ENTITY = registerBlockEntities(
+            ::CustomSignBlockEntity,
+            listOf(ModBlocks.CUSTOM_SIGN),
+            ModId("custom_sign_block_entity")
         )
         val CABINET_BLOCK_ENTITY = registerBlockEntities(
             ::TrafficCabinetBlockEntity,
@@ -171,6 +190,10 @@ object Registry {
         val SIGN = rBlock(
             "sign",
             SignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
+        )
+        val CUSTOM_SIGN = rBlock(
+            "custom_sign",
+            CustomSignBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL))
         )
 
         //
@@ -470,5 +493,6 @@ object Registry {
         val YELLOW_L_SHORT_RIGHT = rItem(ModBlocks.YELLOW_L_SHORT_RIGHT, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
+        val SIGN_EDITOR = rItem("sign_editor", SignEditor(FabricItemSettings()))
     }
 }

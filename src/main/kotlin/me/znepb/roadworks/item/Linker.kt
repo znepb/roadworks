@@ -21,7 +21,7 @@ class Linker(settings: Settings) : Item(settings) {
     var linkingWith: BlockEntityType<*>? = null
 
     companion object {
-        val MAX_DEVICES = 24
+        const val MAX_DEVICES = 24
         val MAX_DEVICE_DISTANCE = 48.0
     }
 

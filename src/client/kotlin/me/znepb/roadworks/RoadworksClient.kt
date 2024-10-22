@@ -1,16 +1,19 @@
 package me.znepb.roadworks
 
 import me.znepb.roadworks.RoadworksMain.NAMESPACE
+import me.znepb.roadworks.gui.SignEditorScreen
 import me.znepb.roadworks.init.ModelLoader
 import me.znepb.roadworks.render.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry
-import net.fabricmc.fabric.api.client.model.ModelResourceProvider
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
+import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
-import net.minecraft.client.render.entity.ItemEntityRenderer
+import net.minecraft.item.BlockItem
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
 import org.slf4j.LoggerFactory
 
 object RoadworksClient : ClientModInitializer {
@@ -19,6 +22,17 @@ object RoadworksClient : ClientModInitializer {
 	override fun onInitializeClient() {
 		logger.info("Roadworks Client Init")
 		ModelLoadingPlugin.register( me.znepb.roadworks.ModelLoader())
+
+		// Item Groups
+		ItemGroupEvents.modifyEntriesEvent(Registry.itemGroup).register {
+			RoadworksMain.SIGN_TYPES.forEach { sign ->
+				val item = ItemStack(Registry.ModItems.SIGN)
+				val nbt = NbtCompound()
+				nbt.putString("sign_type", sign.key.toString())
+				BlockItem.setBlockEntityNbt(item, Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, nbt)
+				it.add(item)
+			}
+		}
 
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.POST_BLOCK_ENTITY, ::PostBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.SIGN_BLOCK_ENTITY, ::SignBlockRenderer)
@@ -33,6 +47,9 @@ object RoadworksClient : ClientModInitializer {
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.FIVE_HEAD_TRAFFIC_SIGNAL_RIGHT_BLOCK_ENTITY, ::FiveHeadTrafficSignalRightBlockRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.PEDESTRIAN_SIGNAL_BLOCK_ENTITY, ::PedestrianSignalRenderer)
 		BlockEntityRendererFactories.register(Registry.ModBlockEntities.PEDESTRIAN_BUTTON_BLOCK_ENTITY, ::PedestrianButtonRenderer)
+		BlockEntityRendererFactories.register(Registry.ModBlockEntities.CUSTOM_SIGN_BLOCK_ENTITY, ::CustomSignBlockRenderer)
+
+		HandledScreens.register(Registry.ModScreens.SIGN_EDITOR_SCREEN_HANDLER, ::SignEditorScreen)
 
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 			Registry.ModBlocks.WHITE_CENTER_MARKING,

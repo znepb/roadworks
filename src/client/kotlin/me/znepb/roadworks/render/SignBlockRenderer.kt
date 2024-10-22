@@ -33,12 +33,12 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) :
     }
 
     private fun getSignFrontTexture(entity: SignBlockEntity): Identifier? {
-        val tex = SIGN_TYPES.get(entity.signType)?.frontTexture ?: return null
+        val tex = SIGN_TYPES[entity.signType]?.frontTexture ?: return null
         return Identifier(tex.namespace, "textures/" + tex.path + ".png")
     }
 
     private fun getSignBackTexture(entity: SignBlockEntity): Identifier? {
-        val tex = SIGN_TYPES.get(entity.signType)?.backTexture ?: return null
+        val tex = SIGN_TYPES[entity.signType]?.backTexture ?: return null
         return Identifier(tex.namespace, "textures/" + tex.path + ".png")
     }
 

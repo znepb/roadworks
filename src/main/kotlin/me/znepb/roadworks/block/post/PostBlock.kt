@@ -1,7 +1,6 @@
 package me.znepb.roadworks.block.post
 
 import me.znepb.roadworks.Registry
-import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.util.PostThickness
 import me.znepb.roadworks.util.RotateVoxelShape.Companion.rotateVoxelShape
 import net.minecraft.block.BlockEntityProvider

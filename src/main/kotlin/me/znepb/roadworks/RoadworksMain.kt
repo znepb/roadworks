@@ -3,9 +3,6 @@ package me.znepb.roadworks
 import com.google.gson.JsonParser
 import com.mojang.serialization.JsonOps
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
-import me.znepb.roadworks.Registry.ModBlockEntities.SIGN_BLOCK_ENTITY
-import me.znepb.roadworks.Registry.ModItems.SIGN
-import me.znepb.roadworks.Registry.itemGroup
 import me.znepb.roadworks.block.Linkable
 import me.znepb.roadworks.block.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.block.sign.SignType
@@ -14,13 +11,9 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.Event.DEFAULT_PHASE
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.BlockItem
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryOps
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.Identifier

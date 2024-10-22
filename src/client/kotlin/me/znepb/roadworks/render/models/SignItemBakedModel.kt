@@ -1,8 +1,6 @@
 package me.znepb.roadworks.render.models
 
 import me.znepb.roadworks.RoadworksMain
-import me.znepb.roadworks.RoadworksMain.logger
-import me.znepb.roadworks.render.SignBlockRenderer.Companion.POST_SIGN_NONE_FRONT
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView.BAKE_LOCK_UV
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel
@@ -10,9 +8,6 @@ import net.fabricmc.fabric.api.renderer.v1.model.ModelHelper
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.model.ModelPart
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.screen.PlayerScreenHandler.BLOCK_ATLAS_TEXTURE
 import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.render.model.BakedQuad
 import net.minecraft.client.render.model.json.ModelOverrideList
@@ -21,15 +16,13 @@ import net.minecraft.client.texture.Sprite
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.item.BlockItem.getBlockEntityNbt
 import net.minecraft.item.ItemStack
-import net.minecraft.screen.PlayerScreenHandler
+import net.minecraft.screen.PlayerScreenHandler.BLOCK_ATLAS_TEXTURE
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.BlockRenderView
-import java.util.*
 import java.util.function.Supplier
-import kotlin.math.sign
 
 class SignItemBakedModel(val sprite: Sprite) : BakedModel, FabricBakedModel {
     private val minecraft by lazy {MinecraftClient.getInstance()}

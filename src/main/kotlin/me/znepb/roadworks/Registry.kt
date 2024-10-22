@@ -14,12 +14,9 @@ import me.znepb.roadworks.block.marking.TurnMarking
 import me.znepb.roadworks.block.post.PostBlock
 import me.znepb.roadworks.block.post.PostBlockEntity
 import me.znepb.roadworks.block.sign.*
-import me.znepb.roadworks.block.sign.CustomSignBlock
-import me.znepb.roadworks.block.sign.CustomSignBlockEntity
 import me.znepb.roadworks.block.signals.PedestrianSignal
 import me.znepb.roadworks.block.signals.PedestrianSignalBlockEntity
 import me.znepb.roadworks.block.signals.impl.*
-
 import me.znepb.roadworks.item.Linker
 import me.znepb.roadworks.item.SignEditor
 import me.znepb.roadworks.item.SignEditorScreenHandler
@@ -368,7 +365,7 @@ object Registry {
         val BOLLARD_THICK = rItem(ModBlocks.BOLLARD_THICK, ::BlockItem, itemSettings())
 
         val SIGN = rItem(ModBlocks.SIGN, ::SignBlockItem, itemSettings())
-        val CUSTOM_SIGN = rItem(ModBlocks.CUSTOM_SIGN, ::CustomSignBlockItem, itemSettings())
+        val CUSTOM_SIGN = rItem(ModBlocks.CUSTOM_SIGN, ::BlockItem, itemSettings())
 
         val TRAFFIC_CABINET = rItem(ModBlocks.TRAFFIC_CABINET, ::BlockItem, itemSettings())
         val ONE_HEAD_GREEN_TRAFFIC_SIGNAL = rItem(ModBlocks.ONE_HEAD_GREEN_TRAFFIC_SIGNAL, ::BlockItem, itemSettings())

@@ -1,14 +1,11 @@
 package me.znepb.roadworks.block.marking
 
 import me.znepb.roadworks.RoadworksMain
-import me.znepb.roadworks.datagen.ModelProvider
 import me.znepb.roadworks.datagen.TagProvider
 import me.znepb.roadworks.util.OrientedBlockStateSupplier
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider.BlockTagProvider
 import net.minecraft.block.*
 import net.minecraft.data.client.*
 import net.minecraft.item.ItemPlacementContext
-import net.minecraft.registry.tag.BlockTags
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction

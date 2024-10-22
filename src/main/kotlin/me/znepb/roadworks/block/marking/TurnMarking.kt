@@ -2,19 +2,19 @@ package me.znepb.roadworks.block.marking
 
 import me.znepb.roadworks.Registry
 import me.znepb.roadworks.RoadworksMain
-import me.znepb.roadworks.datagen.ModelProvider
 import me.znepb.roadworks.util.MarkingUtil.Companion.getCardinalDirectionFilled
 import me.znepb.roadworks.util.OrientedBlockStateSupplier
-import net.minecraft.block.*
-import net.minecraft.data.client.*
-import net.minecraft.item.ItemPlacementContext
+import net.minecraft.block.Block
+import net.minecraft.block.BlockState
+import net.minecraft.data.client.BlockStateModelGenerator
+import net.minecraft.data.client.TextureKey
+import net.minecraft.data.client.TextureMap
+import net.minecraft.data.client.VariantSettings
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
 class TurnMarking(private val mirror: Boolean = false) : AbstractMarking() {

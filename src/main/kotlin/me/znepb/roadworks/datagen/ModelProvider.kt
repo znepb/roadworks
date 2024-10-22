@@ -2,7 +2,6 @@ package me.znepb.roadworks.datagen
 
 import me.znepb.roadworks.Registry
 import me.znepb.roadworks.RoadworksMain.ModId
-import me.znepb.roadworks.block.sign.SignBlock
 import me.znepb.roadworks.block.marking.AbstractMarking.Companion.addBasicMarking
 import me.znepb.roadworks.block.marking.OneSideFilledMarking.Companion.addMarkingWithFilledSides
 import me.znepb.roadworks.block.marking.TMarking.Companion.addTMarking

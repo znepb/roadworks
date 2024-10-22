@@ -5,8 +5,6 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.ObjectLuaTable
 import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
-import me.znepb.roadworks.RoadworksMain.logger
-import me.znepb.roadworks.block.signals.AbstractTrafficSignalBlockEntity
 import me.znepb.roadworks.block.signals.SignalLight
 import me.znepb.roadworks.block.signals.SignalType
 

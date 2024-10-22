@@ -1,6 +1,6 @@
 package me.znepb.roadworks.util
 
-import com.mojang.serialization.*
+import com.mojang.serialization.Codec
 import me.znepb.roadworks.RoadworksMain
 import org.joml.Vector4d
 import java.util.*

@@ -94,11 +94,11 @@ class SignBlockRenderer(private val ctx: BlockEntityRendererFactory.Context) :
             Math.toRadians(180.0).toFloat()
         )
 
-        if(backTexture != null) front.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(backTexture)), light, overlay)
+        if(frontTexture != null) front.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(frontTexture)), light, overlay)
 
         // Render back
         val back = ModelPart(mutableListOf(signObjectBack), Collections.emptyMap())
         back.copyTransform(front)
-        if(frontTexture != null) back.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(frontTexture)), light, overlay)
+        if(backTexture != null) back.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(backTexture)), light, overlay)
     }
 }

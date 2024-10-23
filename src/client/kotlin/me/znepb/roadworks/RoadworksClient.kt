@@ -1,11 +1,16 @@
 package me.znepb.roadworks
 
+import com.google.gson.JsonParser
+import com.mojang.serialization.JsonOps
 import me.znepb.roadworks.RoadworksMain.NAMESPACE
+import me.znepb.roadworks.block.sign.SignType
 import me.znepb.roadworks.gui.SignEditorScreen
 import me.znepb.roadworks.init.ModelLoader
+import me.znepb.roadworks.network.SyncContentPacketClient
 import me.znepb.roadworks.render.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.client.gui.screen.ingame.HandledScreens
@@ -14,14 +19,18 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.registry.RegistryOps
+import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 
 object RoadworksClient : ClientModInitializer {
 	val logger = LoggerFactory.getLogger(NAMESPACE)
 
 	override fun onInitializeClient() {
-		logger.info("Roadworks Client Init")
+		logger.info("Roadworks is initializing")
 		ModelLoadingPlugin.register( me.znepb.roadworks.ModelLoader() )
+
+		SyncContentPacketClient.register()
 
 		// Item Groups
 		ItemGroupEvents.modifyEntriesEvent(Registry.itemGroup).register {

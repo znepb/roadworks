@@ -43,7 +43,7 @@ class SignItemBakedModel(val sprite: Sprite) : BakedModel, FabricBakedModel {
 
         if(type != null && RoadworksMain.SIGN_TYPES.get(Identifier(type)) != null) {
             val signType = RoadworksMain.SIGN_TYPES[Identifier(type)]!!
-            val spriteIdentifier = SpriteIdentifier(BLOCK_ATLAS_TEXTURE, signType.backTexture)
+            val spriteIdentifier = SpriteIdentifier(BLOCK_ATLAS_TEXTURE, signType.frontTexture)
             val sprite = spriteIdentifier.sprite
             val tint = 0xFFFFFFFF.toInt()
             context.emitter.cullFace(null)

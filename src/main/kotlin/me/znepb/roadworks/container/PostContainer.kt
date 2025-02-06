@@ -8,20 +8,15 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
-import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
-import net.minecraft.world.WorldAccess
 
-class PostContainer(settings: Settings) : BlockWithEntity(settings), BlockEntityProvider {
+class PostContainer(settings: Settings) : AttachmentContainer(settings), BlockEntityProvider {
     companion object {
         val BOTTOM_SHAPE_THICK = createCuboidShape(5.0, 0.0, 5.0, 11.0, 5.0, 11.0)
         val MIDSECTION_SHAPE_THICK = createCuboidShape(5.0, 5.0, 5.0, 11.0, 11.0, 11.0)
@@ -72,7 +67,7 @@ class PostContainer(settings: Settings) : BlockWithEntity(settings), BlockEntity
         }
 
         fun blockEntity(world: BlockView, pos: BlockPos): PostContainerBlockEntity? =
-            world.getBlockEntity(pos, RoadworksRegistry.ModBlockEntities.CONTAINER_BLOCK_ENTITY).orElse(null)
+            world.getBlockEntity(pos, RoadworksRegistry.ModBlockEntities.POST_CONTAINER_BLOCK_ENTITY).orElse(null)
     }
 
     override fun <T : BlockEntity?> getTicker(
@@ -81,11 +76,7 @@ class PostContainer(settings: Settings) : BlockWithEntity(settings), BlockEntity
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
         if (world.isClient) return null
-        return checkType(type, RoadworksRegistry.ModBlockEntities.CONTAINER_BLOCK_ENTITY, PostContainerBlockEntity.Companion::onTick)
-    }
-
-    override fun isTransparent(state: BlockState, world: BlockView, pos: BlockPos): Boolean {
-        return true
+        return checkType(type, RoadworksRegistry.ModBlockEntities.POST_CONTAINER_BLOCK_ENTITY, PostContainerBlockEntity.Companion::onTick)
     }
 
     override fun neighborUpdate(
@@ -222,27 +213,5 @@ class PostContainer(settings: Settings) : BlockWithEntity(settings), BlockEntity
         blockEntity(world, pos)?.getConnections(world)
         blockEntity(world, pos)?.thickness = PostContainerItem.getThickness(itemStack)
         world.updateNeighbors(pos, state.block)
-    }
-
-    override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity) {
-        val be = world.getBlockEntity(pos)
-        if(be is PostContainerBlockEntity) be.remove()
-        super.onBreak(world, pos, state, player)
-    }
-
-    override fun onUse(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        player: PlayerEntity,
-        hand: Hand,
-        hit: BlockHitResult
-    ): ActionResult {
-        val be = world.getBlockEntity(pos)
-        if(be is PostContainerBlockEntity) {
-            val attachment = be.getAttachmentHit(hit)
-            return if(attachment != null) attachment.onUse(player, hand, hit) ?: ActionResult.PASS else be.onUse(player, hand, hit)
-        }
-        return ActionResult.PASS
     }
 }

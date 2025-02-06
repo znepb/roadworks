@@ -2,6 +2,7 @@ package me.znepb.roadworks.attachment
 
 import me.znepb.roadworks.RoadworksRegistry
 import me.znepb.roadworks.cabinet.TrafficCabinetBlockEntity
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.util.MiscUtils.blockPosFromNbtIntArray
 import me.znepb.roadworks.util.MiscUtils.blockPosToNbtIntArray
@@ -10,7 +11,7 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class LinkableAttachment(type: AttachmentType<*>, container: PostContainerBlockEntity) : Attachment(type, container) {
+abstract class LinkableAttachment(type: AttachmentType<*>, container: AttachmentContainerBlockEntity) : Attachment(type, container) {
     var linked = false
     var linkPosition = BlockPos(0, 0, 0)
 

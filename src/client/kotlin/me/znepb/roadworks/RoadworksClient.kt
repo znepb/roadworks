@@ -10,6 +10,7 @@ import me.znepb.roadworks.init.ModelLoader
 import me.znepb.roadworks.item.SignEditorScreenHandler
 import me.znepb.roadworks.network.SyncContentPacketClient
 import me.znepb.roadworks.render.PostContainerRenderer
+import me.znepb.roadworks.render.WallContainerRenderer
 import me.znepb.roadworks.render.attachments.*
 import me.znepb.roadworks.util.PostThickness
 import net.fabricmc.api.ClientModInitializer
@@ -21,9 +22,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
-import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
 import org.slf4j.LoggerFactory
 
 object RoadworksClient : ClientModInitializer {
@@ -90,7 +89,8 @@ object RoadworksClient : ClientModInitializer {
 		logger.info("Registering attachment renderers")
 		attachmentRenderers = AttachmentRendererFactories.reload()
 
-		BlockEntityRendererFactories.register(RoadworksRegistry.ModBlockEntities.CONTAINER_BLOCK_ENTITY, ::PostContainerRenderer)
+		BlockEntityRendererFactories.register(RoadworksRegistry.ModBlockEntities.POST_CONTAINER_BLOCK_ENTITY, ::PostContainerRenderer)
+		BlockEntityRendererFactories.register(RoadworksRegistry.ModBlockEntities.WALL_CONTAINER_BLOCK_ENTITY, ::WallContainerRenderer)
 
 		HandledScreens.register(RoadworksRegistry.ModScreens.SIGN_EDITOR_SCREEN_HANDLER, ::SignEditorScreen)
 
@@ -197,7 +197,10 @@ object RoadworksClient : ClientModInitializer {
 			RoadworksRegistry.ModBlocks.YELLOW_L_LEFT,
 			RoadworksRegistry.ModBlocks.YELLOW_L_RIGHT,
 			RoadworksRegistry.ModBlocks.YELLOW_L_SHORT_LEFT,
-			RoadworksRegistry.ModBlocks.YELLOW_L_SHORT_RIGHT
+			RoadworksRegistry.ModBlocks.YELLOW_L_SHORT_RIGHT,
+
+			RoadworksRegistry.ModBlocks.WALL_CONTAINER,
+			RoadworksRegistry.ModBlocks.CATWALK
 		)
 
 		ModelLoader()

@@ -5,6 +5,7 @@ import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.RoadworksRegistry.ModAttachments.SIGN_ATTACHMENT
 import me.znepb.roadworks.attachment.PositionableAttachment
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.util.RotateVoxelShape.Companion.offsetFromDirectionXZ
 import me.znepb.roadworks.util.RotateVoxelShape.Companion.rotateVoxelShape
@@ -17,7 +18,7 @@ import net.minecraft.util.shape.VoxelShape
 import org.joml.Vector3d
 
 class SignAttachment(
-    container: PostContainerBlockEntity,
+    container: AttachmentContainerBlockEntity,
 ) : PositionableAttachment(SIGN_ATTACHMENT, container) {
     var signType = ModId("unknown")
 
@@ -54,15 +55,15 @@ class SignAttachment(
     }
 
     override fun getShape(context: ShapeContext): VoxelShape {
-        val thickness = this.container.thickness.thickness * 0.5
+        val depthOffset = this.container.getDepthOffset()
 
         return offsetFromDirectionXZ(
             rotateVoxelShape(SIGN_SHAPE_WALL, Direction.NORTH, this.facing),
             facing,
-            Vector3d(0.0, 0.0, -thickness),
-            Vector3d(thickness, 0.0, 0.0,),
-            Vector3d(0.0, 0.0, thickness),
-            Vector3d(-thickness, 0.0, 0.0),
+            Vector3d(0.0, 0.0, -depthOffset),
+            Vector3d(depthOffset, 0.0, 0.0,),
+            Vector3d(0.0, 0.0, depthOffset),
+            Vector3d(-depthOffset, 0.0, 0.0),
         )
     }
 

@@ -7,9 +7,7 @@ import me.znepb.roadworks.attachment.AttachmentType
 import me.znepb.roadworks.cabinet.TrafficCabinet
 import me.znepb.roadworks.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.cone.*
-import me.znepb.roadworks.container.PostContainer
-import me.znepb.roadworks.container.PostContainerBlockEntity
-import me.znepb.roadworks.container.PostContainerItem
+import me.znepb.roadworks.container.*
 import me.znepb.roadworks.item.Linker
 import me.znepb.roadworks.item.SignEditor
 import me.znepb.roadworks.item.SignEditorScreenHandler
@@ -17,6 +15,7 @@ import me.znepb.roadworks.marking.BasicMarking
 import me.znepb.roadworks.marking.OneSideFilledMarking
 import me.znepb.roadworks.marking.TMarking
 import me.znepb.roadworks.marking.TurnMarking
+import me.znepb.roadworks.misc.Catwalk
 import me.znepb.roadworks.sign.RoadSignAttachment
 import me.znepb.roadworks.sign.SignAttachment
 import me.znepb.roadworks.sign.SignAttachmentItem
@@ -92,10 +91,15 @@ object RoadworksRegistry {
             return Registry.register(BLOCK_ENTITY_TYPE, identifier, entity.build())
         }
 
-        val CONTAINER_BLOCK_ENTITY = registerBlockEntities(
+        val POST_CONTAINER_BLOCK_ENTITY = registerBlockEntities(
             ::PostContainerBlockEntity,
             listOf(ModBlocks.POST_CONTAINER),
             ModId("container_entity")
+        )
+        val WALL_CONTAINER_BLOCK_ENTITY = registerBlockEntities(
+            ::WallContainerBlockEntity,
+            listOf(ModBlocks.WALL_CONTAINER),
+            ModId("wall_container_entity")
         )
         val CABINET_BLOCK_ENTITY = registerBlockEntities(
             ::TrafficCabinetBlockEntity,
@@ -109,6 +113,7 @@ object RoadworksRegistry {
             Registry.register(BLOCK, ModId(name), value)
 
         val POST_CONTAINER = rBlock("post_container", PostContainer(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
+        val WALL_CONTAINER = rBlock("wall_container", WallContainer(AbstractBlock.Settings.copy(Blocks.STONE_BRICK_WALL)))
 
         //
 
@@ -230,6 +235,8 @@ object RoadworksRegistry {
         val WHITE_L_RIGHT = rBlock("marking_white_l_right", TurnMarking(true))
         val WHITE_L_SHORT_LEFT = rBlock("marking_white_l_thin_short_left", TurnMarking())
         val WHITE_L_SHORT_RIGHT = rBlock("marking_white_l_thin_short_right", TurnMarking(true))
+
+        val CATWALK = rBlock("catwalk", Catwalk())
     }
 
     object ModItems {
@@ -375,6 +382,8 @@ object RoadworksRegistry {
         val YELLOW_L_RIGHT = rItem(ModBlocks.YELLOW_L_RIGHT, ::BlockItem, itemSettings())
         val YELLOW_L_SHORT_LEFT = rItem(ModBlocks.YELLOW_L_SHORT_LEFT, ::BlockItem, itemSettings())
         val YELLOW_L_SHORT_RIGHT = rItem(ModBlocks.YELLOW_L_SHORT_RIGHT, ::BlockItem, itemSettings())
+
+        val CATWALK = rItem(ModBlocks.CATWALK, ::BlockItem, itemSettings())
 
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
         val SIGN_EDITOR = rItem("sign_editor", SignEditor(FabricItemSettings()))

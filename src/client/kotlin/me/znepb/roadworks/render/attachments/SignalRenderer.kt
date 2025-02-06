@@ -15,6 +15,7 @@ import net.minecraft.client.render.model.BakedQuad
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
+import org.joml.Vector3d
 
 class SignalRenderer(
     private val attachment: AbstractSignalAttachment,
@@ -32,14 +33,15 @@ class SignalRenderer(
     fun renderSignal(
         signalLight: SignalLight,
         x: Double,
-        y: Double
+        y: Double,
+        offset: Vector3d
     ) {
         val modelLocation =
             RoadworksMain.ModId("block/signal_${signalLight.light}_${if(attachment.isSignalActive(signalLight)) "on" else "off"}")
 
         matrices.push()
         AttachmentRenderer.translateForCenter(matrices, attachment.facing.opposite, 0)
-        matrices.translate(x, y, -this.attachment.container.thickness.thickness / 2)
+        matrices.translate(offset.x + x, offset.y + y, -offset.z)
 
         val model = MinecraftClient.getInstance().bakedModelManager.getModel(modelLocation)
 

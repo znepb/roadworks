@@ -48,7 +48,7 @@ class SignEditorScreen(handler: SignEditorScreenHandler, playerInventory: Player
     }
 
     override fun init() {
-        this.backgroundHeight = 176
+        this.backgroundHeight = 201
 
         super.init()
 
@@ -72,7 +72,7 @@ class SignEditorScreen(handler: SignEditorScreenHandler, playerInventory: Player
             val x = (index % 7) * 24
             val y = (floor(index.toDouble() / 7.0) * 24).toInt()
             val button = ButtonWidget.builder(Text.literal("")) {
-                this.nameField.write(charset.char)
+                this.nameField.write(charset.symbol)
             }
                 .dimensions(this.x + x + 6, this.nameField.y + this.nameField.height + y + 6, 20, 20)
                 .build()
@@ -185,10 +185,14 @@ class SignEditorScreen(handler: SignEditorScreenHandler, playerInventory: Player
             Charset.DR,
             Charset.PK,
             Charset.HWY,
-            Charset.ARROW_RIGHT,
-            Charset.ARROW_LEFT,
             Charset.ARROW_UP,
+            Charset.ARROW_UR,
+            Charset.ARROW_RIGHT,
+            Charset.ARROW_DR,
             Charset.ARROW_DOWN,
+            Charset.ARROW_DL,
+            Charset.ARROW_LEFT,
+            Charset.ARROW_UL,
             Charset.FORBIDDEN,
             Charset.WARNING,
             Charset.ND,

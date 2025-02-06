@@ -2,45 +2,46 @@ package me.znepb.roadworks.util
 
 import com.mojang.serialization.Codec
 import me.znepb.roadworks.RoadworksMain
+import me.znepb.roadworks.RoadworksMain.logger
 import org.joml.Vector4d
 import java.util.*
 
-enum class Charset(val char: String, val x: Int, val y: Int, val w: Int) {
-    A("A", 0, 0, 4),
-    B("B", 1, 0, 4),
-    C("C", 2, 0, 4),
-    D("D", 3, 0, 4),
-    E("E", 4, 0, 4),
-    F("F", 5, 0, 4),
+enum class Charset(val symbol: String, val x: Int, val y: Int, val w: Int) {
+    A("A", 0, 0, 5),
+    B("B", 1, 0, 5),
+    C("C", 2, 0, 5),
+    D("D", 3, 0, 5),
+    E("E", 4, 0, 5),
+    F("F", 5, 0, 5),
     G("G", 6, 0, 5),
-    H("H", 7, 0, 4),
+    H("H", 7, 0, 5),
     I("I", 8, 0, 3),
     J("J", 9, 0, 5),
-    K("K", 10, 0, 4),
-    L("L", 11, 0, 4),
+    K("K", 10, 0, 5),
+    L("L", 11, 0, 5),
     M("M", 12, 0, 5),
     N("N", 13, 0, 5),
-    O("O", 14, 0, 4),
-    P("P", 15, 0, 4),
+    O("O", 14, 0, 5),
+    P("P", 15, 0, 5),
     Q("Q", 0, 1, 5),
-    R("R", 1, 1, 4),
-    S("S", 2, 1, 4),
+    R("R", 1, 1, 5),
+    S("S", 2, 1, 5),
     T("T", 3, 1, 5),
-    U("U", 4, 1, 4),
+    U("U", 4, 1, 5),
     V("V", 5, 1, 5),
     W("W", 6, 1, 5),
     X("X", 7, 1, 5),
     Y("Y", 8, 1, 5),
     Z("Z", 9, 1, 5),
-    ONE("1", 10, 1, 3),
-    TWO("2", 11, 1, 4),
-    THREE("3", 12, 1, 4),
-    FOUR("4", 13, 1, 4),
-    FIVE("5", 14, 1, 4),
-    SIX("6", 15, 1, 4),
-    SEVEN("7", 0, 2, 4),
-    EIGHT("8", 1, 2, 4),
-    NINE("9", 2, 2, 4),
+    ONE("1", 10, 1, 4),
+    TWO("2", 11, 1, 5),
+    THREE("3", 12, 1, 5),
+    FOUR("4", 13, 1, 5),
+    FIVE("5", 14, 1, 5),
+    SIX("6", 15, 1, 5),
+    SEVEN("7", 0, 2, 5),
+    EIGHT("8", 1, 2, 5),
+    NINE("9", 2, 2, 5),
     ZERO("0", 3, 2, 5),
     ROAD("[ROAD]", 4, 2, 7),
     STREET("[STREET]", 5, 2, 6),
@@ -67,7 +68,37 @@ enum class Charset(val char: String, val x: Int, val y: Int, val w: Int) {
     SOUTH("[SOUTH]", 13, 3, 2),
     WEST("[WEST]", 14, 3, 5),
     SMALL_SPACE("[SMALL_SPACE]", 15, 3, 1),
-    SPACE(" ", 15, 3, 3);
+    SPACE(" ", 15, 3, 3),
+    LOWERCASE_A("a", 0, 4, 5),
+    LOWERCASE_B("b", 1, 4, 5),
+    LOWERCASE_C("c", 2, 4, 5),
+    LOWERCASE_D("d", 3, 4, 5),
+    LOWERCASE_E("e", 4, 4, 5),
+    LOWERCASE_F("f", 5, 4, 4),
+    LOWERCASE_G("g", 6, 4, 5),
+    LOWERCASE_H("h", 7, 4, 5),
+    LOWERCASE_I("i", 8, 4, 1),
+    LOWERCASE_J("j", 9, 4, 4),
+    LOWERCASE_K("k", 10, 4, 4),
+    LOWERCASE_L("l", 11, 4, 2),
+    LOWERCASE_M("m", 12, 4, 5),
+    LOWERCASE_N("n", 13, 4, 5),
+    LOWERCASE_O("o", 14, 4, 5),
+    LOWERCASE_P("p", 15, 4, 5),
+    LOWERCASE_Q("q", 0, 5, 5),
+    LOWERCASE_R("r", 1, 5, 5),
+    LOWERCASE_S("s", 2, 5, 4),
+    LOWERCASE_T("t", 3, 5, 3),
+    LOWERCASE_U("u", 4, 5, 5),
+    LOWERCASE_V("v", 5, 5, 5),
+    LOWERCASE_W("w", 6, 5, 5),
+    LOWERCASE_X("x", 7, 5, 5),
+    LOWERCASE_Y("y", 8, 5, 5),
+    LOWERCASE_Z("z", 9, 5, 5),
+    ARROW_UR("[ARROW_UR]", 10, 5, 8),
+    ARROW_UL("[ARROW_UL]", 11, 5, 8),
+    ARROW_DR("[ARROW_DR]", 12, 5, 8),
+    ARROW_DL("[ARROW_DL]", 13, 5, 8);
 
     fun getUV(): Vector4d {
         return Vector4d(
@@ -78,7 +109,7 @@ enum class Charset(val char: String, val x: Int, val y: Int, val w: Int) {
         )
     }
 
-    override fun toString(): String = this.char
+    override fun toString(): String = this.symbol
 
     fun toInt() = this.ordinal
 
@@ -102,8 +133,8 @@ enum class Charset(val char: String, val x: Int, val y: Int, val w: Int) {
             }
         }
 
-        fun fromStr(str: String): Charset? {
-            val valid = Charset.entries.filter { it.char.uppercase() == str.uppercase() }
+        fun fromSymbol(str: String): Charset? {
+            val valid = Charset.entries.filter { it.symbol == str }
             return if(valid.isEmpty()) null else valid[0]
         }
 
@@ -113,18 +144,18 @@ enum class Charset(val char: String, val x: Int, val y: Int, val w: Int) {
             val contents = mutableListOf<Charset>()
 
             string.forEach { char ->
-                val str = char.toString().uppercase(Locale.getDefault())
+                val str = char.toString()
                 if(isCode) {
                     currentString += str
                     if(str == "]") {
                         isCode = false
-                        Charset.fromStr(currentString)?.let { contents.add(it) }
+                        fromSymbol(currentString.uppercase())?.let { contents.add(it) }
                     }
                 } else if(str == "[") {
                     isCode = true
                     currentString = str
                 } else {
-                    Charset.fromStr(str)?.let { contents.add(it) }
+                    fromSymbol(str)?.let { contents.add(it) }
                 }
             }
 

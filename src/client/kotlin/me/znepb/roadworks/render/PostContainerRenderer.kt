@@ -22,9 +22,11 @@ import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import org.joml.Vector3d
 
 
-class PostContainerRenderer(private val ctx: BlockEntityRendererFactory.Context) : BlockEntityRenderer<PostContainerBlockEntity> {
+class PostContainerRenderer(private val ctx: BlockEntityRendererFactory.Context) :
+    ContainerRenderer<PostContainerBlockEntity>(ctx) {
     companion object {
         val POST_THIN_EXT_MODEL = ModId("block/post_thin_extension")
         val POST_THIN_FOOTER_MODEL = ModId("block/post_thin_footer")
@@ -76,63 +78,6 @@ class PostContainerRenderer(private val ctx: BlockEntityRendererFactory.Context)
         matrices.multiply(direction.rotationQuaternion, 0.5F, 0.5F, 0.5F)
         RenderUtils.renderModel(matrices, buffer, light, overlay, sizeModel, null, directionsToRender)
         matrices.pop()
-    }
-
-    fun renderOutline(
-        blockEntity: PostContainerBlockEntity,
-        matrices: MatrixStack,
-        vertexConsumer: VertexConsumer,
-        entity: Entity,
-        world: World,
-        cameraX: Double,
-        cameraY: Double,
-        cameraZ: Double,
-        pos: BlockPos,
-        state: BlockState
-    ) {
-        val block = state.block
-        if(block !is PostContainer) return
-        val client: MinecraftClient = MinecraftClient.getInstance()
-        val hit = client.crosshairTarget
-
-        if(hit?.type == HitResult.Type.BLOCK) {
-            val blockHit = hit as BlockHitResult
-            val shapeContext = ShapeContext.of(entity)
-            if(blockHit.blockPos != pos) return
-
-            val hitAttachment = blockEntity.getAttachmentHit(blockHit)
-
-            if(hitAttachment != null) {
-                WorldRenderer.drawCuboidShapeOutline(
-                    matrices,
-                    vertexConsumer,
-                    hitAttachment.getShape(shapeContext),
-                    pos.x.toDouble() - cameraX,
-                    pos.y.toDouble() - cameraY,
-                    pos.z.toDouble() - cameraZ,
-                    0.0f,
-                    0.0f,
-                    0.0f,
-                    0.4f
-                )
-                return
-            }
-
-            // Draw post shape if didn't hit attachment shape
-            val shape = block.getShape(world, pos, shapeContext)
-            WorldRenderer.drawCuboidShapeOutline(
-                matrices,
-                vertexConsumer,
-                shape,
-                pos.x.toDouble() - cameraX,
-                pos.y.toDouble() - cameraY,
-                pos.z.toDouble() - cameraZ,
-                0.0f,
-                0.0f,
-                0.0f,
-                0.4f
-            )
-        }
     }
 
     override fun render(
@@ -188,10 +133,6 @@ class PostContainerRenderer(private val ctx: BlockEntityRendererFactory.Context)
             addSideThickness(blockEntity, blockEntity.cachedState, Direction.DOWN, blockEntity.down, matrices, buffer, light, overlay)
         }
 
-        blockEntity.attachments.forEach {
-            RoadworksClient.attachmentRenderers[it.type]?.render(
-                it, blockEntity, tickDelta, matrices, vertexConsumers, light, overlay
-            )
-        }
+        this.renderAttachments(blockEntity, tickDelta, matrices, vertexConsumers, light, overlay, Vector3d(0.0, 0.0, blockEntity.thickness.thickness / 2))
     }
 }

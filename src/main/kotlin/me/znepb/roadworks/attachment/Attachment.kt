@@ -1,6 +1,7 @@
 package me.znepb.roadworks.attachment
 
 import me.znepb.roadworks.RoadworksRegistry
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import net.minecraft.block.ShapeContext
 import net.minecraft.entity.player.PlayerEntity
@@ -18,7 +19,7 @@ import java.util.*
 
 abstract class Attachment(
     val type: AttachmentType<*>,
-    val container: PostContainerBlockEntity,
+    val container: AttachmentContainerBlockEntity,
 ) {
     var facing: Direction = Direction.NORTH
     var offset: Vector3f = Vector3f(0F, 0F, 0F)

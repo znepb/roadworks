@@ -2,13 +2,14 @@ package me.znepb.roadworks.signal
 
 import me.znepb.roadworks.attachment.AttachmentType
 import me.znepb.roadworks.attachment.LinkableAttachment
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import net.minecraft.nbt.NbtCompound
 
 abstract class AbstractSignalAttachment(
     val signalType: SignalType,
     type: AttachmentType<*>,
-    container: PostContainerBlockEntity,
+    container: AttachmentContainerBlockEntity,
 ) : LinkableAttachment(type, container) {
     val signalState = signalStateMapFromList(signalType)
     val queue = hashMapOf<SignalLight, Boolean>()

@@ -2,7 +2,7 @@ package me.znepb.roadworks.train
 
 import me.znepb.roadworks.RoadworksRegistry
 import me.znepb.roadworks.attachment.LinkableAttachment
-import me.znepb.roadworks.container.PostContainerBlockEntity
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.signal.BeaconAttachment
 import me.znepb.roadworks.util.RotateVoxelShape
 import net.minecraft.block.BlockWithEntity
@@ -12,7 +12,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import org.joml.Vector3d
 
-class TrainSignalAttachment(container: PostContainerBlockEntity) : LinkableAttachment(RoadworksRegistry.ModAttachments.TRAIN_SIGNAL, container) {
+class TrainSignalAttachment(container: AttachmentContainerBlockEntity) : LinkableAttachment(RoadworksRegistry.ModAttachments.TRAIN_SIGNAL, container) {
     override fun getLinkType() = "train_beacon"
     private var isActivated = true
     private var leftOn = false
@@ -21,15 +21,15 @@ class TrainSignalAttachment(container: PostContainerBlockEntity) : LinkableAttac
     private val shape = BlockWithEntity.createCuboidShape(6.0, 6.0, 7.5, 10.0, 10.0, 8.5)
 
     override fun getShape(context: ShapeContext): VoxelShape {
-        val thickness = this.container.thickness.thickness * 0.5
+        val depthOffset = this.container.getDepthOffset()
 
         return RotateVoxelShape.offsetFromDirectionXZ(
             RotateVoxelShape.rotateVoxelShape(shape, Direction.NORTH, this.facing),
             facing,
-            Vector3d(0.0, 0.0, -thickness - BeaconAttachment.HALF),
-            Vector3d(thickness + BeaconAttachment.HALF, 0.0, 0.0),
-            Vector3d(0.0, 0.0, thickness + BeaconAttachment.HALF),
-            Vector3d(-thickness - BeaconAttachment.HALF, 0.0, 0.0),
+            Vector3d(0.0, 0.0, -depthOffset - BeaconAttachment.HALF),
+            Vector3d(depthOffset + BeaconAttachment.HALF, 0.0, 0.0),
+            Vector3d(0.0, 0.0, depthOffset + BeaconAttachment.HALF),
+            Vector3d(-depthOffset - BeaconAttachment.HALF, 0.0, 0.0),
         )
     }
 

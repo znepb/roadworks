@@ -2,6 +2,7 @@ package me.znepb.roadworks.render.attachments
 
 import me.znepb.roadworks.RoadworksMain
 import me.znepb.roadworks.attachment.AttachmentPosition
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.signal.BeaconAttachment
 import me.znepb.roadworks.train.TrainBellAttachment
@@ -17,6 +18,7 @@ import net.minecraft.client.render.model.BakedQuad
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
+import org.joml.Vector3d
 
 class TrainSignalAttachmentRenderer : AttachmentRenderer<TrainSignalAttachment> {
     companion object {
@@ -28,43 +30,44 @@ class TrainSignalAttachmentRenderer : AttachmentRenderer<TrainSignalAttachment> 
 
     override fun render(
         attachment: TrainSignalAttachment,
-        blockEntity: PostContainerBlockEntity,
+        blockEntity: AttachmentContainerBlockEntity,
         tickDelta: Float,
         matrices: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
         light: Int,
-        overlay: Int
+        overlay: Int,
+        offset: Vector3d
     ) {
-        val thickness = blockEntity.thickness.thickness
         val buffer: VertexConsumer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntityTranslucentCull())
+
 
         matrices.push()
         AttachmentRenderer.translateForCenter(matrices, attachment.facing.opposite, 0)
-        matrices.translate(0.0, (2.0 / 16.0), (-thickness / 2) + (1.0 / 16.0))
+        matrices.translate(offset.x, offset.y + (2.0 / 16.0), -offset.z + (1.0 / 16.0))
         RenderUtils.renderModel(matrices, buffer, light, overlay, BEACON_BACKBEAM, null)
         matrices.pop()
 
         matrices.push()
         AttachmentRenderer.translateForCenter(matrices, attachment.facing.opposite, 0)
-        matrices.translate((-5.0 / 16.0), 0.0, -thickness / 2)
+        matrices.translate(offset.x + (-5.0 / 16.0), offset.y, -offset.z)
         RenderUtils.renderModel(matrices, buffer, light, overlay, BEACON_BASE, null)
         matrices.pop()
 
         matrices.push()
         AttachmentRenderer.translateForCenter(matrices, attachment.facing.opposite, 0)
-        matrices.translate((4.0 / 16.0), 0.0, -thickness / 2)
+        matrices.translate(offset.x + (4.0 / 16.0), offset.y, -offset.z)
         RenderUtils.renderModel(matrices, buffer, light, overlay, BEACON_BASE, null)
         matrices.pop()
 
         matrices.push()
         AttachmentRenderer.translateForCenter(matrices, attachment.facing.opposite, 0)
-        matrices.translate((4.0 / 16.0), 0.0, -thickness / 2 - 0.0078125)
+        matrices.translate(offset.x + (4.0 / 16.0), offset.y, -offset.z - 0.0078125)
         renderSignal(matrices, buffer, overlay, light, attachment, attachment.isLeftOn())
         matrices.pop()
 
         matrices.push()
         AttachmentRenderer.translateForCenter(matrices, attachment.facing.opposite, 0)
-        matrices.translate((-5.0 / 16.0), 0.0, -thickness / 2 - 0.0078125)
+        matrices.translate((-5.0 / 16.0), offset.y, -offset.z - 0.0078125)
         renderSignal(matrices, buffer, overlay, light, attachment, attachment.isRightOn())
         matrices.pop()
     }

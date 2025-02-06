@@ -1,6 +1,7 @@
 package me.znepb.roadworks.attachment
 
 import me.znepb.roadworks.RoadworksRegistry
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.util.PostThickness
 import net.minecraft.entity.player.PlayerEntity
@@ -11,15 +12,18 @@ import net.minecraft.util.hit.BlockHitResult
 
 abstract class PositionableAttachment(
     type: AttachmentType<*>,
-    container: PostContainerBlockEntity,
+    container: AttachmentContainerBlockEntity,
 ) : Attachment(type, container) {
     var position = getFirstValid()
 
     private fun getValidPositions(): List<AttachmentPosition> {
         val positions = mutableListOf<AttachmentPosition>()
-        if(container.up != PostThickness.NONE) positions.add(AttachmentPosition.TOP)
-        if(!container.stub) positions.add(AttachmentPosition.MIDDLE)
-        if(container.down != PostThickness.NONE) positions.add(AttachmentPosition.BOTTOM)
+
+        if(container is PostContainerBlockEntity) {
+            if (container.up != PostThickness.NONE) positions.add(AttachmentPosition.TOP)
+            if (!container.stub) positions.add(AttachmentPosition.MIDDLE)
+            if (container.down != PostThickness.NONE) positions.add(AttachmentPosition.BOTTOM)
+        }
 
         return positions.toList()
     }
@@ -62,7 +66,7 @@ abstract class PositionableAttachment(
 
     override fun onUse(player: PlayerEntity, hand: Hand, hit: BlockHitResult): ActionResult {
         if(!isPositionable()) return ActionResult.PASS
-        if(!this.container.isVertical()) return ActionResult.PASS
+        if(this.container is PostContainerBlockEntity && !this.container.isVertical()) return ActionResult.PASS
 
         if(player.isHolding(RoadworksRegistry.ModItems.WRENCH)) {
             val newPosition = getNextValid()

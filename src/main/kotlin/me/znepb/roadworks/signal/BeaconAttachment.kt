@@ -3,6 +3,7 @@ package me.znepb.roadworks.signal
 import me.znepb.roadworks.RoadworksRegistry
 import me.znepb.roadworks.attachment.AttachmentPosition
 import me.znepb.roadworks.attachment.AttachmentType
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.util.RotateVoxelShape
 import net.minecraft.block.BlockWithEntity
@@ -16,7 +17,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import org.joml.Vector3d
 
-open class BeaconAttachment(signalType: SignalType, attachmentType: AttachmentType<*>, container: PostContainerBlockEntity, )
+open class BeaconAttachment(signalType: SignalType, attachmentType: AttachmentType<*>, container: AttachmentContainerBlockEntity, )
     : AbstractSignalAttachment(signalType, attachmentType, container) {
     companion object {
         val SIGNAL_SHAPE = BlockWithEntity.createCuboidShape(5.0, 5.0, 7.5, 11.0, 11.0, 8.5)
@@ -26,7 +27,7 @@ open class BeaconAttachment(signalType: SignalType, attachmentType: AttachmentTy
     var position = AttachmentPosition.MIDDLE
 
     override fun getShape(context: ShapeContext): VoxelShape {
-        val thickness = this.container.thickness.thickness * 0.5
+        val depthOffset = this.container.getDepthOffset()
         val offsetHeight = when(this.position) {
             AttachmentPosition.TOP -> 0.275
             AttachmentPosition.MIDDLE -> 0.0
@@ -36,10 +37,10 @@ open class BeaconAttachment(signalType: SignalType, attachmentType: AttachmentTy
         return RotateVoxelShape.offsetFromDirectionXZ(
             RotateVoxelShape.rotateVoxelShape(SIGNAL_SHAPE, Direction.NORTH, this.facing),
             facing,
-            Vector3d(0.0, offsetHeight, -thickness - HALF),
-            Vector3d(thickness + HALF, offsetHeight, 0.0),
-            Vector3d(0.0, offsetHeight, thickness + HALF),
-            Vector3d(-thickness - HALF, offsetHeight, 0.0),
+            Vector3d(0.0, offsetHeight, -depthOffset - HALF),
+            Vector3d(depthOffset + HALF, offsetHeight, 0.0),
+            Vector3d(0.0, offsetHeight, depthOffset + HALF),
+            Vector3d(-depthOffset - HALF, offsetHeight, 0.0),
         )
     }
 
@@ -51,14 +52,14 @@ open class BeaconAttachment(signalType: SignalType, attachmentType: AttachmentTy
     override fun readNBT(nbt: NbtCompound) {
         super.readNBT(nbt)
 
-        this.position = if(!this.container.isVertical())
+        this.position = if(this.container is PostContainerBlockEntity && !this.container.isVertical())
             AttachmentPosition.MIDDLE
         else
             AttachmentPosition.fromName(nbt.getString("position") ?: "middle") ?: AttachmentPosition.MIDDLE
     }
 
     override fun onUse(player: PlayerEntity, hand: Hand, hit: BlockHitResult): ActionResult {
-        if(!this.container.isVertical()) return ActionResult.PASS
+        if(this.container is PostContainerBlockEntity && !this.container.isVertical()) return ActionResult.PASS
 
         if(player.isHolding(RoadworksRegistry.ModItems.WRENCH)) {
             position = if(player.isSneaking) position.previous() else position.next()
@@ -69,7 +70,7 @@ open class BeaconAttachment(signalType: SignalType, attachmentType: AttachmentTy
         return super.onUse(player, hand, hit)
     }
 
-    class Red(container: PostContainerBlockEntity) : BeaconAttachment(SignalType.BEACON_RED, RoadworksRegistry.ModAttachments.BEACON_RED, container)
-    class Yellow(container: PostContainerBlockEntity) : BeaconAttachment(SignalType.BEACON_YELLOW, RoadworksRegistry.ModAttachments.BEACON_YELLOW, container)
-    class Green(container: PostContainerBlockEntity) : BeaconAttachment(SignalType.BEACON_GREEN, RoadworksRegistry.ModAttachments.BEACON_GREEN, container)
+    class Red(container: AttachmentContainerBlockEntity) : BeaconAttachment(SignalType.BEACON_RED, RoadworksRegistry.ModAttachments.BEACON_RED, container)
+    class Yellow(container: AttachmentContainerBlockEntity) : BeaconAttachment(SignalType.BEACON_YELLOW, RoadworksRegistry.ModAttachments.BEACON_YELLOW, container)
+    class Green(container: AttachmentContainerBlockEntity) : BeaconAttachment(SignalType.BEACON_GREEN, RoadworksRegistry.ModAttachments.BEACON_GREEN, container)
 }

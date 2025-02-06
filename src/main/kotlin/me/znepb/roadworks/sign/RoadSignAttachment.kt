@@ -3,6 +3,7 @@ package me.znepb.roadworks.sign
 import me.znepb.roadworks.RoadworksRegistry
 import me.znepb.roadworks.attachment.AttachmentPosition
 import me.znepb.roadworks.attachment.PositionableAttachment
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.util.Charset
 import me.znepb.roadworks.util.RotateVoxelShape
@@ -14,7 +15,7 @@ import net.minecraft.util.shape.VoxelShape
 import org.joml.Vector3d
 
 class RoadSignAttachment(
-    container: PostContainerBlockEntity,
+    container: AttachmentContainerBlockEntity,
 ) : PositionableAttachment(RoadworksRegistry.ModAttachments.ROAD_SIGN_ATTACHMENT, container) {
     var color = "green"
     var contents = listOf<Charset>()
@@ -32,7 +33,7 @@ class RoadSignAttachment(
 
     override fun getShape(context: ShapeContext): VoxelShape {
         val width = this.getContentsPixelWidth()
-        val thickness = this.container.thickness.thickness * 0.5
+        val depthOffset = this.container.getDepthOffset()
         val offsetHeight = when(this.position) {
             AttachmentPosition.TOP -> 0.75
             AttachmentPosition.MIDDLE -> 0.375
@@ -51,10 +52,10 @@ class RoadSignAttachment(
         return RotateVoxelShape.offsetFromDirectionXZ(
             RotateVoxelShape.rotateVoxelShape(shape, Direction.NORTH, this.facing),
             facing,
-            Vector3d(0.0, 0.0, -thickness),
-            Vector3d(thickness, 0.0, 0.0,),
-            Vector3d(0.0, 0.0, thickness),
-            Vector3d(-thickness, 0.0, 0.0),
+            Vector3d(0.0, 0.0, -depthOffset),
+            Vector3d(depthOffset, 0.0, 0.0,),
+            Vector3d(0.0, 0.0, depthOffset),
+            Vector3d(-depthOffset, 0.0, 0.0),
         )
     }
 

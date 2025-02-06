@@ -2,6 +2,7 @@ package me.znepb.roadworks.render.attachments
 
 import me.znepb.roadworks.RoadworksMain
 import me.znepb.roadworks.attachment.AttachmentPosition
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.sign.RoadSignAttachment
 import me.znepb.roadworks.util.Charset
@@ -10,6 +11,7 @@ import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
+import org.joml.Vector3d
 
 class RoadSignAttachmentRenderer : AttachmentRenderer<RoadSignAttachment> {
     companion object {
@@ -30,14 +32,14 @@ class RoadSignAttachmentRenderer : AttachmentRenderer<RoadSignAttachment> {
 
     override fun render(
         attachment: RoadSignAttachment,
-        blockEntity: PostContainerBlockEntity,
+        blockEntity: AttachmentContainerBlockEntity,
         tickDelta: Float,
         matrices: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
         light: Int,
-        overlay: Int
+        overlay: Int,
+        offset: Vector3d
     ) {
-        val maxThickness = blockEntity.thickness
         val contents = attachment.contents
         val color = attachment.color
 
@@ -57,12 +59,14 @@ class RoadSignAttachmentRenderer : AttachmentRenderer<RoadSignAttachment> {
             AttachmentPosition.BOTTOM -> -1.0 + 16.0 / 64.0
         }
 
+        val finalOffset = offset.add(Vector3d(0.0, offsetPos,  0.0078125))
+
         // Prepare matrices
         matrices.push()
         matrices.translate(0.5F, 0.5F, 0.5F)
         matrices.multiply(attachment.facing.rotationQuaternion.rotateXYZ((Math.PI / 2).toFloat(), Math.PI.toFloat(), Math.PI.toFloat()))
         matrices.translate(-0.5F, -0.5F, -0.5F)
-        matrices.translate(0.0F, offsetPos.toFloat(), (maxThickness.id.toFloat() / 16) + 0.0078125F)
+        matrices.translate(finalOffset.x, finalOffset.y, finalOffset.z)
 
         // Render sign background
         val buffer: VertexConsumer = vertexConsumers.getBuffer(RenderLayers.getRenderLayer(frontTexture!!))
@@ -110,7 +114,7 @@ class RoadSignAttachmentRenderer : AttachmentRenderer<RoadSignAttachment> {
         matrices.translate(0.5F, 0.5F, 0.5F)
         matrices.multiply(attachment.facing.rotationQuaternion.rotateXYZ((Math.PI / 2).toFloat(), 0.0F, Math.PI.toFloat()))
         matrices.translate(-0.5F, -0.5F, -0.5F)
-        matrices.translate(0.0F, offsetPos.toFloat(), -(maxThickness.id.toFloat() / 16) + 0.0078125F)
+        matrices.translate(finalOffset.x, finalOffset.y, -finalOffset.z)
 
         val backBuffer: VertexConsumer = vertexConsumers.getBuffer(RenderLayers.getRenderLayer(BACK_TEXTURE))
         RenderUtils.nineSplice(

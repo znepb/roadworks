@@ -1,5 +1,6 @@
 package me.znepb.roadworks.attachment
 
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import net.minecraft.block.Block
 
@@ -19,6 +20,6 @@ class AttachmentType<T : Attachment>(val factory: AttachmentTypeFactory<out T>) 
     }
 
     fun interface AttachmentTypeFactory<T : Attachment> {
-        fun create(container: PostContainerBlockEntity): T
+        fun create(container: AttachmentContainerBlockEntity): T
     }
 }

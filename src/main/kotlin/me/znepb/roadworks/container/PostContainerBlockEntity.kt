@@ -1,5 +1,6 @@
 package me.znepb.roadworks.container
 
+import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.RoadworksRegistry
 import me.znepb.roadworks.RoadworksRegistry.ModBlocks.CATWALK
 import me.znepb.roadworks.RoadworksRegistry.ModBlocks.POST_CONTAINER

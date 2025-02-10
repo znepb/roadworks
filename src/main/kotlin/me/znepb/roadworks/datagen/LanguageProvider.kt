@@ -35,7 +35,13 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(RoadworksRegistry.ModItems.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT, "Five-head Traffic Signal Right")
         translationBuilder.add(RoadworksRegistry.ModItems.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT, "Five-head Traffic Signal Left/Right")
         translationBuilder.add(RoadworksRegistry.ModItems.PEDESTRIAN_SIGNAL_ATTACHMENT, "Pedestrian Signal")
+        translationBuilder.add(RoadworksRegistry.ModItems.TRAIN_BELL_ATTACHMENT, "Train Bell")
+        translationBuilder.add(RoadworksRegistry.ModItems.TRAIN_SIGNAL_ATTACHMENT, "Train Signal")
+        translationBuilder.add(RoadworksRegistry.ModItems.CROSSING_GATE_ATTACHMENT, "Crossing Gate Hinge")
         // translationBuilder.add(RoadworksRegistry.ModBlocks.PEDESTRIAN_BUTTON, "Pedestrian Button")
+
+        translationBuilder.add(RoadworksRegistry.ModItems.CROSSING_GATE_ARM_EXTENSION, "Crossing Gate Extension")
+        translationBuilder.add(RoadworksRegistry.ModItems.CATWALK, "Catwalk")
 
         translationBuilder.add(RoadworksRegistry.ModBlocks.WHITE_INFILL_MARKING, "White Infill Marking")
         translationBuilder.add(RoadworksRegistry.ModBlocks.WHITE_ARROW_LEFT_MARKING, "White Left Arrow Marking")
@@ -191,6 +197,11 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add("sign.${NAMESPACE}.yield", "Yield Sign")
         translationBuilder.add("sign.${NAMESPACE}.yield_ahead", "Yield Ahead Sign")
         translationBuilder.add("sign.${NAMESPACE}.wrong_way", "Wrong Way Sign")
+        translationBuilder.add("sign.${NAMESPACE}.no_left_turn", "No Left Turn Sign")
+        translationBuilder.add("sign.${NAMESPACE}.no_right_turn", "No Right Turn Sign")
+        translationBuilder.add("sign.${NAMESPACE}.ahead", "Supplemental Ahead Sign")
+        translationBuilder.add("sign.${NAMESPACE}.crossbuck", "Crossbuck")
+        translationBuilder.add("sign.${NAMESPACE}.4_way", "Supplemental 4-way Sign")
 
         translationBuilder.add("block.${NAMESPACE}.post_thick", "Thick Post")
         translationBuilder.add("block.${NAMESPACE}.post_medium", "Post")

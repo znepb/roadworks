@@ -197,6 +197,9 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
         return if(blockEntity.getTypeOfId(id) == "train_bell") {
             blockEntity.queueTrainBellSet(id, active)
             true
+        } else if(blockEntity.getTypeOfId(id) == "crossing_gate") {
+            blockEntity.queueCrossingArmSet(id, active)
+            true
         } else {
             throw LuaException("invalid signal type")
         }

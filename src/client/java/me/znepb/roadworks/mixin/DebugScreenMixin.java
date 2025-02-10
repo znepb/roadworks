@@ -3,6 +3,7 @@ package me.znepb.roadworks.mixin;
 import me.znepb.roadworks.RoadworksRegistry;
 import me.znepb.roadworks.attachment.LinkableAttachment;
 import me.znepb.roadworks.container.PostContainerBlockEntity;
+import me.znepb.roadworks.train.CrossingGateAttachment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.util.Formatting;
@@ -43,6 +44,12 @@ public class DebugScreenMixin {
                         if(((LinkableAttachment) attachment).getLinked()) {
                             value.add("Link position: " + ((LinkableAttachment) attachment).getLinkPosition());
                         }
+                    }
+
+                    if(attachment instanceof CrossingGateAttachment) {
+                        value.add("Gate progress: " + ((CrossingGateAttachment) attachment).getProgress());
+                        value.add("Active: " + ((CrossingGateAttachment) attachment).isActive());
+                        value.add("In motion: " + ((CrossingGateAttachment) attachment).isInMotion());
                     }
                 }
             }

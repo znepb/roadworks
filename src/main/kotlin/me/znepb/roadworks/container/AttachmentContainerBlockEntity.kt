@@ -24,6 +24,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.RaycastContext
+import net.minecraft.world.World
 import org.joml.Vector3d
 import java.util.*
 
@@ -119,6 +120,10 @@ abstract class AttachmentContainerBlockEntity(blockEntityType: BlockEntityType<*
 
     protected fun sendAttachmentUpdate() {
         this.attachments.forEach { it.containerUpdate() }
+    }
+
+    fun sendAttachmentNeighborUpdate(state: BlockState, world: World, pos: BlockPos, sourceBlock: Block, sourcePos: BlockPos, notify: Boolean) {
+        this.attachments.forEach { it.containerNeighborUpdate(state, world, pos, sourceBlock, sourcePos, notify) }
     }
 
     fun getPlayerAttachmentLookingAt(player: PlayerEntity): Attachment? {

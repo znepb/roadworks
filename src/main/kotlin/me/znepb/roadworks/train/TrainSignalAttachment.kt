@@ -5,11 +5,13 @@ import me.znepb.roadworks.attachment.LinkableAttachment
 import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.signal.BeaconAttachment
 import me.znepb.roadworks.util.RotateVoxelShape
+import me.znepb.roadworks.util.ShapeSized
 import net.minecraft.block.BlockWithEntity
 import net.minecraft.block.ShapeContext
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
+import net.minecraft.util.shape.VoxelShapes
 import org.joml.Vector3d
 
 class TrainSignalAttachment(container: AttachmentContainerBlockEntity) : LinkableAttachment(RoadworksRegistry.ModAttachments.TRAIN_SIGNAL, container) {
@@ -18,7 +20,11 @@ class TrainSignalAttachment(container: AttachmentContainerBlockEntity) : Linkabl
     private var leftOn = false
     private var rightOn = false
 
-    private val shape = BlockWithEntity.createCuboidShape(6.0, 6.0, 7.5, 10.0, 10.0, 8.5)
+    private val shape = VoxelShapes.union(
+        ShapeSized.createShape(1.0, 9.0, 7.5, 14.0, 1.0, 1.0),
+        ShapeSized.createShape(0.0, 4.0, 5.5, 7.0, 7.0, 2.0),
+        ShapeSized.createShape(9.0, 4.0, 5.5, 7.0, 7.0, 2.0)
+    )
 
     override fun getShape(context: ShapeContext): VoxelShape {
         val depthOffset = this.container.getDepthOffset()
@@ -63,11 +69,9 @@ class TrainSignalAttachment(container: AttachmentContainerBlockEntity) : Linkabl
         val server = world?.server
 
         if(world != null && server != null) {
-            if(this.isActivated && server.ticks % 12 == 0) {
-                if(!leftOn && !rightOn) rightOn = true
-                leftOn = !leftOn
-                rightOn = !rightOn
-                markDirty()
+            if(this.isActivated) {
+                leftOn = server.ticks % 24 < 13
+                rightOn = server.ticks % 24 >= 13
             } else if((leftOn || rightOn) && !this.isActivated) {
                 leftOn = false
                 rightOn = false

@@ -23,6 +23,8 @@ import me.znepb.roadworks.signal.BeaconAttachment
 import me.znepb.roadworks.signal.FiveHeadSignalAttachment
 import me.znepb.roadworks.signal.PedestrianSignalAttachment
 import me.znepb.roadworks.signal.ThreeHeadSignalAttachment
+import me.znepb.roadworks.train.CrossingGateArmExtension
+import me.znepb.roadworks.train.CrossingGateAttachment
 import me.znepb.roadworks.train.TrainBellAttachment
 import me.znepb.roadworks.train.TrainSignalAttachment
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
@@ -237,6 +239,8 @@ object RoadworksRegistry {
         val WHITE_L_SHORT_RIGHT = rBlock("marking_white_l_thin_short_right", TurnMarking(true))
 
         val CATWALK = rBlock("catwalk", Catwalk())
+
+        val CROSSING_GATE_ARM_EXTENSION = rBlock("crossing_gate_arm_extension", CrossingGateArmExtension())
     }
 
     object ModItems {
@@ -404,6 +408,8 @@ object RoadworksRegistry {
         val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT = rItem("five_head_traffic_signal_left_right", AttachmentItem(FabricItemSettings(), ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT))
         val TRAIN_BELL_ATTACHMENT = rItem("train_bell", AttachmentItem(FabricItemSettings(), ModAttachments.TRAIN_BELL))
         val TRAIN_SIGNAL_ATTACHMENT = rItem("train_signal", AttachmentItem(FabricItemSettings(), ModAttachments.TRAIN_SIGNAL))
+        val CROSSING_GATE_ATTACHMENT = rItem("crossing_gate", AttachmentItem(FabricItemSettings(), ModAttachments.CROSSING_GATE))
+        val CROSSING_GATE_ARM_EXTENSION = rItem(ModBlocks.CROSSING_GATE_ARM_EXTENSION, ::BlockItem, itemSettings())
     }
 
     object ModAttachments {
@@ -437,6 +443,7 @@ object RoadworksRegistry {
 
         val TRAIN_BELL = Registry.register(REGISTRY, ModId("train_bell"), AttachmentType.Builder(::TrainBellAttachment).build())
         val TRAIN_SIGNAL = Registry.register(REGISTRY, ModId("train_signal"), AttachmentType.Builder(::TrainSignalAttachment).build())
+        val CROSSING_GATE = Registry.register(REGISTRY, ModId("crossing_gate"), AttachmentType.Builder(::CrossingGateAttachment).build())
     }
 
     object ModSounds {

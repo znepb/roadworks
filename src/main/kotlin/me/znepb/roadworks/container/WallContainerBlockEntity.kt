@@ -18,6 +18,6 @@ class WallContainerBlockEntity(pos: BlockPos, state: BlockState) : AttachmentCon
     }
 
     override fun getDepthOffset(): Double {
-        return 0.5
+        return -0.5
     }
 }

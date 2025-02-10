@@ -65,7 +65,6 @@ object RoadworksClient : ClientModInitializer {
 				if(screenHandler is SignEditorScreenHandler) {
 					screenHandler.setBlockPosition(syncData.pos)
 					screenHandler.setAttachmentUUID(syncData.uuid)
-					RoadworksMain.logger.info("Synced blockpos and signuuid: data $syncData")
 				}
 			}
 		}
@@ -85,6 +84,7 @@ object RoadworksClient : ClientModInitializer {
 		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT, ::FiveHeadSignalAttachmentRenderer)
 		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.TRAIN_BELL, ::TrainBellAttachmentRenderer)
 		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.TRAIN_SIGNAL, ::TrainSignalAttachmentRenderer)
+		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.CROSSING_GATE, ::CrossingGateAttachmentRenderer)
 
 		logger.info("Registering attachment renderers")
 		attachmentRenderers = AttachmentRendererFactories.reload()

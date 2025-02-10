@@ -1,6 +1,7 @@
 package me.znepb.roadworks.container
 
 
+import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
@@ -35,5 +36,18 @@ abstract class AttachmentContainer(settings: Settings) : BlockWithEntity(setting
         val be = world.getBlockEntity(pos)
         if(be is AttachmentContainerBlockEntity) be.remove()
         super.onBreak(world, pos, state, player)
+    }
+
+    override fun neighborUpdate(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        sourceBlock: Block,
+        sourcePos: BlockPos,
+        notify: Boolean
+    ) {
+        val be = world.getBlockEntity(pos)
+        if(be !is AttachmentContainerBlockEntity) return
+        be.sendAttachmentNeighborUpdate(state, world, pos, sourceBlock, sourcePos, notify)
     }
 }

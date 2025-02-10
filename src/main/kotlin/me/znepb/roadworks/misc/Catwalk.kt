@@ -100,7 +100,6 @@ class Catwalk : Block(Settings.copy(Blocks.IRON_BLOCK)) {
         builder.add(DEVICE_EAST)
         builder.add(DEVICE_SOUTH)
         builder.add(DEVICE_WEST)
-
     }
 
     override fun getStateForNeighborUpdate(

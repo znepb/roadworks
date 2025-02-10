@@ -1,0 +1,132 @@
+{
+  "variants": {
+    "direction=horizontal,facing=east,thickness=medium": {
+      "model": "roadworks:block/crossing_gate_arm_post_medium",
+      "y": 90
+    },
+    "direction=horizontal,facing=east,thickness=none": {
+      "model": "roadworks:block/crossing_gate_arm",
+      "y": 90
+    },
+    "direction=horizontal,facing=east,thickness=thick": {
+      "model": "roadworks:block/crossing_gate_arm_post_thick",
+      "y": 90
+    },
+    "direction=horizontal,facing=east,thickness=thin": {
+      "model": "roadworks:block/crossing_gate_arm_post_thin",
+      "y": 90
+    },
+    "direction=horizontal,facing=north,thickness=medium": {
+      "model": "roadworks:block/crossing_gate_arm_post_medium",
+      "y": 0
+    },
+    "direction=horizontal,facing=north,thickness=none": {
+      "model": "roadworks:block/crossing_gate_arm",
+      "y": 0
+    },
+    "direction=horizontal,facing=north,thickness=thick": {
+      "model": "roadworks:block/crossing_gate_arm_post_thick",
+      "y": 0
+    },
+    "direction=horizontal,facing=north,thickness=thin": {
+      "model": "roadworks:block/crossing_gate_arm_post_thin",
+      "y": 0
+    },
+    "direction=horizontal,facing=south,thickness=medium": {
+      "model": "roadworks:block/crossing_gate_arm_post_medium",
+      "y": 180
+    },
+    "direction=horizontal,facing=south,thickness=none": {
+      "model": "roadworks:block/crossing_gate_arm",
+      "y": 180
+    },
+    "direction=horizontal,facing=south,thickness=thick": {
+      "model": "roadworks:block/crossing_gate_arm_post_thick",
+      "y": 180
+    },
+    "direction=horizontal,facing=south,thickness=thin": {
+      "model": "roadworks:block/crossing_gate_arm_post_thin",
+      "y": 180
+    },
+    "direction=horizontal,facing=west,thickness=medium": {
+      "model": "roadworks:block/crossing_gate_arm_post_medium",
+      "y": 270
+    },
+    "direction=horizontal,facing=west,thickness=none": {
+      "model": "roadworks:block/crossing_gate_arm",
+      "y": 270
+    },
+    "direction=horizontal,facing=west,thickness=thick": {
+      "model": "roadworks:block/crossing_gate_arm_post_thick",
+      "y": 270
+    },
+    "direction=horizontal,facing=west,thickness=thin": {
+      "model": "roadworks:block/crossing_gate_arm_post_thin",
+      "y": 270
+    },
+    "direction=vertical,facing=east,thickness=medium": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_medium",
+      "y": 90
+    },
+    "direction=vertical,facing=east,thickness=none": {
+      "model": "roadworks:block/crossing_gate_arm_vertical",
+      "y": 90
+    },
+    "direction=vertical,facing=east,thickness=thick": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_thick",
+      "y": 90
+    },
+    "direction=vertical,facing=east,thickness=thin": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_thin",
+      "y": 90
+    },
+    "direction=vertical,facing=north,thickness=medium": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_medium",
+      "y": 0
+    },
+    "direction=vertical,facing=north,thickness=none": {
+      "model": "roadworks:block/crossing_gate_arm_vertical",
+      "y": 0
+    },
+    "direction=vertical,facing=north,thickness=thick": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_thick",
+      "y": 0
+    },
+    "direction=vertical,facing=north,thickness=thin": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_thin",
+      "y": 0
+    },
+    "direction=vertical,facing=south,thickness=medium": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_medium",
+      "y": 180
+    },
+    "direction=vertical,facing=south,thickness=none": {
+      "model": "roadworks:block/crossing_gate_arm_vertical",
+      "y": 180
+    },
+    "direction=vertical,facing=south,thickness=thick": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_thick",
+      "y": 180
+    },
+    "direction=vertical,facing=south,thickness=thin": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_thin",
+      "y": 180
+    },
+    "direction=vertical,facing=west,thickness=medium": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_medium",
+      "y": 270
+    },
+    "direction=vertical,facing=west,thickness=none": {
+      "model": "roadworks:block/crossing_gate_arm_vertical",
+      "y": 270
+    },
+    "direction=vertical,facing=west,thickness=thick": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_thick",
+      "y": 270
+    },
+    "direction=vertical,facing=west,thickness=thin": {
+      "model": "roadworks:block/crossing_gate_arm_vertical_post_thin",
+      "y": 270
+    }
+  }
+}

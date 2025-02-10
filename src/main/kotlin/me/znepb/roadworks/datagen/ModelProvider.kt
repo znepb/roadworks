@@ -7,7 +7,9 @@ import me.znepb.roadworks.marking.OneSideFilledMarking.Companion.addMarkingWithF
 import me.znepb.roadworks.marking.TMarking.Companion.addTMarking
 import me.znepb.roadworks.marking.TurnMarking.Companion.addTurnMarking
 import me.znepb.roadworks.signal.SignalLight
+import me.znepb.roadworks.train.CrossingGateArmExtension
 import me.znepb.roadworks.util.OrientedBlockStateSupplier
+import me.znepb.roadworks.util.PostThickness
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -278,6 +280,60 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
             "marking_yellow_l_thin_short_right_outside")
 
         signals.forEach { addSignal(generator, it) }
+
+        // This block of code is commented out because it conflicts with the item model.
+        generator.excludeFromSimpleItemModelGeneration(RoadworksRegistry.ModBlocks.CROSSING_GATE_ARM_EXTENSION)
+        generator.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(RoadworksRegistry.ModBlocks.CROSSING_GATE_ARM_EXTENSION)
+                .coordinate(BlockStateVariantMap.create(Properties.HORIZONTAL_FACING)
+                    .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R0))
+                    .register(Direction.EAST, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R90))
+                    .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R180))
+                    .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.Y, Rotation.R270))
+                )
+                .coordinate(BlockStateVariantMap.create(CrossingGateArmExtension.DIRECTION, CrossingGateArmExtension.THICKNESS)
+                    .register(
+                        CrossingGateArmExtension.CrossingArmDirection.HORIZONTAL,
+                        PostThickness.THICK,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, ModId("block/crossing_gate_arm_post_thick"))
+                    )
+                    .register(
+                        CrossingGateArmExtension.CrossingArmDirection.HORIZONTAL,
+                        PostThickness.MEDIUM,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, ModId("block/crossing_gate_arm_post_medium"))
+                    )
+                    .register(
+                        CrossingGateArmExtension.CrossingArmDirection.HORIZONTAL,
+                        PostThickness.THIN,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, ModId("block/crossing_gate_arm_post_thin"))
+                    )
+                    .register(
+                        CrossingGateArmExtension.CrossingArmDirection.HORIZONTAL,
+                        PostThickness.NONE,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, ModId("block/crossing_gate_arm"))
+                    )
+                    .register(
+                        CrossingGateArmExtension.CrossingArmDirection.VERTICAL,
+                        PostThickness.THICK,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, ModId("block/crossing_gate_arm_vertical_post_thick"))
+                    )
+                    .register(
+                        CrossingGateArmExtension.CrossingArmDirection.VERTICAL,
+                        PostThickness.MEDIUM,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, ModId("block/crossing_gate_arm_vertical_post_medium"))
+                    )
+                    .register(
+                        CrossingGateArmExtension.CrossingArmDirection.VERTICAL,
+                        PostThickness.THIN,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, ModId("block/crossing_gate_arm_vertical_post_thin"))
+                    )
+                    .register(
+                        CrossingGateArmExtension.CrossingArmDirection.VERTICAL,
+                        PostThickness.NONE,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, ModId("block/crossing_gate_arm_vertical"))
+                    )
+                )
+        )
     }
 
     private fun addSignal(generator: BlockStateModelGenerator, signalName: String) {

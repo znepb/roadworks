@@ -1,5 +1,6 @@
 package me.znepb.roadworks.container
 
+import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.RoadworksRegistry
 import me.znepb.roadworks.util.PostThickness
 import me.znepb.roadworks.util.RotateVoxelShape
@@ -75,7 +76,6 @@ class PostContainer(settings: Settings) : AttachmentContainer(settings), BlockEn
         state: BlockState,
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
-        if (world.isClient) return null
         return checkType(type, RoadworksRegistry.ModBlockEntities.POST_CONTAINER_BLOCK_ENTITY, PostContainerBlockEntity.Companion::onTick)
     }
 

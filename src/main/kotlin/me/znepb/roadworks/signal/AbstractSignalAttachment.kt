@@ -61,6 +61,7 @@ abstract class AbstractSignalAttachment(
 
     override fun onTick() {
         val world = this.container.world
+
         val server = world?.server
         if(world?.isClient == false && server != null && !this.linked) {
             val tick = server.ticks

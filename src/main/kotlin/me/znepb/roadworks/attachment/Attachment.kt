@@ -3,6 +3,8 @@ package me.znepb.roadworks.attachment
 import me.znepb.roadworks.RoadworksRegistry
 import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
+import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
@@ -12,8 +14,10 @@ import net.minecraft.nbt.NbtString
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
+import net.minecraft.world.World
 import org.joml.Vector3f
 import java.util.*
 
@@ -59,6 +63,13 @@ abstract class Attachment(
     open fun onTick() {}
 
     open fun containerUpdate() {}
+
+    open fun containerNeighborUpdate(state: BlockState,
+                                     world: World,
+                                     pos: BlockPos,
+                                     sourceBlock: Block,
+                                     sourcePos: BlockPos,
+                                     notify: Boolean) {}
 
     open fun onUse(player: PlayerEntity, hand: Hand, hit: BlockHitResult): ActionResult = ActionResult.PASS
 }

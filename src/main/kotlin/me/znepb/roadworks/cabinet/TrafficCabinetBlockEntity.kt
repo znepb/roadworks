@@ -7,6 +7,7 @@ import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.signal.AbstractSignalAttachment
 import me.znepb.roadworks.signal.SignalLight
 import me.znepb.roadworks.signal.SignalType
+import me.znepb.roadworks.train.CrossingGateAttachment
 import me.znepb.roadworks.train.TrainBellAttachment
 import me.znepb.roadworks.util.MiscUtils.blockPosFromNbtIntArray
 import me.znepb.roadworks.util.MiscUtils.blockPosToNbtIntArray
@@ -31,6 +32,7 @@ class TrafficCabinetBlockEntity(
 
     private var signalSetQueue = HashMap<Int, HashMap<SignalLight, Boolean>>()
     private var bellActivationQueue = HashMap<Int, Boolean>()
+    private var crossingGateQueue = HashMap<Int, Boolean>()
 
     fun getTotalDevices() = connections.getAmount()
     fun getConnections() = connections
@@ -50,6 +52,8 @@ class TrafficCabinetBlockEntity(
                 return addSignal(attachment)
             } else if(attachment is TrainBellAttachment) {
                 return addTrainBell(attachment)
+            } else if(attachment is CrossingGateAttachment) {
+                return addCrossingGate(attachment)
             }
         }
         return null
@@ -70,6 +74,13 @@ class TrafficCabinetBlockEntity(
         idTypeCache[newBell.getId()] = attachment.getLinkType()
         this.markDirty()
         return newBell.getId()
+    }
+
+    private fun addCrossingGate(attachment: CrossingGateAttachment): Int {
+        val newCrossingGate = connections.add(attachment.container.pos, attachment.id)
+        idTypeCache[newCrossingGate.getId()] = attachment.getLinkType()
+        this.markDirty()
+        return newCrossingGate.getId()
     }
 
     fun addButton(pos: BlockPos, uuid: UUID): Int? {
@@ -128,6 +139,10 @@ class TrafficCabinetBlockEntity(
         bellActivationQueue[id] = activated
     }
 
+    fun queueCrossingArmSet(id: Int, activated: Boolean) {
+        crossingGateQueue[id] = activated
+    }
+
     fun onTick(world: World, pos: BlockPos, state: BlockState) {
         if(signalSetQueue.isNotEmpty()) {
             connections.getAll().forEach {
@@ -159,6 +174,21 @@ class TrafficCabinetBlockEntity(
                     attachment.setActive(value)
                 }
             }
+            bellActivationQueue = HashMap()
+        }
+
+        if(crossingGateQueue.isNotEmpty()) {
+            crossingGateQueue.forEach {
+                val id = it.key
+                val value = it.value
+                val connection = connections.get(id)
+                val attachment = this.world?.let { it1 -> connection?.getAttachment(it1) }
+
+                if(attachment is CrossingGateAttachment) {
+                    attachment.setActive(value)
+                }
+            }
+            crossingGateQueue = HashMap()
         }
 
         this.connections.getAll().forEach {

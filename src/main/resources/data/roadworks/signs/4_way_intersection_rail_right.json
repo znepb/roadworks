@@ -1,0 +1,5 @@
+{
+  "name": "sign.roadworks.4_way_intersection_rail_right",
+  "front_texture": "roadworks:block/signs/4_way_intersection_rail_right",
+  "back_texture": "roadworks:block/signs/back_diamond"
+}

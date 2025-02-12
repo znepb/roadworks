@@ -13,6 +13,7 @@ import net.minecraft.block.ShapeContext
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.network.packet.s2c.play.EntityS2CPacket.Rotate
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
@@ -28,7 +29,19 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Activa
     private var inMotion = false
 
     companion object {
-        val shape = VoxelShapes.cuboid(7.0 / 16.0, 7.0 / 16.0, 7.0 / 16.0, 9.0 / 16.0, 9.0 / 16.0, 9.0 / 16.0)
+        //val shape =
+    }
+
+    fun getShape(open: Boolean): VoxelShape  {
+        val shape = VoxelShapes.union(
+            VoxelShapes.cuboid(7.0 / 16.0, 5.0 / 16.0, 6.5 / 16.0, 9.0 / 16.0, 7.5 / 16.0, 9.0 / 16.0),
+            VoxelShapes.cuboid(6.0 / 16.0, 0.0, 5.5 / 16.0, 10.0 / 16.0, 5 / 16.0, 10.0 / 16.0),
+            VoxelShapes.cuboid(7.0 / 16.0, 7.5 / 16.0, 6.5 / 16.0, 12.75 / 16.0, 12 / 16.0, 8.5 / 16.0),
+            VoxelShapes.cuboid(10.75 / 16.0, 12 / 16.0, 6.5 / 16.0, 12.75 / 16.0, 15 / 16.0, 8.5 / 16.0),
+            VoxelShapes.cuboid(10.75 / 16.0, 15 / 16.0, 7 / 16.0, 12.75 / 16.0, 16 / 16.0, 8 / 16.0),
+        )
+
+        return if(open) RotateVoxelShape.rotateVoxelShape(RotateVoxelShape.rotateVoxelShape(shape, Direction.DOWN, Direction.NORTH), Direction.WEST, Direction.UP) else shape
     }
 
     override fun writeNBT(nbt: NbtCompound) {
@@ -58,7 +71,7 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Activa
         val depthOffset = this.container.getDepthOffset()
 
         return RotateVoxelShape.offsetFromDirectionXZ(
-            RotateVoxelShape.rotateVoxelShape(shape, Direction.NORTH, this.facing),
+            RotateVoxelShape.rotateVoxelShape(getShape(this.isActive()), Direction.NORTH, if(this.isActive()) this.facing.opposite else this.facing),
             facing,
             Vector3d(0.0, 0.0, -depthOffset - BeaconAttachment.HALF),
             Vector3d(depthOffset + BeaconAttachment.HALF, 0.0, 0.0),

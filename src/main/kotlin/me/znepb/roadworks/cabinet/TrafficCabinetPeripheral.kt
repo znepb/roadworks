@@ -142,6 +142,22 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
 
     }
 
+    /// Sets the colors of a four-head signal.
+    @LuaFunction
+    fun setFourHead(id: Int, red: Boolean, mt: Boolean, mb: Boolean, green: Boolean): Boolean {
+        when (val type = blockEntity.getTypeOfId(id)?.let { SignalType.fromType(it) }) {
+            SignalType.FLASHING_YELLOW_ARROW_SIGNAL -> {
+                blockEntity.queueSignalSet(id, SignalLight.RED_LEFT, red)
+                blockEntity.queueSignalSet(id, SignalLight.YELLOW_LEFT, mt)
+                blockEntity.queueSignalSet(id, SignalLight.FLASHING_YELLOW_LEFT, mb)
+                blockEntity.queueSignalSet(id, SignalLight.GREEN_LEFT, green)
+                return true
+            }
+            else -> throw LuaException("invalid signal type, got $type")
+        }
+
+    }
+
     @LuaFunction
     fun setFiveHead(id: Int, red: Boolean, yellowLeft: Boolean, greenLeft: Boolean, yellowRight: Boolean, greenRight: Boolean): Boolean {
         return when (val type = blockEntity.getTypeOfId(id)?.let { SignalType.fromType(it) }) {

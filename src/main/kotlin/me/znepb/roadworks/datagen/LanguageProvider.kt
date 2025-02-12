@@ -31,6 +31,7 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(RoadworksRegistry.ModItems.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT, "Three-head Traffic Signal Left")
         translationBuilder.add(RoadworksRegistry.ModItems.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT, "Three-head Traffic Signal Right")
         translationBuilder.add(RoadworksRegistry.ModItems.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_STRAIGHT, "Three-head Traffic Signal Straight")
+        translationBuilder.add(RoadworksRegistry.ModItems.FLASHING_YELLOW_ARROW_SIGNAL_ATTACHMENT, "Flashing Yellow Arrow Signal")
         translationBuilder.add(RoadworksRegistry.ModItems.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT, "Five-head Traffic Signal Left")
         translationBuilder.add(RoadworksRegistry.ModItems.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT, "Five-head Traffic Signal Right")
         translationBuilder.add(RoadworksRegistry.ModItems.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT, "Five-head Traffic Signal Left/Right")

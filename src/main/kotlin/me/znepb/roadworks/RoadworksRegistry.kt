@@ -2,6 +2,7 @@ package me.znepb.roadworks
 
 import dan200.computercraft.api.peripheral.PeripheralLookup
 import me.znepb.roadworks.RoadworksMain.ModId
+import me.znepb.roadworks.attachment.Attachment
 import me.znepb.roadworks.attachment.AttachmentItem
 import me.znepb.roadworks.attachment.AttachmentType
 import me.znepb.roadworks.cabinet.TrafficCabinet
@@ -19,10 +20,7 @@ import me.znepb.roadworks.misc.Catwalk
 import me.znepb.roadworks.sign.RoadSignAttachment
 import me.znepb.roadworks.sign.SignAttachment
 import me.znepb.roadworks.sign.SignAttachmentItem
-import me.znepb.roadworks.signal.BeaconAttachment
-import me.znepb.roadworks.signal.FiveHeadSignalAttachment
-import me.znepb.roadworks.signal.PedestrianSignalAttachment
-import me.znepb.roadworks.signal.ThreeHeadSignalAttachment
+import me.znepb.roadworks.signal.*
 import me.znepb.roadworks.train.CrossingGateArmExtension
 import me.znepb.roadworks.train.CrossingGateAttachment
 import me.znepb.roadworks.train.TrainBellAttachment
@@ -403,6 +401,7 @@ object RoadworksRegistry {
         val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT = rItem("three_head_traffic_signal_left", AttachmentItem(FabricItemSettings(), ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT))
         val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT = rItem("three_head_traffic_signal_right", AttachmentItem(FabricItemSettings(), ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT))
         val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_STRAIGHT = rItem("three_head_traffic_signal_straight", AttachmentItem(FabricItemSettings(), ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_STRAIGHT))
+        val FLASHING_YELLOW_ARROW_SIGNAL_ATTACHMENT = rItem("flashing_yellow_arrow_traffic_signal", AttachmentItem(FabricItemSettings(), ModAttachments.FLASHING_YELLOW_ARROW_SIGNAL_ATTACHMENT))
         val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT = rItem("five_head_traffic_signal_left", AttachmentItem(FabricItemSettings(), ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT))
         val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT = rItem("five_head_traffic_signal_right", AttachmentItem(FabricItemSettings(), ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT))
         val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT = rItem("five_head_traffic_signal_left_right", AttachmentItem(FabricItemSettings(), ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT))
@@ -433,6 +432,9 @@ object RoadworksRegistry {
             ThreeHeadSignalAttachment::Right).build())
         val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_STRAIGHT = Registry.register(REGISTRY, ModId("three_head_traffic_signal_straight"), AttachmentType.Builder(
             ThreeHeadSignalAttachment::Straight).build())
+
+        val FLASHING_YELLOW_ARROW_SIGNAL_ATTACHMENT = Registry.register(REGISTRY, ModId("flashing_yellow_arrow_signal"), AttachmentType.Builder(
+            FourHeadSignalAttachment::FlashingYellowArrowSignal).build())
 
         val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT = Registry.register(REGISTRY, ModId("five_head_traffic_signal_left"), AttachmentType.Builder(
             FiveHeadSignalAttachment::LeftBall).build())

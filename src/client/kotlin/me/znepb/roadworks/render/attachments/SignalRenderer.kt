@@ -16,6 +16,7 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import org.joml.Vector3d
+import kotlin.math.sign
 
 class SignalRenderer(
     private val attachment: AbstractSignalAttachment,
@@ -36,8 +37,13 @@ class SignalRenderer(
         y: Double,
         offset: Vector3d
     ) {
-        val modelLocation =
-            RoadworksMain.ModId("block/signal_${signalLight.light}_${if(attachment.isSignalActive(signalLight)) "on" else "off"}")
+        val time = System.currentTimeMillis()
+        val modelLocation = RoadworksMain.ModId("block/signal_${if(signalLight.useTextureOf != null) signalLight.useTextureOf!!.light else signalLight.light}_${
+            if(
+                (attachment.isSignalActive(signalLight) && !signalLight.flashing) 
+                || (attachment.isSignalActive(signalLight) && signalLight.flashing && time % 1000 >= 500)) 
+            "on" else "off"
+        }")
 
         matrices.push()
         AttachmentRenderer.translateForCenter(matrices, attachment.facing.opposite, 0)

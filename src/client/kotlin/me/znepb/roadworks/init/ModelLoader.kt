@@ -6,6 +6,7 @@ import me.znepb.roadworks.datagen.ModelProvider
 import me.znepb.roadworks.render.PostContainerRenderer
 import me.znepb.roadworks.render.attachments.*
 import me.znepb.roadworks.render.models.PostItemBakedModel
+import me.znepb.roadworks.signal.FourHeadSignalAttachment
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 
 class ModelLoader {
@@ -25,6 +26,7 @@ class ModelLoader {
             PostContainerRenderer.POST_MEDIUM_STUB_MODEL,
             BeaconAttachmentRenderer.SIGNAL_FRAME_1,
             ThreeHeadSignalAttachmentRenderer.SIGNAL_FRAME_3,
+            FourHeadSignalAttachmentRenderer.SIGNAL_FRAME_4,
             FiveHeadSignalAttachmentRenderer.SIGNAL_FRAME_5,
             PedestrianSignalAttachmentRenderer.BLANK_SIGNAL,
             PedestrianSignalAttachmentRenderer.DONT_WALK,

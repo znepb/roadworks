@@ -40,6 +40,12 @@ enum class SignalType(
         SignalLight.GREEN_RIGHT,
         SignalLight.YELLOW_RIGHT,
         SignalLight.RED
+    )),
+    FLASHING_YELLOW_ARROW_SIGNAL("flashing_yellow_arrow_signal", listOf(
+        SignalLight.GREEN_LEFT,
+        SignalLight.FLASHING_YELLOW_LEFT,
+        SignalLight.YELLOW_LEFT,
+        SignalLight.RED_LEFT
     ));
 
     fun getReds(): List<SignalLight> {

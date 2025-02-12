@@ -1,6 +1,7 @@
 package me.znepb.roadworks.train
 
 import me.znepb.roadworks.RoadworksRegistry
+import me.znepb.roadworks.attachment.ActivatableAttachment
 import me.znepb.roadworks.attachment.LinkableAttachment
 import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.signal.BeaconAttachment
@@ -12,9 +13,8 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import org.joml.Vector3d
 
-class TrainBellAttachment(container: AttachmentContainerBlockEntity) : LinkableAttachment(RoadworksRegistry.ModAttachments.TRAIN_BELL, container) {
+class TrainBellAttachment(container: AttachmentContainerBlockEntity) : ActivatableAttachment(RoadworksRegistry.ModAttachments.TRAIN_BELL, container) {
     override fun getLinkType() = "train_bell"
-    private var isActivated = false
 
     private val shape = BlockWithEntity.createCuboidShape(6.0, 6.0, 7.5, 10.0, 10.0, 8.5)
 
@@ -31,13 +31,8 @@ class TrainBellAttachment(container: AttachmentContainerBlockEntity) : LinkableA
         )
     }
 
-    fun isActive() = isActivated
-    fun activate() { isActivated = true }
-    fun deactivate() { isActivated = false }
-    fun setActive(active: Boolean) { isActivated = active }
-
     override fun onTick() {
-        if(!isActivated) return
+        if(!this.isActive()) return
         if(this.container.world?.isClient == true) return
 
         val world = this.container.world

@@ -1,8 +1,7 @@
 package me.znepb.roadworks.train
 
-import me.znepb.roadworks.RoadworksMain.logger
 import me.znepb.roadworks.RoadworksRegistry
-import me.znepb.roadworks.attachment.LinkableAttachment
+import me.znepb.roadworks.attachment.ActivatableAttachment
 import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.signal.BeaconAttachment
@@ -15,16 +14,13 @@ import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvent
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import org.joml.Vector3d
 
-class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : LinkableAttachment(RoadworksRegistry.ModAttachments.CROSSING_GATE, container) {
-    private var isActivated = false
+class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : ActivatableAttachment(RoadworksRegistry.ModAttachments.CROSSING_GATE, container) {
     private var extensionCount = 0
     private var progress = 0F
     private var lastProgress = 0F
@@ -36,7 +32,6 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
     }
 
     override fun writeNBT(nbt: NbtCompound) {
-        nbt.putBoolean("active", isActivated)
         nbt.putBoolean("inMotion", inMotion)
         nbt.putInt("extensionCount", extensionCount)
         nbt.putFloat("progress", progress)
@@ -45,9 +40,8 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
     }
 
     override fun readNBT(nbt: NbtCompound) {
-        val active = nbt.getBoolean("active")
-        if(active != isActivated) {
-            this.setActive(active)
+        if(nbt.getBoolean("inMotion") != this.isActive()) {
+            activeChanged(!this.isActive())
         }
 
         this.inMotion = nbt.getBoolean("inMotion")
@@ -58,9 +52,7 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
         super.readNBT(nbt)
     }
 
-    override fun getLinkType(): String {
-        return "crossing_gate"
-    }
+    override fun getLinkType() = "crossing_gate"
 
     override fun getShape(context: ShapeContext): VoxelShape {
         val depthOffset = this.container.getDepthOffset()
@@ -81,7 +73,7 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
 
     fun getProgress(tickDelta: Float): Float {
         if(!inMotion) {
-            return if(isActivated) 0F else 1F
+            return if(isActive()) 0F else 1F
         }
         return MathHelper.lerp(tickDelta.coerceAtMost(1.0F), lastProgress, this.progress)
     }
@@ -91,7 +83,7 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
 
         if(world?.isClient == false) {
             val pos = this.container.pos
-            val extensionDirection = if(this.isActivated) this.facing.rotateYClockwise() else Direction.UP
+            val extensionDirection = if(isActive()) this.facing.rotateYClockwise() else Direction.UP
 
             for(i in 0..<extensionCount) {
                 world.setBlockState(pos.offset(extensionDirection, i + 1), Blocks.AIR.defaultState)
@@ -101,11 +93,10 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
 
     private fun replaceExtensions() {
         val world = this.container.world
-        logger.info("Extension replacement")
 
         if(world?.isClient == false) {
             val pos = this.container.pos
-            val extensionDirection = if(this.isActivated) this.facing.rotateYClockwise() else Direction.UP
+            val extensionDirection = if(isActive()) this.facing.rotateYClockwise() else Direction.UP
 
             for (i in 0..<extensionCount) {
                 val position = pos.offset(extensionDirection, i + 1)
@@ -119,7 +110,7 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
                             )
                             .with(
                                 CrossingGateArmExtension.DIRECTION,
-                                if (this.isActivated) CrossingGateArmExtension.CrossingArmDirection.HORIZONTAL else CrossingGateArmExtension.CrossingArmDirection.VERTICAL
+                                if (isActive()) CrossingGateArmExtension.CrossingArmDirection.HORIZONTAL else CrossingGateArmExtension.CrossingArmDirection.VERTICAL
                             )
                             .with(HorizontalFacingBlock.FACING, this.facing)
                     )
@@ -135,7 +126,9 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
     }
 
     private fun countExtensions() {
-        val extensionDirection = if(this.isActivated) this.facing.rotateYClockwise() else Direction.UP
+        if(this.container.world?.isClient == true) return
+
+        val extensionDirection = if(isActive()) this.facing.rotateYClockwise() else Direction.UP
         var hasExtension = true
         var extensions = 0
 
@@ -158,7 +151,6 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
             }
         }
 
-        logger.info("Counted $extensions extensions")
         this.extensionCount = extensions
     }
 
@@ -181,25 +173,24 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Linkab
         }
     }
 
-    fun isActive() = isActivated
-    fun activate() { setActive(true) }
-    fun deactivate() { setActive(false) }
-    fun setActive(active: Boolean) {
+    override fun setActive(active: Boolean) {
         if(inMotion) return
+        this.activeChanged(active)
+        super.setActive(active)
+    }
 
-        if(active != isActivated) {
-            if(this.container.world?.isClient == false) {
-                logger.info("Activation state changed")
-                countExtensions()
-                removeExtensions()
-            }
+    private fun activeChanged(active: Boolean) {
+        if(this.isActive() == active) return
 
-            inMotion = true
-            isActivated = active
-            gateDirection = if(active) -1 else 1
-            this.markDirty()
-            this.lastProgress = if(gateDirection == 1) 0.0F else 1.0F
-            this.progress = if(gateDirection == 1) 0.0F else 1.0F
+        if(this.container.world?.isClient == false) {
+            countExtensions()
+            removeExtensions()
         }
+
+        inMotion = true
+        gateDirection = if(active) -1 else 1
+        this.markDirty()
+        this.lastProgress = if(gateDirection == 1) 0.0F else 1.0F
+        this.progress = if(gateDirection == 1) 0.0F else 1.0F
     }
 }

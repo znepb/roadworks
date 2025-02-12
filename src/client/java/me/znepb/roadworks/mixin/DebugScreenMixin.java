@@ -1,6 +1,7 @@
 package me.znepb.roadworks.mixin;
 
 import me.znepb.roadworks.RoadworksRegistry;
+import me.znepb.roadworks.attachment.ActivatableAttachment;
 import me.znepb.roadworks.attachment.LinkableAttachment;
 import me.znepb.roadworks.container.PostContainerBlockEntity;
 import me.znepb.roadworks.train.CrossingGateAttachment;
@@ -46,10 +47,14 @@ public class DebugScreenMixin {
                         }
                     }
 
+                    if(attachment instanceof ActivatableAttachment) {
+                        value.add("Active: " + ((ActivatableAttachment) attachment).isActive());
+                    }
+
                     if(attachment instanceof CrossingGateAttachment) {
                         value.add("Gate progress: " + ((CrossingGateAttachment) attachment).getProgress());
-                        value.add("Active: " + ((CrossingGateAttachment) attachment).isActive());
                         value.add("In motion: " + ((CrossingGateAttachment) attachment).isInMotion());
+                        value.add("Extensions: " + ((CrossingGateAttachment) attachment).getExtensionCount());
                     }
                 }
             }

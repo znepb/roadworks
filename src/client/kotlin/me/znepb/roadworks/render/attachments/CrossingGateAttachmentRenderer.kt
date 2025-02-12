@@ -14,9 +14,8 @@ import org.joml.Vector3d
 class CrossingGateAttachmentRenderer : AttachmentRenderer<CrossingGateAttachment> {
     companion object {
         val HINGE = RoadworksMain.ModId("block/crossing_arm_hinge")
-        val GATE_ARM = RoadworksMain.ModId("block/crossing_gate_arm_extension")
+        val GATE_ARM = RoadworksMain.ModId("block/crossing_gate_arm")
     }
-
 
     override fun render(
         attachment: CrossingGateAttachment,

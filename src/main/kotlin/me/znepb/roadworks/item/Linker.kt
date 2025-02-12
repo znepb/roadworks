@@ -3,7 +3,7 @@ package me.znepb.roadworks.item
 import me.znepb.roadworks.RoadworksMain
 import me.znepb.roadworks.attachment.LinkableAttachment
 import me.znepb.roadworks.cabinet.TrafficCabinetBlockEntity
-import me.znepb.roadworks.container.PostContainerBlockEntity
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -146,7 +146,7 @@ class Linker(settings: Settings) : Item(settings) {
 
         val linkedFromBlockEntity = context.world.getBlockEntity(linking)
 
-        if(linkedFromBlockEntity !is PostContainerBlockEntity) {
+        if(linkedFromBlockEntity !is AttachmentContainerBlockEntity) {
             // Traffic device disappeared somehow
             context.player?.sendMessage(Text.literal("The device is no longer there"), true)
             return
@@ -198,7 +198,7 @@ class Linker(settings: Settings) : Item(settings) {
             val blockEntity = context.world?.getBlockEntity(context.blockPos)
 
             if(linking == null) {
-                if (blockEntity is PostContainerBlockEntity) {
+                if (blockEntity is AttachmentContainerBlockEntity) {
                     val attachment = context.player?.let { blockEntity.getPlayerAttachmentLookingAt(it) }
                     return if(attachment != null && attachment is LinkableAttachment) linkDevice(attachment, context) else ActionResult.CONSUME
                 } else if(blockEntity is TrafficCabinetBlockEntity) {
@@ -210,7 +210,7 @@ class Linker(settings: Settings) : Item(settings) {
                 if(linkingWith == LinkingFrom.DEVICE) {
                     completeDeviceToCabinetLink(blockEntity, context)
                     reset()
-                } else if(linkingWith == LinkingFrom.CABINET && blockEntity is PostContainerBlockEntity) {
+                } else if(linkingWith == LinkingFrom.CABINET && blockEntity is AttachmentContainerBlockEntity) {
                     val attachment = context.player?.let { blockEntity.getPlayerAttachmentLookingAt(it) }
                     if(attachment != null && attachment is LinkableAttachment) completeLinkToCabinet(attachment, context)
                     reset()

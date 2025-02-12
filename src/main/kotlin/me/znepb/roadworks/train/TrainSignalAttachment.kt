@@ -1,6 +1,7 @@
 package me.znepb.roadworks.train
 
 import me.znepb.roadworks.RoadworksRegistry
+import me.znepb.roadworks.attachment.ActivatableAttachment
 import me.znepb.roadworks.attachment.LinkableAttachment
 import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.signal.BeaconAttachment
@@ -14,9 +15,8 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import org.joml.Vector3d
 
-class TrainSignalAttachment(container: AttachmentContainerBlockEntity) : LinkableAttachment(RoadworksRegistry.ModAttachments.TRAIN_SIGNAL, container) {
+class TrainSignalAttachment(container: AttachmentContainerBlockEntity) : ActivatableAttachment(RoadworksRegistry.ModAttachments.TRAIN_SIGNAL, container) {
     override fun getLinkType() = "train_beacon"
-    private var isActivated = true
     private var leftOn = false
     private var rightOn = false
 
@@ -43,23 +43,15 @@ class TrainSignalAttachment(container: AttachmentContainerBlockEntity) : Linkabl
     fun isLeftOn() = leftOn
 
     override fun writeNBT(nbt: NbtCompound) {
+        super.writeNBT(nbt)
         nbt.putBoolean("left", leftOn)
         nbt.putBoolean("right", rightOn)
-        super.writeNBT(nbt)
     }
 
     override fun readNBT(nbt: NbtCompound) {
-        super.readNBT(nbt)
-
         this.leftOn = if(nbt.contains("left")) nbt.getBoolean("left") else false
         this.rightOn = if(nbt.contains("right")) nbt.getBoolean("right") else false
-    }
-
-    fun isActive() = isActivated
-    fun activate() { isActivated = true }
-    fun deactivate() { isActivated = false }
-    fun setActive(active: Boolean) {
-        isActivated = active
+        super.readNBT(nbt)
     }
 
     override fun onTick() {
@@ -69,10 +61,11 @@ class TrainSignalAttachment(container: AttachmentContainerBlockEntity) : Linkabl
         val server = world?.server
 
         if(world != null && server != null) {
-            if(this.isActivated) {
+            if(this.isActive()) {
                 leftOn = server.ticks % 24 < 13
                 rightOn = server.ticks % 24 >= 13
-            } else if((leftOn || rightOn) && !this.isActivated) {
+                markDirty()
+            } else if((leftOn || rightOn) && !this.isActive()) {
                 leftOn = false
                 rightOn = false
                 markDirty()

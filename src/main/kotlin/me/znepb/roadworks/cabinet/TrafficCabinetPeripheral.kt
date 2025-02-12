@@ -5,6 +5,7 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.ObjectLuaTable
 import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
+import me.znepb.roadworks.attachment.ActivatableAttachment
 import me.znepb.roadworks.signal.SignalLight
 import me.znepb.roadworks.signal.SignalType
 import me.znepb.roadworks.train.TrainBellAttachment
@@ -194,11 +195,11 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
 
     @LuaFunction
     fun setActive(id: Int, active: Boolean): Boolean {
-        return if(blockEntity.getTypeOfId(id) == "train_bell") {
-            blockEntity.queueTrainBellSet(id, active)
-            true
-        } else if(blockEntity.getTypeOfId(id) == "crossing_gate") {
-            blockEntity.queueCrossingArmSet(id, active)
+        return if(blockEntity.getTypeOfId(id) == "crossing_gate"
+            || blockEntity.getTypeOfId(id) == "train_bell"
+            || blockEntity.getTypeOfId(id) == "train_beacon")
+        {
+            blockEntity.queueActivatable(id, active)
             true
         } else {
             throw LuaException("invalid signal type")

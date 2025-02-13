@@ -1,5 +1,5 @@
 {
   "name": "sign.roadworks.no_left_turn",
   "front_texture": "roadworks:block/signs/no_left_turn",
-  "back_texture": "roadworks:block/signs/back_no_turn"
+  "back_texture": "roadworks:block/signs/back_small_square"
 }

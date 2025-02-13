@@ -1,0 +1,5 @@
+{
+  "name": "sign.roadworks.no_turn_on_red_alt_2",
+  "front_texture": "roadworks:block/signs/no_turn_on_red_alt_2",
+  "back_texture": "roadworks:block/signs/back_large_square"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "sign.roadworks.keep_left",
+  "front_texture": "roadworks:block/signs/keep_left",
+  "back_texture": "roadworks:block/signs/back_rectangle"
+}

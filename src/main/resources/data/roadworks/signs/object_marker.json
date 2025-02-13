@@ -1,0 +1,5 @@
+{
+  "name": "sign.roadworks.object_marker",
+  "front_texture": "roadworks:block/signs/object_marker",
+  "back_texture": "roadworks:block/signs/back_diamond"
+}

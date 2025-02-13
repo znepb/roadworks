@@ -23,6 +23,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.item.ItemStack
+import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 
 object RoadworksClient : ClientModInitializer {
@@ -45,7 +46,7 @@ object RoadworksClient : ClientModInitializer {
 			warningRoadSignAttachmentItem.orCreateNbt.putString("color", "yellow")
 			it.add(warningRoadSignAttachmentItem)
 
-			RoadworksMain.signageManager.getSignTypes().forEach { sign ->
+			RoadworksMain.signageManager.getSignTypes().toSortedMap(compareBy<Identifier> { it.path }).forEach { sign ->
 				val item = ItemStack(RoadworksRegistry.ModItems.SIGN_ATTACHMENT)
 				item.orCreateNbt.putString("sign_type", sign.key.toString())
 				it.add(item)

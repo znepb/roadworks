@@ -1,0 +1,5 @@
+{
+  "name": "sign.roadworks.road_ending_marker",
+  "front_texture": "roadworks:block/signs/road_ending_marker",
+  "back_texture": "roadworks:block/signs/back_diamond"
+}

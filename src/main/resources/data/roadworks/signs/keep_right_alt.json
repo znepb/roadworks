@@ -1,0 +1,5 @@
+{
+  "name": "sign.roadworks.keep_right_alt",
+  "front_texture": "roadworks:block/signs/keep_right_alt",
+  "back_texture": "roadworks:block/signs/back_rectangle"
+}

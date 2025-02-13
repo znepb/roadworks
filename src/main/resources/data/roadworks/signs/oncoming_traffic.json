@@ -1,0 +1,5 @@
+{
+  "name": "sign.roadworks.oncoming_traffic",
+  "front_texture": "roadworks:block/signs/oncoming_traffic",
+  "back_texture": "roadworks:block/signs/back_diamond"
+}

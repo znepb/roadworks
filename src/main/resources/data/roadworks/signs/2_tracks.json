@@ -1,0 +1,6 @@
+{
+  "name": "sign.roadworks.2_tracks",
+  "front_texture": "roadworks:block/signs/2_tracks",
+  "back_texture": "roadworks:block/signs/tracks_back",
+  "height": 33
+}

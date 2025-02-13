@@ -1,0 +1,5 @@
+{
+  "name": "sign.roadworks.left_turn_yield_on_green",
+  "front_texture": "roadworks:block/signs/left_turn_yield_on_green",
+  "back_texture": "roadworks:block/signs/back_wide_rectangle"
+}

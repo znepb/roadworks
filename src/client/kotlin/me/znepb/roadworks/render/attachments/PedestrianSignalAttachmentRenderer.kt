@@ -2,6 +2,7 @@ package me.znepb.roadworks.render.attachments
 
 import me.znepb.roadworks.RoadworksMain
 import me.znepb.roadworks.container.AttachmentContainerBlockEntity
+import me.znepb.roadworks.container.PostContainer
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.signal.PedestrianSignalAttachment
 import me.znepb.roadworks.signal.SignalLight
@@ -33,9 +34,14 @@ class PedestrianSignalAttachmentRenderer : AttachmentRenderer<PedestrianSignalAt
         else if(attachment.isSignalActive(SignalLight.DONT_WALK)) DONT_WALK
         else BLANK_SIGNAL
 
+        var offsetZ = 0.0
+        if(attachment.container is PostContainerBlockEntity && (attachment.container as PostContainerBlockEntity).thickness === PostThickness.THICK) {
+            offsetZ = -1.0 / 16.0
+        }
+
         matrices.push()
         AttachmentRenderer.translateForCenter(matrices, attachment.facing.opposite, 0)
-        matrices.translate(offset.x, offset.y, offset.z)
+        matrices.translate(offset.x, offset.y, -offset.z - 1.0 / 16.0 + offsetZ)
         RenderUtils.renderModel(matrices, renderer.buffer, light, overlay, signal, null)
         matrices.pop()
     }

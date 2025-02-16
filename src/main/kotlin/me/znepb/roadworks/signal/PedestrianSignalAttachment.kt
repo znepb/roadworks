@@ -20,7 +20,10 @@ class PedestrianSignalAttachment(container: AttachmentContainerBlockEntity) : Ab
     }
 
     override fun getShape(context: ShapeContext): VoxelShape {
-        val depthOffset = this.container.getDepthOffset()
+        var depthOffset = this.container.getDepthOffset()
+        if(container is PostContainerBlockEntity && container.thickness === PostThickness.THICK) {
+            depthOffset -= -1.0 / 16.0
+        }
 
         return RotateVoxelShape.offsetFromDirectionXZ(
             RotateVoxelShape.rotateVoxelShape(SIGNAL_SHAPE, Direction.NORTH, this.facing),

@@ -213,6 +213,7 @@ class TrafficCabinetPeripheral(val blockEntity: TrafficCabinetBlockEntity) : IPe
     fun setActive(id: Int, active: Boolean): Boolean {
         return if(blockEntity.getTypeOfId(id) == "crossing_gate"
             || blockEntity.getTypeOfId(id) == "train_bell"
+            || blockEntity.getTypeOfId(id) == "blankout"
             || blockEntity.getTypeOfId(id) == "train_beacon")
         {
             blockEntity.queueActivatable(id, active)

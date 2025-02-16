@@ -39,6 +39,13 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(RoadworksRegistry.ModItems.TRAIN_BELL_ATTACHMENT, "Train Bell")
         translationBuilder.add(RoadworksRegistry.ModItems.TRAIN_SIGNAL_ATTACHMENT, "Train Signal")
         translationBuilder.add(RoadworksRegistry.ModItems.CROSSING_GATE_ATTACHMENT, "Crossing Gate Hinge")
+
+        translationBuilder.add(RoadworksRegistry.ModItems.BLANKOUT_NO_LEFT_TURN, "No Left Turn Blankout")
+        translationBuilder.add(RoadworksRegistry.ModItems.BLANKOUT_NO_LEFT_TURN_TRAIN, "No Left Turn Train Blankout")
+        translationBuilder.add(RoadworksRegistry.ModItems.BLANKOUT_NO_RIGHT_TURN, "No Right Turn Blankout")
+        translationBuilder.add(RoadworksRegistry.ModItems.BLANKOUT_NO_RIGHT_TURN_TRAIN, "No Right Turn Train Blankout")
+        translationBuilder.add(RoadworksRegistry.ModItems.BLANKOUT_NO_TURN_ON_RED, "No Turn On Red Blankout")
+
         // translationBuilder.add(RoadworksRegistry.ModBlocks.PEDESTRIAN_BUTTON, "Pedestrian Button")
 
         translationBuilder.add(RoadworksRegistry.ModItems.CROSSING_GATE_ARM_EXTENSION, "Crossing Gate Extension")

@@ -87,6 +87,11 @@ object RoadworksClient : ClientModInitializer {
 		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.TRAIN_BELL, ::TrainBellAttachmentRenderer)
 		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.TRAIN_SIGNAL, ::TrainSignalAttachmentRenderer)
 		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.CROSSING_GATE, ::CrossingGateAttachmentRenderer)
+		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.BLANKOUT_NO_LEFT_TURN, ::BlankoutAttachmentRenderer)
+		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.BLANKOUT_NO_RIGHT_TURN, ::BlankoutAttachmentRenderer)
+		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.BLANKOUT_NO_LEFT_TURN_TRAIN, ::BlankoutAttachmentRenderer)
+		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.BLANKOUT_NO_RIGHT_TURN_TRAIN, ::BlankoutAttachmentRenderer)
+		AttachmentRendererFactories.register(RoadworksRegistry.ModAttachments.BLANKOUT_NO_TURN_ON_RED, ::BlankoutAttachmentRenderer)
 
 		logger.info("Registering attachment renderers")
 		attachmentRenderers = AttachmentRendererFactories.reload()

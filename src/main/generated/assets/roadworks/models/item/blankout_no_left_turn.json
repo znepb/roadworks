@@ -1,0 +1,6 @@
+{
+  "parent": "roadworks:item/blankout_square_item_base",
+  "textures": {
+    "texture": "roadworks:block/signals/blankout_no_left_turn"
+  }
+}

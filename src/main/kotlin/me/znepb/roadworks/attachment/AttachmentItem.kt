@@ -19,7 +19,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import net.minecraft.world.event.GameEvent
 
-open class AttachmentItem(var settings: Settings, val attachment: AttachmentType<out Attachment>) : Item(settings) {
+open class AttachmentItem(val attachment: AttachmentType<out Attachment>, var settings: Settings) : Item(settings) {
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
         val be = context.world.getBlockEntity(context.blockPos)
         if(be is PostContainerBlockEntity) {

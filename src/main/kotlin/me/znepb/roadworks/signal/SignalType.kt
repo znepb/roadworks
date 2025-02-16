@@ -18,7 +18,7 @@ enum class SignalType(
     THREE_HEAD_STRAIGHT("three_head_straight", listOf(
         SignalLight.GREEN_STRAIGHT,
         SignalLight.YELLOW_STRAIGHT,
-        SignalLight.RED_STRAIGHT
+        SignalLight.RED
     )),
     FIVE_HEAD_LEFT("five_head_left", listOf(
         SignalLight.GREEN_LEFT,

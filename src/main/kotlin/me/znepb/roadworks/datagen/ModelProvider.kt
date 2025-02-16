@@ -1,7 +1,9 @@
 package me.znepb.roadworks.datagen
 
+import me.znepb.roadworks.RoadworksMain
 import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.RoadworksRegistry
+import me.znepb.roadworks.attachment.AttachmentType
 import me.znepb.roadworks.marking.AbstractMarking.Companion.addBasicMarking
 import me.znepb.roadworks.marking.OneSideFilledMarking.Companion.addMarkingWithFilledSides
 import me.znepb.roadworks.marking.TMarking.Companion.addTMarking
@@ -361,12 +363,32 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         )
     }
 
+    private fun addBlankout(rectangle: Boolean, type: AttachmentType<*>, generator: ItemModelGenerator) {
+        val baseBlankoutModelSquare = Model(
+            Optional.of(ModId("item/${if(rectangle) "blankout_rectangle_item_base" else "blankout_square_item_base"}")), Optional.empty(),
+            TextureKey.TEXTURE
+        )
+        baseBlankoutModelSquare.upload(
+            ModId("item/${RoadworksRegistry.ModAttachments.REGISTRY.getId(type)?.path}"),
+            TextureMap()
+                .put(TextureKey.TEXTURE, ModId("block/signals/${RoadworksRegistry.ModAttachments.REGISTRY.getId(type)?.path}")),
+            generator.writer
+        )
+    }
+
     override fun generateItemModels(generator: ItemModelGenerator) {
         generator.register(RoadworksRegistry.ModItems.LINKER, Models.GENERATED)
         generator.register(RoadworksRegistry.ModItems.WRENCH, Models.GENERATED)
         generator.register(RoadworksRegistry.ModItems.SIGN_EDITOR, Models.GENERATED)
         generator.register(RoadworksRegistry.ModItems.ROAD_SIGN_ATTACHMENT, Models.GENERATED)
         generator.register(RoadworksRegistry.ModItems.ROAD_SIGN_WARNING_ATTACHMENT, Models.GENERATED)
+
+        addBlankout(false, RoadworksRegistry.ModAttachments.BLANKOUT_NO_LEFT_TURN, generator)
+        addBlankout(false, RoadworksRegistry.ModAttachments.BLANKOUT_NO_RIGHT_TURN, generator)
+        addBlankout(true, RoadworksRegistry.ModAttachments.BLANKOUT_NO_TURN_ON_RED, generator)
+        addBlankout(true, RoadworksRegistry.ModAttachments.BLANKOUT_NO_LEFT_TURN_TRAIN, generator)
+        addBlankout(true, RoadworksRegistry.ModAttachments.BLANKOUT_NO_RIGHT_TURN_TRAIN, generator)
+
 
         fun markingItem(name: String): Model {
             return Model(Optional.of(ModId("block/$name")), Optional.empty())

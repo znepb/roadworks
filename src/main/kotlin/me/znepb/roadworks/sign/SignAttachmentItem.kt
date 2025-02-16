@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
-class SignAttachmentItem(settings: Settings, attachment: AttachmentType<out Attachment>) : AttachmentItem(settings, attachment) {
+class SignAttachmentItem(attachment: AttachmentType<out Attachment>, settings: Settings) : AttachmentItem(attachment, settings) {
     override fun getName(stack: ItemStack): Text {
         val nbt = stack.orCreateNbt
         val signType = if(nbt?.contains("sign_type") == true) RoadworksMain.signageManager.getSign(Identifier(nbt.getString("sign_type"))) else null

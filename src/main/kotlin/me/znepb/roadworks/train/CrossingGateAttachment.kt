@@ -28,10 +28,6 @@ class CrossingGateAttachment(container: AttachmentContainerBlockEntity) : Activa
     private var gateDirection = 1
     private var inMotion = false
 
-    companion object {
-        //val shape =
-    }
-
     fun getShape(open: Boolean): VoxelShape  {
         val shape = VoxelShapes.union(
             VoxelShapes.cuboid(7.0 / 16.0, 5.0 / 16.0, 6.5 / 16.0, 9.0 / 16.0, 7.5 / 16.0, 9.0 / 16.0),

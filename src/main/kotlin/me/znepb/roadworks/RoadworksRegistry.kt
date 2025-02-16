@@ -269,6 +269,21 @@ object RoadworksRegistry {
             return rItem(parent, supplier, settings, true)
         }
 
+        private fun<A: AttachmentType<*>, I: Item> rItem(parent:A, supplier: (A, Item.Settings) -> I, settings: Item.Settings =
+            itemSettings(), addToCreative: Boolean): I
+        {
+            val item = Registry.register(ITEM, ModAttachments.REGISTRY.getId(parent), supplier(parent, settings))
+            items.add(item)
+            if(addToCreative) creativeInventoryItems.add(item)
+            return item
+        }
+
+        private fun<A: AttachmentType<*>, I: Item> rItem(parent:A, supplier: (A, Item.Settings) -> I, settings: Item.Settings =
+            itemSettings()): I
+        {
+            return rItem(parent, supplier, settings, true)
+        }
+
         val WRENCH = rItem("wrench", Item(itemSettings()))
 
         val TRAFFIC_CABINET = rItem(ModBlocks.TRAFFIC_CABINET, ::BlockItem, itemSettings())
@@ -390,25 +405,31 @@ object RoadworksRegistry {
         val LINKER = rItem("linker", Linker(FabricItemSettings()))
         val SIGN_EDITOR = rItem("sign_editor", SignEditor(FabricItemSettings()))
 
-        val SIGN_ATTACHMENT = rItem("sign", SignAttachmentItem(FabricItemSettings(), ModAttachments.SIGN_ATTACHMENT), false)
-        val ROAD_SIGN_ATTACHMENT = rItem("road_sign", AttachmentItem(FabricItemSettings(), ModAttachments.ROAD_SIGN_ATTACHMENT), false)
-        val ROAD_SIGN_WARNING_ATTACHMENT = rItem("road_sign_warning", AttachmentItem(FabricItemSettings(), ModAttachments.ROAD_SIGN_ATTACHMENT), false)
-        val PEDESTRIAN_SIGNAL_ATTACHMENT = rItem("pedestrian_signal", AttachmentItem(FabricItemSettings(), ModAttachments.PEDESTRIAN_SIGNAL))
-        val BEACON_ATTACHMENT_RED = rItem("beacon_red", AttachmentItem(FabricItemSettings(), ModAttachments.BEACON_RED))
-        val BEACON_ATTACHMENT_YELLOW = rItem("beacon_yellow", AttachmentItem(FabricItemSettings(), ModAttachments.BEACON_YELLOW))
-        val BEACON_ATTACHMENT_GREEN = rItem("beacon_green", AttachmentItem(FabricItemSettings(), ModAttachments.BEACON_GREEN))
-        val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT = rItem("three_head_traffic_signal", AttachmentItem(FabricItemSettings(), ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT))
-        val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT = rItem("three_head_traffic_signal_left", AttachmentItem(FabricItemSettings(), ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT))
-        val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT = rItem("three_head_traffic_signal_right", AttachmentItem(FabricItemSettings(), ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT))
-        val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_STRAIGHT = rItem("three_head_traffic_signal_straight", AttachmentItem(FabricItemSettings(), ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_STRAIGHT))
-        val FLASHING_YELLOW_ARROW_SIGNAL_ATTACHMENT = rItem("flashing_yellow_arrow_traffic_signal", AttachmentItem(FabricItemSettings(), ModAttachments.FLASHING_YELLOW_ARROW_SIGNAL_ATTACHMENT))
-        val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT = rItem("five_head_traffic_signal_left", AttachmentItem(FabricItemSettings(), ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT))
-        val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT = rItem("five_head_traffic_signal_right", AttachmentItem(FabricItemSettings(), ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT))
-        val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT = rItem("five_head_traffic_signal_left_right", AttachmentItem(FabricItemSettings(), ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT))
-        val TRAIN_BELL_ATTACHMENT = rItem("train_bell", AttachmentItem(FabricItemSettings(), ModAttachments.TRAIN_BELL))
-        val TRAIN_SIGNAL_ATTACHMENT = rItem("train_signal", AttachmentItem(FabricItemSettings(), ModAttachments.TRAIN_SIGNAL))
-        val CROSSING_GATE_ATTACHMENT = rItem("crossing_gate", AttachmentItem(FabricItemSettings(), ModAttachments.CROSSING_GATE))
+        val SIGN_ATTACHMENT = rItem(ModAttachments.SIGN_ATTACHMENT, ::SignAttachmentItem, itemSettings(), false)
+        val ROAD_SIGN_ATTACHMENT = rItem("road_sign", AttachmentItem(ModAttachments.ROAD_SIGN_ATTACHMENT, FabricItemSettings()), false)
+        val ROAD_SIGN_WARNING_ATTACHMENT = rItem("road_sign_warning", AttachmentItem(ModAttachments.ROAD_SIGN_ATTACHMENT, FabricItemSettings()), false)
+        val PEDESTRIAN_SIGNAL_ATTACHMENT = rItem(ModAttachments.PEDESTRIAN_SIGNAL, ::AttachmentItem, itemSettings())
+        val BEACON_ATTACHMENT_RED = rItem(ModAttachments.BEACON_RED, ::AttachmentItem, itemSettings())
+        val BEACON_ATTACHMENT_YELLOW = rItem(ModAttachments.BEACON_YELLOW, ::AttachmentItem, itemSettings())
+        val BEACON_ATTACHMENT_GREEN = rItem(ModAttachments.BEACON_GREEN, ::AttachmentItem, itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT = rItem(ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT, ::AttachmentItem, itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT = rItem(ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT, ::AttachmentItem, itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT = rItem(ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT, ::AttachmentItem, itemSettings())
+        val THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_STRAIGHT = rItem(ModAttachments.THREE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_STRAIGHT, ::AttachmentItem, itemSettings())
+        val FLASHING_YELLOW_ARROW_SIGNAL_ATTACHMENT = rItem(ModAttachments.FLASHING_YELLOW_ARROW_SIGNAL_ATTACHMENT, ::AttachmentItem, itemSettings())
+        val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT = rItem(ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT, ::AttachmentItem, itemSettings())
+        val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT = rItem(ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_RIGHT, ::AttachmentItem, itemSettings())
+        val FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT = rItem(ModAttachments.FIVE_HEAD_TRAFFIC_SIGNAL_ATTACHMENT_LEFT_RIGHT, ::AttachmentItem, itemSettings())
+        val TRAIN_BELL_ATTACHMENT = rItem(ModAttachments.TRAIN_BELL, ::AttachmentItem, itemSettings())
+        val TRAIN_SIGNAL_ATTACHMENT = rItem(ModAttachments.TRAIN_SIGNAL, ::AttachmentItem, itemSettings())
+        val CROSSING_GATE_ATTACHMENT = rItem(ModAttachments.CROSSING_GATE, ::AttachmentItem, itemSettings())
         val CROSSING_GATE_ARM_EXTENSION = rItem(ModBlocks.CROSSING_GATE_ARM_EXTENSION, ::BlockItem, itemSettings())
+        val BLANKOUT_NO_LEFT_TURN = rItem(ModAttachments.BLANKOUT_NO_LEFT_TURN, ::AttachmentItem, itemSettings())
+        val BLANKOUT_NO_RIGHT_TURN = rItem(ModAttachments.BLANKOUT_NO_RIGHT_TURN, ::AttachmentItem, itemSettings())
+        val BLANKOUT_NO_TURN_ON_RED = rItem(ModAttachments.BLANKOUT_NO_TURN_ON_RED, ::AttachmentItem, itemSettings())
+        val BLANKOUT_NO_LEFT_TURN_TRAIN = rItem(ModAttachments.BLANKOUT_NO_LEFT_TURN_TRAIN, ::AttachmentItem, itemSettings())
+        val BLANKOUT_NO_RIGHT_TURN_TRAIN = rItem(ModAttachments.BLANKOUT_NO_RIGHT_TURN_TRAIN, ::AttachmentItem, itemSettings())
+
     }
 
     object ModAttachments {
@@ -446,6 +467,12 @@ object RoadworksRegistry {
         val TRAIN_BELL = Registry.register(REGISTRY, ModId("train_bell"), AttachmentType.Builder(::TrainBellAttachment).build())
         val TRAIN_SIGNAL = Registry.register(REGISTRY, ModId("train_signal"), AttachmentType.Builder(::TrainSignalAttachment).build())
         val CROSSING_GATE = Registry.register(REGISTRY, ModId("crossing_gate"), AttachmentType.Builder(::CrossingGateAttachment).build())
+
+        val BLANKOUT_NO_LEFT_TURN = Registry.register(REGISTRY, ModId("blankout_no_left_turn"), AttachmentType.Builder(BlankoutAttachment::NoLeftTurn).build())
+        val BLANKOUT_NO_RIGHT_TURN = Registry.register(REGISTRY, ModId("blankout_no_right_turn"), AttachmentType.Builder(BlankoutAttachment::NoRightTurn).build())
+        val BLANKOUT_NO_TURN_ON_RED = Registry.register(REGISTRY, ModId("blankout_no_turn_on_red"), AttachmentType.Builder(BlankoutAttachment::NoTurnOnRed).build())
+        val BLANKOUT_NO_LEFT_TURN_TRAIN = Registry.register(REGISTRY, ModId("blankout_no_left_turn_train"), AttachmentType.Builder(BlankoutAttachment::NoLeftTurnTrain).build())
+        val BLANKOUT_NO_RIGHT_TURN_TRAIN = Registry.register(REGISTRY, ModId("blankout_no_right_turn_train"), AttachmentType.Builder(BlankoutAttachment::NoRightTurnTrain).build())
     }
 
     object ModSounds {

@@ -40,7 +40,9 @@ class ModelLoader {
             TrainSignalAttachmentRenderer.BEACON_OFF,
             TrainSignalAttachmentRenderer.BEACON_ON,
             CrossingGateAttachmentRenderer.HINGE,
-            CrossingGateAttachmentRenderer.GATE_ARM
+            CrossingGateAttachmentRenderer.GATE_ARM,
+            BlankoutAttachmentRenderer.RECTANGLE,
+            BlankoutAttachmentRenderer.SQUARE
         )
 
         init {

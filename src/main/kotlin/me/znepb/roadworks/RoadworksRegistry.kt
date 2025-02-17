@@ -18,6 +18,7 @@ import me.znepb.roadworks.marking.TMarking
 import me.znepb.roadworks.marking.TurnMarking
 import me.znepb.roadworks.misc.Catwalk
 import me.znepb.roadworks.sign.RoadSignAttachment
+import me.znepb.roadworks.sign.RouteShieldAttachment
 import me.znepb.roadworks.sign.SignAttachment
 import me.znepb.roadworks.sign.SignAttachmentItem
 import me.znepb.roadworks.signal.*
@@ -429,7 +430,7 @@ object RoadworksRegistry {
         val BLANKOUT_NO_TURN_ON_RED = rItem(ModAttachments.BLANKOUT_NO_TURN_ON_RED, ::AttachmentItem, itemSettings())
         val BLANKOUT_NO_LEFT_TURN_TRAIN = rItem(ModAttachments.BLANKOUT_NO_LEFT_TURN_TRAIN, ::AttachmentItem, itemSettings())
         val BLANKOUT_NO_RIGHT_TURN_TRAIN = rItem(ModAttachments.BLANKOUT_NO_RIGHT_TURN_TRAIN, ::AttachmentItem, itemSettings())
-
+        val ROUTE_SHEILD = rItem(ModAttachments.ROUTE_SHEILD, ::AttachmentItem, itemSettings())
     }
 
     object ModAttachments {
@@ -438,6 +439,7 @@ object RoadworksRegistry {
 
         val SIGN_ATTACHMENT = Registry.register(REGISTRY, ModId("sign"), AttachmentType.Builder(::SignAttachment).build())
         val ROAD_SIGN_ATTACHMENT = Registry.register(REGISTRY, ModId("road_sign"), AttachmentType.Builder(::RoadSignAttachment).build())
+        val ROUTE_SHEILD = Registry.register(REGISTRY, ModId("route_shield"), AttachmentType.Builder(::RouteShieldAttachment).build())
 
         val PEDESTRIAN_SIGNAL = Registry.register(REGISTRY, ModId("pedestrian_signal"), AttachmentType.Builder(::PedestrianSignalAttachment).build())
 

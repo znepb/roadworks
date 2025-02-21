@@ -1,0 +1,6 @@
+{
+  "name": "sign.roadworks.guide_south",
+  "front_texture": "roadworks:block/signs/guide_south",
+  "back_texture": "roadworks:block/signs/back_guide_short",
+  "height": 23
+}

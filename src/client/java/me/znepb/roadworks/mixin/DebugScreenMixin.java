@@ -3,6 +3,7 @@ package me.znepb.roadworks.mixin;
 import me.znepb.roadworks.RoadworksRegistry;
 import me.znepb.roadworks.attachment.ActivatableAttachment;
 import me.znepb.roadworks.attachment.LinkableAttachment;
+import me.znepb.roadworks.attachment.PositionableAttachment;
 import me.znepb.roadworks.container.PostContainerBlockEntity;
 import me.znepb.roadworks.train.CrossingGateAttachment;
 import net.minecraft.client.MinecraftClient;
@@ -39,6 +40,10 @@ public class DebugScreenMixin {
                     value.add(Objects.requireNonNull(RoadworksRegistry.ModAttachments.INSTANCE.getREGISTRY().getId(attachment.getType())).toString());
                     value.add(String.valueOf(attachment.getId()));
                     value.add("Facing: " + attachment.getFacing().asString());
+
+                    if(attachment instanceof PositionableAttachment) {
+                        value.add("Position: " + ((PositionableAttachment) attachment).getPosition());
+                    }
 
                     if(attachment instanceof LinkableAttachment) {
                         value.add("Linked: " + ((LinkableAttachment) attachment).getLinked());

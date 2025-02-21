@@ -5,9 +5,10 @@ import me.znepb.roadworks.RoadworksMain.NAMESPACE
 import me.znepb.roadworks.attachment.Attachment
 import me.znepb.roadworks.attachment.AttachmentType
 import me.znepb.roadworks.container.PostContainer.Companion.createItemStackForThickness
+import me.znepb.roadworks.gui.RouteShieldEditorScreen
 import me.znepb.roadworks.gui.SignEditorScreen
 import me.znepb.roadworks.init.ModelLoader
-import me.znepb.roadworks.item.SignEditorScreenHandler
+import me.znepb.roadworks.item.AbstractSignEditorScreenHandler
 import me.znepb.roadworks.network.SyncContentPacketClient
 import me.znepb.roadworks.render.PostContainerRenderer
 import me.znepb.roadworks.render.WallContainerRenderer
@@ -58,12 +59,12 @@ object RoadworksClient : ClientModInitializer {
 			}
 		}
 
-		ClientPlayNetworking.registerGlobalReceiver(SignEditorScreenHandler.SyncData.PACKET_ID) { client, handler, buf, response ->
-			val syncData = buf.decodeAsJson(SignEditorScreenHandler.SyncData.CODEC)
+		ClientPlayNetworking.registerGlobalReceiver(AbstractSignEditorScreenHandler.SyncData.PACKET_ID) { client, handler, buf, response ->
+			val syncData = buf.decodeAsJson(AbstractSignEditorScreenHandler.SyncData.CODEC)
 
 			client.execute {
 				val screenHandler = MinecraftClient.getInstance().player?.currentScreenHandler
-				if(screenHandler is SignEditorScreenHandler) {
+				if(screenHandler is AbstractSignEditorScreenHandler) {
 					screenHandler.setBlockPosition(syncData.pos)
 					screenHandler.setAttachmentUUID(syncData.uuid)
 				}
@@ -101,6 +102,7 @@ object RoadworksClient : ClientModInitializer {
 		BlockEntityRendererFactories.register(RoadworksRegistry.ModBlockEntities.WALL_CONTAINER_BLOCK_ENTITY, ::WallContainerRenderer)
 
 		HandledScreens.register(RoadworksRegistry.ModScreens.SIGN_EDITOR_SCREEN_HANDLER, ::SignEditorScreen)
+		HandledScreens.register(RoadworksRegistry.ModScreens.ROUTE_SHIELD_EDITOR, ::RouteShieldEditorScreen)
 
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 			RoadworksRegistry.ModBlocks.WHITE_CENTER_MARKING,

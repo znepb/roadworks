@@ -5,6 +5,7 @@ import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer
 import me.znepb.roadworks.cabinet.TrafficCabinetBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
 import me.znepb.roadworks.network.DestroyAttachmentPacket
+import me.znepb.roadworks.network.EditRouteShieldPacket
 import me.znepb.roadworks.network.EditSignPacket
 import me.znepb.roadworks.sign.SignageManager
 import net.fabricmc.api.ModInitializer
@@ -48,5 +49,6 @@ object RoadworksMain : ModInitializer {
 		// Networking Registration
 		EditSignPacket.register()
 		DestroyAttachmentPacket.register()
+		EditRouteShieldPacket.register()
 	}
 }

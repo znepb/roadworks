@@ -15,6 +15,7 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add(RoadworksRegistry.ModBlocks.BOLLARD, "Bollard")
         translationBuilder.add(RoadworksRegistry.ModBlocks.BOLLARD_THICK, "Thick Bollard")
 
+        translationBuilder.add(RoadworksRegistry.ModItems.ROUTE_SHEILD, "Route Shield")
         translationBuilder.add(RoadworksRegistry.ModItems.ROAD_SIGN_ATTACHMENT, "Road Sign")
         translationBuilder.add(RoadworksRegistry.ModItems.ROAD_SIGN_WARNING_ATTACHMENT, "Warning Road Sign")
         translationBuilder.add(RoadworksRegistry.ModItems.SIGN_ATTACHMENT, "Sign")
@@ -160,6 +161,7 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
 
         translationBuilder.add("gui.${NAMESPACE}.sign_editor.name", "Sign Editor")
         translationBuilder.add("gui.${NAMESPACE}.sign_editor.set", "Set")
+        translationBuilder.add("gui.${NAMESPACE}.route_shield_editor.name", "Route Shield Editor")
 
         translationBuilder.add("itemGroup.${NAMESPACE}.main", "Roadworks")
         translationBuilder.add("sign.${NAMESPACE}.stop_sign", "Stop Sign")
@@ -234,6 +236,20 @@ class LanguageProvider(output: FabricDataOutput) : FabricLanguageProvider(output
         translationBuilder.add("sign.${NAMESPACE}.oncoming_traffic", "Oncoming Traffic Sign")
         translationBuilder.add("sign.${NAMESPACE}.right_lane_ends_ahead", "Right Lane Ends Ahead Sign")
         translationBuilder.add("sign.${NAMESPACE}.road_ending_marker", "Road Ends Marker")
+
+        translationBuilder.add("sign.${NAMESPACE}.guide_begin", "Guide Begin Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_both", "Guide Bi-directional Arrow Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_east", "Guide East Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_end", "Guide End Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_junction", "Guide Junction Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_left", "Guide Left Arrow Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_north", "Guide North Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_right", "Guide Right Arrow Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_south", "Guide South Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_straight", "Guide Straight Arrow Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_to", "Guide To Sign")
+        translationBuilder.add("sign.${NAMESPACE}.guide_west", "Guide West Sign")
+
 
 
         translationBuilder.add("block.${NAMESPACE}.post_thick", "Thick Post")

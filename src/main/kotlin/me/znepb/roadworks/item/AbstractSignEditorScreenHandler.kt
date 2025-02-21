@@ -4,6 +4,7 @@ import com.mojang.serialization.*
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.Unpooled
 import me.znepb.roadworks.RoadworksMain
+import me.znepb.roadworks.RoadworksRegistry.ModScreens.ROUTE_SHIELD_EDITOR
 import me.znepb.roadworks.RoadworksRegistry.ModScreens.SIGN_EDITOR_SCREEN_HANDLER
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.entity.player.PlayerEntity
@@ -11,14 +12,15 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.screen.ScreenHandler
+import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Uuids
 import net.minecraft.util.math.BlockPos
 import java.util.*
 import java.util.stream.Stream
 
-class SignEditorScreenHandler(syncId: Int, playerInventory: PlayerInventory)
-    : ScreenHandler(SIGN_EDITOR_SCREEN_HANDLER, syncId) {
+abstract class AbstractSignEditorScreenHandler(type: ScreenHandlerType<*>, syncId: Int, playerInventory: PlayerInventory)
+    : ScreenHandler(type, syncId) {
     private var pos: BlockPos? = null
     private var uuid: UUID? = null
 
@@ -78,4 +80,7 @@ class SignEditorScreenHandler(syncId: Int, playerInventory: PlayerInventory)
             })
         }
     }
+
+    class RoadSignEditorScreenHandler(syncId: Int, playerInventory: PlayerInventory) : AbstractSignEditorScreenHandler(SIGN_EDITOR_SCREEN_HANDLER, syncId, playerInventory)
+    class RouteShieldEditorScreenHandler(syncId: Int, playerInventory: PlayerInventory) : AbstractSignEditorScreenHandler(ROUTE_SHIELD_EDITOR, syncId, playerInventory)
 }

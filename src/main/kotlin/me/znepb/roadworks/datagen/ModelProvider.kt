@@ -382,6 +382,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         generator.register(RoadworksRegistry.ModItems.SIGN_EDITOR, Models.GENERATED)
         generator.register(RoadworksRegistry.ModItems.ROAD_SIGN_ATTACHMENT, Models.GENERATED)
         generator.register(RoadworksRegistry.ModItems.ROAD_SIGN_WARNING_ATTACHMENT, Models.GENERATED)
+        generator.register(RoadworksRegistry.ModItems.ROUTE_SHEILD, Models.GENERATED)
 
         addBlankout(false, RoadworksRegistry.ModAttachments.BLANKOUT_NO_LEFT_TURN, generator)
         addBlankout(false, RoadworksRegistry.ModAttachments.BLANKOUT_NO_RIGHT_TURN, generator)

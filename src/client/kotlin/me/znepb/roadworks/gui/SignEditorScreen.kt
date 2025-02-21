@@ -2,8 +2,9 @@ package me.znepb.roadworks.gui
 
 import me.znepb.roadworks.RoadworksMain.ModId
 import me.znepb.roadworks.RoadworksMain.NAMESPACE
+import me.znepb.roadworks.container.AttachmentContainerBlockEntity
 import me.znepb.roadworks.container.PostContainerBlockEntity
-import me.znepb.roadworks.item.SignEditorScreenHandler
+import me.znepb.roadworks.item.AbstractSignEditorScreenHandler
 import me.znepb.roadworks.network.EditSignPacket
 import me.znepb.roadworks.network.EditSignPacketClient.Companion.sendUpdateSignPacket
 import me.znepb.roadworks.sign.RoadSignAttachment
@@ -19,8 +20,8 @@ import net.minecraft.util.math.BlockPos
 import org.lwjgl.glfw.GLFW
 import kotlin.math.floor
 
-class SignEditorScreen(handler: SignEditorScreenHandler, playerInventory: PlayerInventory, title: Text) :
-    HandledScreen<SignEditorScreenHandler>(handler, playerInventory, title) {
+class SignEditorScreen(handler: AbstractSignEditorScreenHandler.RoadSignEditorScreenHandler, playerInventory: PlayerInventory, title: Text) :
+    HandledScreen<AbstractSignEditorScreenHandler.RoadSignEditorScreenHandler>(handler, playerInventory, title) {
 
     private val background = ModId("textures/gui/sign_editor.png")
     private val charsetTex = ModId("textures/block/signs/charset.png")
@@ -157,8 +158,7 @@ class SignEditorScreen(handler: SignEditorScreenHandler, playerInventory: Player
         if(!hasSetName && this.screenHandler.getBlockPosition() != BlockPos.ORIGIN) {
             val be = MinecraftClient.getInstance().player?.world?.getBlockEntity(this.handler.getBlockPosition())
 
-
-            if (be != null && be is PostContainerBlockEntity) {
+            if (be != null && be is AttachmentContainerBlockEntity) {
                 val attachment = this.handler.getAttachmentUUID()?.let { be.getAttachment(it) }
                 if(attachment != null && attachment is RoadSignAttachment) {
                     var text = ""

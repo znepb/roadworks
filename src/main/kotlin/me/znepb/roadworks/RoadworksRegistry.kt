@@ -2,7 +2,6 @@ package me.znepb.roadworks
 
 import dan200.computercraft.api.peripheral.PeripheralLookup
 import me.znepb.roadworks.RoadworksMain.ModId
-import me.znepb.roadworks.attachment.Attachment
 import me.znepb.roadworks.attachment.AttachmentItem
 import me.znepb.roadworks.attachment.AttachmentType
 import me.znepb.roadworks.cabinet.TrafficCabinet
@@ -11,7 +10,7 @@ import me.znepb.roadworks.cone.*
 import me.znepb.roadworks.container.*
 import me.znepb.roadworks.item.Linker
 import me.znepb.roadworks.item.SignEditor
-import me.znepb.roadworks.item.SignEditorScreenHandler
+import me.znepb.roadworks.item.AbstractSignEditorScreenHandler
 import me.znepb.roadworks.marking.BasicMarking
 import me.znepb.roadworks.marking.OneSideFilledMarking
 import me.znepb.roadworks.marking.TMarking
@@ -73,10 +72,16 @@ object RoadworksRegistry {
     }
 
     object ModScreens {
-        val SIGN_EDITOR_SCREEN_HANDLER: ScreenHandlerType<SignEditorScreenHandler> = Registry.register(
+        val SIGN_EDITOR_SCREEN_HANDLER = Registry.register(
             SCREEN_HANDLER,
             ModId("sign_editor"),
-            ScreenHandlerType(::SignEditorScreenHandler, FeatureFlags.VANILLA_FEATURES)
+            ScreenHandlerType(AbstractSignEditorScreenHandler::RoadSignEditorScreenHandler, FeatureFlags.VANILLA_FEATURES)
+        )
+
+        val ROUTE_SHIELD_EDITOR = Registry.register(
+            SCREEN_HANDLER,
+            ModId("route_shield_editor"),
+            ScreenHandlerType(AbstractSignEditorScreenHandler::RouteShieldEditorScreenHandler, FeatureFlags.VANILLA_FEATURES)
         )
     }
 

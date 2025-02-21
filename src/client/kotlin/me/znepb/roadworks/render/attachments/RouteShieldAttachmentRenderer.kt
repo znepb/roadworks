@@ -32,16 +32,7 @@ class RouteShieldAttachmentRenderer : AttachmentRenderer<RouteShieldAttachment> 
     ) {
         val number = attachment.number
 
-        // Get size of contents
-        val width = if(number < 100) 21.0 else 14.0
-        val renderedCharWidth = if(number < 100) 15.0 else 10.0
-        val height = if(number < 100) 21.0 else 14.0
-        val charOffset = if(number < 10) 1 else if(number < 100) 3 else 2
-        val pixelCount = number.toString().length * renderedCharWidth
-
-        val offsetPos = 0.0
-
-        val finalOffset = offset.add(Vector3d(0.0, offsetPos,  0.0078125))
+        val finalOffset = offset.add(Vector3d(0.0, if(attachment.position == AttachmentPosition.TOP) (6.0 / 64.0) else if(attachment.position == AttachmentPosition.MIDDLE) 0.0 else -(7.0 / 64.0),  0.0078125))
 
         // Prepare matrices
         matrices.push()
@@ -61,18 +52,24 @@ class RouteShieldAttachmentRenderer : AttachmentRenderer<RouteShieldAttachment> 
 
         // Render sign text
         val charsetBuffer: VertexConsumer = vertexConsumers.getBuffer(RenderLayers.getRenderLayer(NUMBERS_TEXTURE))
-        var x = 32.0 - (pixelCount / 2) - charOffset
-        number.toString().forEach {
+        val charWidth = if(number < 100) 15 else 10
+        val charHeight = if(number < 100) 21 else 14
+        val pixelSpacing = if(number < 100) 3 else 2
+        val numberString = number.toString()
+        val numberWidth = numberString.length * charWidth + (numberString.length - 1) * (pixelSpacing * 2)
+
+        var x = 33.5 - (numberWidth.toDouble() / 2.0)
+        numberString.forEach {
             val num = it.digitToIntOrNull()?.toDouble()
 
             if(num != null)
                 RenderUtils.drawSquare(
-                    x.toFloat(), 32F - (height / 2).toFloat(), 0.51F, (num * width).toFloat(), if(number < 100) 14F else 0F, width.toFloat(), height.toFloat(),
-                    64, 64, width.toFloat(), height.toFloat(),
+                    x.toFloat(), 32F - (charHeight / 2).toFloat(), 0.51F, (num * (charWidth + pixelSpacing * 2)).toFloat(), if(number < 100) 14F else 0F, charWidth.toFloat(), charHeight.toFloat(),
+                    64, 64, charWidth.toFloat(), charHeight.toFloat(),
                     256, 256, charsetBuffer, matrix, light, overlay
                 )
 
-            x += (width - charOffset)
+            x += charWidth + pixelSpacing
         }
 
         matrices.pop()
